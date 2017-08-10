@@ -1,0 +1,19 @@
+{
+  "name": "gitbud",
+  "version": "1.0.0",
+  "description": "An application to help programmers begin working on open source projects.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cranebaes/gitbud.git"
+  },
+  "author": "haque-kim-ngo-warner-medley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cranebaes/gitbud/issues"
+  },
+  "homepage": "https://github.com/cranebaes/gitbud#readme"
+}
