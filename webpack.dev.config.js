@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
+  devtool: 'eval',
   entry: [
     './client/app'
   ],
@@ -29,7 +30,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin(), // For live reloading
+    new webpack.NoEmitOnErrorsPlugin() // Makes sure Webpack will not compile if Errors
   ]
 };
