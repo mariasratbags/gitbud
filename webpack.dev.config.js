@@ -4,10 +4,10 @@ const path = require('path');
 module.exports = {
   devtool: 'eval',
   entry: [
-    './client/app'
+    './client/index'
   ],
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: path.join(__dirname, 'dist'),
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -26,7 +26,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, '/dist'),
     hot: true,
-    port: 3000
+    port: 3000,
+    historyApiFallback: true
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
