@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --config webpack.dev.config.js --progress --colors --hot --inline"
+    "start": "nodemon server.js",
+    "build:dev": "webpack --config webpack.dev.config.js",
+    "webpack": "webpack-dev-server --config webpack.dev.config.js --progress --colors --hot --inline"
   },
   "repository": {
     "type": "git",
@@ -34,6 +36,7 @@
     "webpack-hot-middleware": "^2.18.2"
   },
   "dependencies": {
+    "express": "^4.15.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.2"
