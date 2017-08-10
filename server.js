@@ -7,6 +7,7 @@ Serve dummy user data to user endpoints
 Serve static files from dist
 */
 const express = require('express');
+const path = require('path');
 
 // make express server
 const app = express();
@@ -15,5 +16,8 @@ app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
 
-// serve static files
-app.use(express.static('./dist'));
+// serve static files and hello world
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('/', (req, res) => {
+  res.send('hello world');
+});
