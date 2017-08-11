@@ -13,9 +13,9 @@ class UserList extends React.Component {
   }
 
   getUsers() {
-    axios.get('/users')
-      .then((users) => {
-        this.setState({ users: users.data });
+    axios.get('/API/users')
+      .then(users => {
+        this.setState({users: users.data});
       })
       .catch(console.error);
   }
