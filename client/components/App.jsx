@@ -10,8 +10,9 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Route exact path='/user' component={User}/>
           <Route exact path='/' component={Landing} />
+          <Route exact path='/user' component={User}/>
+          <Route exact path='/projects' component={Landing} />
         </div>
       </BrowserRouter>
     )
