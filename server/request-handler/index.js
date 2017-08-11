@@ -14,22 +14,22 @@ fs.readFile(path.join(__dirname, '../../dist/index.html'), 'utf8', (err, data) =
   }
 });
 
+//serves index.html on react routes
+//and redirects /API request to appropriate endpoint
 exports.handler = function handler(req, res) {
-  console.log('handling url: ', req.url);
+
+  //react routes
   if (routes.react.has(req.url)) {
-    console.log('serving react route: ', req.url);
     res.send(exports.index);
   }
 
+  //API endpoints
   var urlParts = req.url.split('/');
-  console.log('url parts line 25', urlParts);
-  // /api/user
-  if (urlParts[1] === 'API' && routes.api[req.method].hasOwnProperty(urlParts[2])) {
-    console.log('serving api endpoint', urlParts);
-      routes.api[req.method][urlParts[2]](req)
+  if (urlParts[1] === 'API' &&
+    routes.api[urlParts[2]].hasOwnProperty(req.method)) {
+      routes.api[urlParts[2]][req.method](req)
         .then(data => res.send(data))
         .catch(err => {
-          console.error(err);
           res.end('sorry not sorry');
         });
   }

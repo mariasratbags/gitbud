@@ -4,8 +4,8 @@ exports.react = new Set(['/user', '/projects']);
 
 // request handlers for server routes
 exports.api = {
-  GET: {
-    'users': function getUsers() {
+  users: {
+    'GET': function getUsers() {
       return new Promise((resolve) => {
         resolve([
           { name: 'Francis' },
@@ -15,8 +15,5 @@ exports.api = {
         ]);
       });
     },
-  },
-  POST: {
-
   },
 };
