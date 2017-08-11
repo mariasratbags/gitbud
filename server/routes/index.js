@@ -29,7 +29,7 @@ exports.routes = {
       });
     },
     '/user': function getUser() {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         resolve(exports.index);
       });
     },
