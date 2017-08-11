@@ -7,7 +7,7 @@ function Nav() {
       <ul>
         <li><Link to='/'>Landing Page</Link></li>
         <li><Link to='/user'>MyAccount</Link></li>
-        <li><Link to='/projects'>Projects</Link></li>
+        <li><Link to='/projects'>Project List</Link></li>
       </ul>
     </div>
   );
