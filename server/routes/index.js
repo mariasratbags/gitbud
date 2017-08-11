@@ -1,4 +1,4 @@
-exports = {
+exports.routes = {
   GET: {
     '/': function getRoot() {
       return new Promise((resolve) => {

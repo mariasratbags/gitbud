@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const routes = require('./server/routes');
+const routes = require('./server/routes').routes;
 
 // make express server
 const app = express();
@@ -13,6 +13,7 @@ app.listen(port, () => {
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use((req, res) => {
   console.log(req.url);
-  routes[req.method][req.url](req)
-    .then(res.send);
+  routes[req.method][req.url]()
+    .then(data => res.send(data))
+    .catch(console.error);
 });
