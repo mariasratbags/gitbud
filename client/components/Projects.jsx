@@ -1,7 +1,12 @@
 import React from 'react';
 
-function Landing() {
-  return <div>Welcome to Gitbud</div>;
+function Projects() {
+  return <div>
+    <ul>
+      <li>Hello World</li>
+      <li>N-Queens</li>
+    </ul>
+  </div>;
 }
 
-export default Landing;
+export default Projects;
