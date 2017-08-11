@@ -25,7 +25,11 @@ exports.handler = function handler(req, res) {
   if (urlParts[1] === 'API' &&
     routes.api[urlParts[2]].hasOwnProperty(req.method)) {
     routes.api[urlParts[2]][req.method](req)
-      .then(data => res.send(data))
+      .then((data) => {
+        res.statusCode = 200;
+        res.setHeader('Content-type', 'application/json');
+        res.send(data);
+      })
       .catch((err) => {
         console.error(err);
         res.end('sorry not sorry');
