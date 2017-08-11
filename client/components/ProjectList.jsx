@@ -25,9 +25,6 @@ class ProjectList extends React.Component {
           <li>Hello world</li>
           {this.state.projects.map((data) => <li><Link to={`project/${data.projectId}`}>{data.project}</Link></li>)}
         </ul>
-        <Switch>
-          <Route path="/project/:id" component={ProjectDetails} />
-        </Switch>
       </div>
     );
   }
