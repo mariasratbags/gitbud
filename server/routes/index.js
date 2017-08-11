@@ -19,13 +19,21 @@ exports.api = {
     GET: function getProjects() {
       return new Promise((resolve) => {
         resolve([
-          { project: 'Hello GitBud', languages: ['JavaScript', 'HTML', 'CSS'],
-            experience: 'beginner', userIds: [0, 1, 2] },
-          { project: 'N-Queens', languages: ['JavaScript', 'HTML', 'BackBone'],
-            experience: 'Boss mode', userIds: [0, 3] },
+          { projectId: 1,
+            project: 'Hello GitBud',
+            languages: ['JavaScript', 'HTML', 'CSS'],
+            experience: 'beginner',
+            userIds: [0, 1, 2],
+          },
+          { projectId: 2,
+            project: 'N-Queens',
+            languages: ['JavaScript', 'HTML', 'BackBone'],
+            experience: 'Boss mode',
+            userIds: [0, 3],
+          },
         ]);
       });
-    }
+    },
   },
   'recommended-pairs': {
     GET: function getProjects() {
@@ -33,9 +41,9 @@ exports.api = {
         resolve([
           { userId: 2, username: 'p-w-party-m', rating: 89 },
           { userId: 3, username: 'brianheartsocketio', rating: 100 },
-          { userId: 4, username: 'shaikat', rating: 63 },
+          { userId: 4, username: 'shaikat', rating: 50 },
         ]);
       });
-    }
-  }
+    },
+  },
 };
