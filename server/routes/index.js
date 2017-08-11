@@ -1,11 +1,10 @@
+// react routes that require index.html
 exports.react = new Set(['/user', '/projects']);
-
-
 
 // request handlers for server routes
 exports.api = {
   users: {
-    'GET': function getUsers() {
+    GET: function getUsers() {
       return new Promise((resolve) => {
         resolve([
           { userId: 1, username: 'Francis' },
@@ -17,7 +16,7 @@ exports.api = {
     },
   },
   projects: {
-    'GET': function getProjects() {
+    GET: function getProjects() {
       return new Promise((resolve) => {
         resolve([
           { project: 'Hello GitBud', languages: ['JavaScript', 'HTML', 'CSS'],
@@ -29,7 +28,7 @@ exports.api = {
     }
   },
   'recommended-pairs': {
-    'GET': function getProjects() {
+    GET: function getProjects() {
       return new Promise((resolve) => {
         resolve([
           { userId: 2, username: 'p-w-party-m', rating: 89 },
