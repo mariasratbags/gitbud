@@ -27,8 +27,7 @@ exports.handler = function handler(req, res) {
     routes.api[urlParts[2]][req.method](req)
       .then((data) => {
         res.statusCode = 200;
-        res.setHeader('Content-type', 'application/json');
-        res.send(data);
+        res.json(data);
       })
       .catch((err) => {
         console.error(err);
