@@ -1,21 +1,21 @@
 import React from 'react';
 import axios from 'axios';
 
-class User extends React.Component {
+class UserList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      users: []
-    }
+      users: [],
+    };
 
     this.getUsers();
   }
 
   getUsers() {
     axios.get('/users')
-      .then(users => {
-        this.setState({users: users.data});
+      .then((users) => {
+        this.setState({ users: users.data });
       })
       .catch(console.error);
   }
@@ -33,4 +33,4 @@ class User extends React.Component {
 //   );
 // }
 
-export default User;
+export default UserList;
