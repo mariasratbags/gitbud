@@ -3,8 +3,8 @@ exports.react = new Set(['/user', '/projects']);
 
 // request handlers for server routes
 exports.api = {
-  users: {
-    GET: function getUsers() {
+  GET: {
+    users: function getUsers() {
       return new Promise((resolve) => {
         resolve([
           { userId: 1, username: 'francis' },
@@ -14,9 +14,7 @@ exports.api = {
         ]);
       });
     },
-  },
-  projects: {
-    GET: function getProjects() {
+    projects: function getProjects() {
       return new Promise((resolve) => {
         resolve([
           { projectId: 1,
@@ -34,9 +32,7 @@ exports.api = {
         ]);
       });
     },
-  },
-  'recommended-pairs': {
-    GET: function getProjects() {
+    'recommended-pairs': function getProjects() {
       return new Promise((resolve) => {
         resolve([
           { userId: 2, username: 'p-w-party-m', rating: 89 },

@@ -22,9 +22,8 @@ exports.handler = function handler(req, res) {
 
   // API endpoints
   const urlParts = req.url.split('/');
-  if (urlParts[1] === 'API' &&
-    routes.api[urlParts[2]].hasOwnProperty(req.method)) {
-    routes.api[urlParts[2]][req.method](req)
+  if (urlParts[1] === 'API' && routes.api[req.method].hasOwnProperty(urlParts[2])) {
+    routes.api[req.method][urlParts[2]](req)
       .then((data) => {
         res.statusCode = 200;
         res.json(data);
