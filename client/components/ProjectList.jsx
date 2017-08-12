@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
-import ProjectDetails from './ProjectDetails';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 class ProjectList extends React.Component {
@@ -11,39 +10,28 @@ class ProjectList extends React.Component {
       projects: []
     };
 
-    this.getData();
+    this.getProjects();
   }
 
-  getData() {
-    axios.get('/API/projects/').then(data => this.setState({projects: data.data}));
+  getProjects() {
+    axios.get('/API/projects/')
+    .then(project => {
+      this.setState({projects: project.data});
+    })
+    .catch(console.error);
   }
 
   render() {
     return (
       <div>
+        <h1>This is the Project List Page</h1>
         <ul>
-          <li>Hello world</li>
-          {this.state.projects.map((data) => <li><Link to={`project/${data.projectId}`}>{data.project}</Link></li>)}
+          {this.state.projects.map(project => <li><Link to={`projects/${project.projectId}`}>{project.project}</Link></li>
+          )}
         </ul>
       </div>
     );
   }
-}
-
-
-function ProjectList() {
-  return (
-    <div>
-      <p>id: 1This is ProjectList component</p>
-      <p>id: 2This is ProjectList component</p>
-      <p>id: 3This is ProjectList component</p>
-      <p>id: 4This is ProjectList component</p>
-      <p>id: 5This is ProjectList component</p>
-      <Switch>
-        <Route path="/project/:id" component={ProjectDetails} />
-      </Switch>
-    </div>
-  );
 }
 
 export default ProjectList;
