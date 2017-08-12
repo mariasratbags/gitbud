@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 class UserList extends React.Component {
@@ -22,15 +23,15 @@ class UserList extends React.Component {
 
   render() {
     return (
-      <div>{this.state.users.map(user => <h1>{user.name}</h1>)}</div>
+      <div>
+        <h1>This is the User List Page</h1>
+        <ul>
+          {this.state.users.map(user => <li><Link to={`user/${user.name}`}>{user.name}</Link></li>
+          )}
+        </ul>
+      </div>
     );
   }
 }
-
-// function User(arr) {
-//   return (
-//     <div>{console.log(arr)} List of user names</div>
-//   );
-// }
 
 export default UserList;
