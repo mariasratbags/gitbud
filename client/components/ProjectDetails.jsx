@@ -1,14 +1,36 @@
 import React from 'react';
-import UserList from './UserList';
+import { Redirect, Link } from 'react-router-dom';
+import axios from 'axios';
 
-function ProjectDetails(props) {
-  return (
-    <div>
-      <pre><code>{JSON.stringify(props.match.params)}</code></pre>
-      <p>This is ProjectDetails component</p>
-      <UserList />
-    </div>
-  );
+class ProjectDetails extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      users: [],
+    };
+
+    this.getUsers();
+  }
+
+  getUsers() {
+    axios.get('/API/recommended-pairs')
+      .then(users => {
+        this.setState({users: users.data});
+      })
+      .catch(console.error);
+  }
+
+  render() {
+    return (
+      <div>
+        <p>This is Project details component</p>
+        <p>Below is a list of recommended users</p>
+        {this.state.users.map(user => <li><Link to={`user/${user.userId}`}>Username: {user.username} Rating: {user.rating}</Link></li>
+        )}
+      </div>
+    )
+  }
 }
 
 export default ProjectDetails;

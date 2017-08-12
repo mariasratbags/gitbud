@@ -24,7 +24,7 @@ class ProjectList extends React.Component {
   render() {
     return (
       <div>
-        <h1>This is the Project List Page</h1>
+        <p>This is the Project list page</p>
         <ul>
           {this.state.projects.map(project => <li><Link to={`projects/${project.projectId}`}>{project.project}</Link></li>
           )}

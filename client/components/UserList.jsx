@@ -14,7 +14,7 @@ class UserList extends React.Component {
   }
 
   getUsers() {
-    axios.get('/API/users')
+    axios.get('/API/recommended-pairs')
       .then(users => {
         this.setState({users: users.data});
       })
@@ -24,7 +24,7 @@ class UserList extends React.Component {
   render() {
     return (
       <div>
-        <h1>This is the User List Page</h1>
+        <p>This is the User List Page</p>
         <ul>
           {this.state.users.map(user => <li><Link to={`user/${user.name}`}>{user.name}</Link></li>
           )}
