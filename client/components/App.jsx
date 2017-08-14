@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Nav from './Nav';
 import Landing from './Landing';
@@ -19,6 +20,8 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div>
+          <p>{this.props.message}</p>
+          <button onClick={this.props.changeString}>Button</button>
           <Nav />
           <Switch>
             <Route exact path="/" component={Landing} />
@@ -34,4 +37,19 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    message: state
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeString: () => dispatch({
+      type: 'CHANGE_STRING',
+      text: 'some other message'
+    })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
