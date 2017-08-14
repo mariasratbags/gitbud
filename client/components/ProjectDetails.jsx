@@ -1,24 +1,11 @@
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 class ProjectDetails extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      users: [],
-    };
-
-    this.getUsers();
-  }
-
-  getUsers() {
-    axios.get('/API/recommended-pairs')
-      .then(users => {
-        this.setState({users: users.data});
-      })
-      .catch(console.error);
   }
 
   render() {
@@ -26,11 +13,11 @@ class ProjectDetails extends React.Component {
       <div>
         <p>This is Project details component</p>
         <p>Below is a list of recommended users</p>
-        {this.state.users.map(user => <li><Link to={`user/${user.userId}`}>Username: {user.username} Rating: {user.rating}</Link></li>
+        {this.props.users.map(user => <li><Link to={`user/${user.userId}`}>Username: {user.name} Rating: {user.rating}</Link></li>
         )}
       </div>
     )
   }
 }
 
-export default ProjectDetails;
+export default connect(state => ({ users: state.users }))(ProjectDetails);
