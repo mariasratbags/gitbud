@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const requestHandler = require('./server/request-handler');
+const db = require('./server/db');
 
 // make express server
 app = express();
