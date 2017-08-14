@@ -32,12 +32,11 @@ exports.api = {
       });
     },
     'recommended-pairs': function getProjects() {
-      return new Promise((resolve) => {
-        resolve([
-          { userId: 2, username: 'p-w-party-m', rating: 89 },
-          { userId: 3, username: 'brianheartsocketio', rating: 100 },
-          { userId: 4, username: 'shaikat', rating: -13 },
-        ]);
+      return new Promise((resolve, reject) => {
+        console.log('GET users');
+        db.runQuery(`MATCH (s:User) RETURN s`)
+          .then(res => resolve(res.records.map(user => user._fields[0].properties)))
+          .catch(reject);
       });
     },
   },

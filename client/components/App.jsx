@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import Nav from './Nav';
 import Landing from './Landing';
@@ -14,15 +15,24 @@ import NotFound from './NotFound';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.getUsers();
   }
+
+  getUsers() {
+    axios.get('/API/recommended-pairs')
+      .then(users => {
+        this.props.addUsers(users.data);
+      })
+      .catch(console.error);
+    }
 
   render() {
     return (
       <BrowserRouter>
         <div>
-          <p>{this.props.message}</p>
-          <button onClick={this.props.changeString}>Button</button>
           <Nav />
+          <p>{ this.props.message }</p>
+          <button onClick={ this.props.changeString }>Click</button>
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route path="/signup" component={Questionnaire} />
@@ -39,7 +49,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    message: state
+    message: state.message
   };
 };
 
@@ -48,6 +58,10 @@ const mapDispatchToProps = dispatch => {
     changeString: () => dispatch({
       type: 'CHANGE_STRING',
       text: 'some other message'
+    }),
+    addUsers: (users) => dispatch({
+      type: 'USERS_ADD',
+      users
     })
   };
 };
