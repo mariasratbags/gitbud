@@ -1,3 +1,1 @@
-const reducer = (state, action) => 'what peter said';
-
-export default reducer;
+export default (state = 'some message', action) => action.type === 'CHANGE_STRING' ? action.text : state;

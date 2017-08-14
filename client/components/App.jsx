@@ -21,6 +21,7 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <p>{this.props.message}</p>
+          <button onClick={this.props.changeString}>Button</button>
           <Nav />
           <Switch>
             <Route exact path="/" component={Landing} />
@@ -42,4 +43,13 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    changeString: () => dispatch({
+      type: 'CHANGE_STRING',
+      text: 'some other message'
+    })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
