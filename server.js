@@ -14,5 +14,3 @@ app.listen(port, () => {
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(requestHandler.handler);
-
-
