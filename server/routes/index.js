@@ -1,3 +1,4 @@
+const db = require('../db');
 // react routes that require index.html
 exports.react = new Set(['/user', '/projects']);
 
@@ -5,13 +6,11 @@ exports.react = new Set(['/user', '/projects']);
 exports.api = {
   GET: {
     users: function getUsers() {
-      return new Promise((resolve) => {
-        resolve([
-          { userId: 1, username: 'francis' },
-          { userId: 2, username: 'p-w-party-m' },
-          { userId: 3, username: 'brianheartsocketio' },
-          { userId: 4, username: 'shaikat' },
-        ]);
+      return new Promise((resolve, reject) => {
+        console.log('GET users');
+        db.runQuery(`MATCH (s:User) RETURN s`)
+          .then(res => resolve(res.records.map(user => user._fields[0].properties)))
+          .catch(reject);
       });
     },
     projects: function getProjects() {
