@@ -14,7 +14,6 @@ import {
 class UserList extends React.Component {
   constructor(props) {
     super(props);
-    console.log(Paper);
   }
 
   render() {
@@ -28,8 +27,8 @@ class UserList extends React.Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={ false } stripedRows={ true }>
-            {this.props.users.map(user =>
-              <TableRow>
+            {this.props.users.map((user, id) =>
+              <TableRow key={ id } >
                 <TableRowColumn><Link to={`/user/${user.name}`}>{ user.name }</Link></TableRowColumn>
                 <TableRowColumn>{ user.rating }</TableRowColumn>
               </TableRow>)}
