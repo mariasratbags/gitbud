@@ -9,16 +9,27 @@ const driver = neo4j.driver(url, neo4j.auth.basic(username, password));
 const session = driver.session();
 
 const name = 'Brian';
-const resultPromise = session.run(
-  `CREATE (u:User {name: '${name}'}) RETURN u`
-);
 
-resultPromise.then(result => {
-  session.close();
+session
+  .run(`MATCH (n) DETACH DELETE n`)
+  .then(result => {
+    console.log('graph dropped');
+  })
+  .catch(error => {
+    session.close();
+    throw error;
+  })
+  .then(populateDatabase);
 
-  const singleRecord = result.records[0];
-  const node = singleRecord.get(0);
+function populateDatabase() {
+  session.run(`CREATE (u:User {name: '${name}'}) RETURN u`)
+  .then(result => {
+    session.close();
 
-  console.log(node.properties.name);
-  driver.close();
-})
+    const singleRecord = result.records[0];
+    const node = singleRecord.get(0);
+
+    console.log(node.properties.name);
+    driver.close();
+  });
+}
