@@ -13,7 +13,7 @@ const name = 'Brian';
 //call functions that seed the db
 dropGraph()
   .then(addUsers)
-  .catch(error => console.error)
+  .then(addProjects)
   .then(() => {
     session.close();
     driver.close();
@@ -39,13 +39,30 @@ var addUsersQueryString = `CREATE (:User {name: 'Brian'})
   CREATE (:User {name: 'Francis'})
   CREATE (:User {name: 'Shaikat'})`;
 
-//initializes graph with data
+//add user nodes
 function addUsers() {
   return session.run(addUsersQueryString)
     .then(result => {
-      const singleRecord = result.records[0];
-      const node = singleRecord.get(0);
-      console.log(node.properties.name);
+      console.log('users added');
+    })
+    .catch(error => {
+      session.close();
+      throw error;
+    });
+}
+
+var addProjectsQueryString = `CREATE (:Project {name: 'Hello World'})
+  CREATE (:Project {name: 'N-Queens'})`;
+
+//add project nodes
+function addProjects() {
+  return session.run(addProjectsQueryString)
+    .then(result => {
+      console.log('projects added');
+    })
+    .catch(error => {
+      session.close();
+      throw error;
     });
 }
 
