@@ -1,4 +1,5 @@
 const db = require('../db');
+const neo4j = require('neo4j-driver').v1;
 // react routes that require index.html
 exports.react = new Set(['/user', '/projects']);
 
@@ -35,7 +36,12 @@ exports.api = {
       return new Promise((resolve, reject) => {
         console.log('GET users');
         db.runQuery(`MATCH (s:User) RETURN s`)
-          .then(res => resolve(res.records.map(user => user._fields[0].properties)))
+          .then(res => resolve(
+            res.records.map(
+              // Please check https://github.com/neo4j/neo4j-javascript-driver#a-note-on-numbers-and-the-integer-type for info on why the below is necessary
+              user => Object.assign({}, user._fields[0].properties, { rating: user._fields[0].properties.rating.toNumber() }) // Annoyingly object spread is not supported below node 8.3.0
+            )
+          ))
           .catch(reject);
       });
     },
