@@ -45,9 +45,7 @@ class App extends React.Component {
       <BrowserRouter>
         <Paper>
           <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome/></IconButton></Link> }/>
-          <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) }/>
-          <p>{ this.props.message }</p>
-          <button onClick={ this.props.changeString }>Click</button>
+          <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/>
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route path="/signup" component={Questionnaire} />

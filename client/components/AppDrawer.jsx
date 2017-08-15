@@ -23,16 +23,16 @@ function AppDrawer(props) {
         <CardHeader title="Projects"/>
         <div style={ {width:'90%', margin: 'auto'} }>
           <Link to='/projects'>
-            <RaisedButton label="Find Projects" fullWidth={ true } primary={ true } icon={ <DeviceDeveloperMode/> }/>
+            <RaisedButton label="Find Projects" fullWidth={ true } primary={ true } onClick={ props.closeDrawer } icon={ <DeviceDeveloperMode/> }/>
           </Link>
-          <RaisedButton label="My Projects" fullWidth={ true }/>
+          <RaisedButton label="My Projects" fullWidth={ true } onClick={ props.closeDrawer }/>
           </div>
         </Card>
       <Card style={ { margin: 12, width: '90%', paddingBottom: 12 } }>
         <CardHeader title="Users"/>
         <div style={ {width:'90%', margin: 'auto'} }>
-          <RaisedButton label="Find A Partner" fullWidth={ true } secondary={ true } icon={ <ActionFace/> }/>
-          <RaisedButton label="My Partners" fullWidth={ true }/>
+          <RaisedButton label="Find A Partner" fullWidth={ true } secondary={ true } onClick={ props.closeDrawer } icon={ <ActionFace/> }/>
+          <RaisedButton label="My Partners" fullWidth={ true } onClick={ props.closeDrawer }/>
           </div>
         </Card>
       <BottomNavigation style={ { position: "absolute", bottom: 0 } }>
