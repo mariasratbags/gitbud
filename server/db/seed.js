@@ -12,16 +12,19 @@ const name = 'Brian';
 
 //call functions that seed the db
 dropGraph()
-  .then(populateGraph)
+  .then(addUsers)
   .catch(error => console.error)
   .then(() => {
     session.close();
     driver.close();
   });
 
+
+
 //deletes all nodes and relationships in the graph
 function dropGraph() {
-  return session.run(`MATCH (n) DETACH DELETE n`)
+  var dropGraphQueryString = 'MATCH (n) DETACH DELETE n';
+  return session.run(dropGraphQueryString)
     .then(result => {
     console.log('graph dropped');
     })
@@ -31,12 +34,24 @@ function dropGraph() {
     });
 }
 
+var addUsersQueryString = `CREATE (:User {name: 'Brian'})
+  CREATE (:User {name: 'Peter'})
+  CREATE (:User {name: 'Francis'})
+  CREATE (:User {name: 'Shaikat'})`;
+
 //initializes graph with data
-function populateGraph() {
-  return session.run(`CREATE (u:User {name: '${name}'}) RETURN u`)
+function addUsers() {
+  return session.run(addUsersQueryString)
     .then(result => {
       const singleRecord = result.records[0];
       const node = singleRecord.get(0);
       console.log(node.properties.name);
     });
 }
+
+
+
+
+
+
+// var createQuery = `CREATE (u:User {name: 'shaikat'}) RETURN u`;
