@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Paper from 'material-ui/Paper';
 import {
   Table,
   TableBody,
@@ -13,26 +14,28 @@ import {
 class UserList extends React.Component {
   constructor(props) {
     super(props);
+    console.log(Paper);
   }
 
   render() {
     return (
-      <div>
+      <Paper>
         <Table>
-          <TableHeader displaySelectAll={ false } >
+          <TableHeader adjustForCheckbox={ false } displaySelectAll={ false }>
             <TableRow>
               <TableHeaderColumn>Name</TableHeaderColumn>
               <TableHeaderColumn>Rating</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody displayRowCheckbox={ false }>
-            {this.props.users.map(user => <TableRow>
+          <TableBody displayRowCheckbox={ false } stripedRows={ true }>
+            {this.props.users.map(user =>
+              <TableRow>
                 <TableRowColumn><Link to={`/user/${user.name}`}>{ user.name }</Link></TableRowColumn>
                 <TableRowColumn>{ user.rating }</TableRowColumn>
               </TableRow>)}
           </TableBody>
         </Table>
-      </div >
+      </Paper>
     );
   }
 }
