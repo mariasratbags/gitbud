@@ -12,46 +12,72 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 
-class ProjectList extends React.Component {
-  constructor(props) {
-    super(props);
+const ProjectList = (props) => {
+  return (
+    <Paper>
+      <Table>
+        <TableHeader displaySelectAll={ false }>
+          <TableRow>
+            <TableHeaderColumn>Name</TableHeaderColumn>
+            <TableHeaderColumn>Description</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody stripedRows={ true }>
+          {props.projects.map(project =>
+            <TableRow key={ project.id }>
+              <TableRowColumn><Link to={`/projects/${ project.id }`}>{ project.project }</Link></TableRowColumn>
+              <TableRowColumn>Funtimes project</TableRowColumn>
+            </TableRow>)}
+        </TableBody>
+      </Table>
+      <RaisedButton label="I'm interested" primary={ true } fullWidth={ true } />
+    </Paper>
+  );
+};
 
-    this.state = {
-      projects: []
-    };
-    this.getProjects();
-  }
+export default ProjectList;
 
-  getProjects() {
-    axios.get('/API/projects/')
-    .then(project => {
-      this.setState({projects: project.data});
-    })
-    .catch(console.error);
-  }
 
-  render() {
-    return (
-      <Paper>
-        <Table>
-          <TableHeader displaySelectAll={ false }>
-            <TableRow>
-              <TableHeaderColumn>Name</TableHeaderColumn>
-              <TableHeaderColumn>Description</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody stripedRows={ true }>
-            {this.state.projects.map(project =>
-              <TableRow key={ project.id }>
-                <TableRowColumn><Link to={`/projects/${ project.id }`}>{ project.project }</Link></TableRowColumn>
-                <TableRowColumn>Funtimes project</TableRowColumn>
-              </TableRow>)}
-          </TableBody>
-        </Table>
-        <RaisedButton label="I'm interested" primary={ true } fullWidth={ true } />
-      </Paper>
-    )
-  }
+// class ProjectList extends React.Component {
+//   constructor(props) {
+//     super(props);
+//
+//     this.state = {
+//       projects: []
+//     };
+//     this.getProjects();
+//   }
+//
+//   getProjects() {
+//     axios.get('/API/projects/')
+//     .then(project => {
+//       this.setState({projects: project.data});
+//     })
+//     .catch(console.error);
+//   }
+//
+//   render() {
+//     return (
+//       <Paper>
+//         <Table>
+//           <TableHeader displaySelectAll={ false }>
+//             <TableRow>
+//               <TableHeaderColumn>Name</TableHeaderColumn>
+//               <TableHeaderColumn>Description</TableHeaderColumn>
+//             </TableRow>
+//           </TableHeader>
+//           <TableBody stripedRows={ true }>
+//             {this.state.projects.map(project =>
+//               <TableRow key={ project.projectId }>
+//                 <TableRowColumn><Link to={`/projects/${ project.projectId }`}>{ project.project }</Link></TableRowColumn>
+//                 <TableRowColumn>Funtimes project</TableRowColumn>
+//               </TableRow>)}
+//           </TableBody>
+//         </Table>
+//         <RaisedButton label="I'm interested" primary={ true } fullWidth={ true } />
+//       </Paper>
+//     )
+//   }
 
   // render() {
   //   return (
@@ -64,6 +90,4 @@ class ProjectList extends React.Component {
   //     </div>
   //   );
   // }
-}
-
-export default ProjectList;
+// }

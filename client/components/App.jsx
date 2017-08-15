@@ -1,5 +1,9 @@
 import React from 'react';
+<<<<<<< HEAD
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+=======
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
+>>>>>>> Create reducer for projects list, pass props down from App to ProjectList
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -23,14 +27,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      drawerOpen: false
-    }
+      drawerOpen: false,
+    };
     this.getUsers();
+    this.getProjects();
     this.navTap = this.navTap.bind(this);
-  }
-
-  navTap() {
-    this.setState({ drawerOpen: !this.state.drawerOpen });
   }
 
   getUsers() {
@@ -39,7 +40,20 @@ class App extends React.Component {
         this.props.addUsers(users.data);
       })
       .catch(console.error);
-    }
+  }
+
+  getProjects() {
+    axios.get('/API/projects/')
+      .then((project) => {
+        // console.log('line 41: ', project.data);
+        this.props.listProjects(project.data); //project.data => array
+      })
+      .catch(console.error);
+  }
+
+  navTap() {
+    this.setState({ drawerOpen: !this.state.drawerOpen });
+  }
 
   render() {
     return (
@@ -50,7 +64,12 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route path="/signup" component={Questionnaire} />
-            <Route exact path="/projects" component={ProjectList} />
+            <Route exact path="/projects"
+              render={() => (
+                <ProjectList projects={this.props.projects} />
+              )}
+            />
+            {/* <Route exact path="/projects" component={ProjectList} /> */}
             <Route path="/projects/:id" component={ProjectDetails} />
             <Route path="/user/:id" component={UserDetails} />
             <Route component={NotFound} />
@@ -63,7 +82,8 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    message: state.message
+    message: state.message,
+    projects: state.projects
   };
 };
 
@@ -75,8 +95,12 @@ const mapDispatchToProps = (dispatch) => {
     }),
     addUsers: users => dispatch({
       type: 'USERS_ADD',
-      users
-    })
+      users: users
+    }),
+    listProjects: (projects) => dispatch({
+      type: 'LIST_PROJECTS',
+      projects: projects,
+    }),
   };
 };
 
