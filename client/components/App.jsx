@@ -3,7 +3,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper';
+
 import Nav from './Nav';
+import AppDrawer from './AppDrawer';
 import Landing from './Landing';
 import UserDetails from './UserDetails';
 import ProjectDetails from './ProjectDetails';
@@ -15,7 +19,15 @@ import NotFound from './NotFound';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      drawerOpen: false
+    }
     this.getUsers();
+    this.navTap = this.navTap.bind(this);
+  }
+
+  navTap() {
+    this.setState({ drawerOpen: !this.state.drawerOpen });
   }
 
   getUsers() {
@@ -29,7 +41,9 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <Paper>
+          <AppBar title="GitBud" onLeftIconButtonTouchTap={ this.navTap }/>
+          <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) }/>
           <Nav />
           <p>{ this.props.message }</p>
           <button onClick={ this.props.changeString }>Click</button>
@@ -41,7 +55,7 @@ class App extends React.Component {
             <Route path="/user/:id" component={UserDetails} />
             <Route component={NotFound} />
           </Switch>
-        </div>
+        </Paper>
       </BrowserRouter>
     );
   }

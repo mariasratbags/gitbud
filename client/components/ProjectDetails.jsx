@@ -3,6 +3,8 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import UserList from './UserList';
+
 class ProjectDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -13,8 +15,7 @@ class ProjectDetails extends React.Component {
       <div>
         <p>This is Project details component</p>
         <p>Below is a list of recommended users</p>
-        {this.props.users.map(user => <li><Link to={`user/${user.userId}`}>Username: {user.name} Rating: {user.rating}</Link></li>
-        )}
+        < UserList />
       </div>
     )
   }
