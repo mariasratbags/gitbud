@@ -1,10 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
+import ActionHome from 'material-ui/svg-icons/action/home';
+import IconButton from 'material-ui/IconButton';
 
 import Nav from './Nav';
 import AppDrawer from './AppDrawer';
@@ -42,7 +44,7 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Paper>
-          <AppBar title="GitBud" onLeftIconButtonTouchTap={ this.navTap }/>
+          <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome/></IconButton></Link> }/>
           <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) }/>
           <Nav />
           <p>{ this.props.message }</p>
