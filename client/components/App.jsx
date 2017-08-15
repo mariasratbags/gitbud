@@ -69,7 +69,6 @@ class App extends React.Component {
                 <ProjectList projects={this.props.projects} />
               )}
             />
-            {/* <Route exact path="/projects" component={ProjectList} /> */}
             <Route path="/projects/:id" component={ProjectDetails} />
             <Route path="/user/:id" component={UserDetails} />
             <Route component={NotFound} />
