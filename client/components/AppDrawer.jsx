@@ -12,7 +12,7 @@ function AppDrawer(props) {
     <Drawer open={ props.open } docked={ false } onRequestChange={ props.changeOpenState }>
       <AppBar title="Menu" showMenuIconButton={ false }/>
       <FlatButton label="Sign Out" secondary={ true } fullWidth={ true } icon={ <ActionEject/> }/>
-      <BottomNavigation>
+      <BottomNavigation style={ { position: "absolute", bottom: 0 } }>
         <BottomNavigationItem label="Sign Out" icon={ <ActionEject/> }/>
         <BottomNavigationItem label="My Account" icon={ <ActionAccountCircle/> }/>
       </BottomNavigation>
