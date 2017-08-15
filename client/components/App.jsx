@@ -7,6 +7,7 @@ import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
+import { fullWhite } from 'material-ui/styles/colors';
 
 import Nav from './Nav';
 import AppDrawer from './AppDrawer';
@@ -43,8 +44,8 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <Paper>
-          <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome/></IconButton></Link> }/>
+        <div>
+          <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome color={ fullWhite }/></IconButton></Link> }/>
           <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/>
           <Switch>
             <Route exact path="/" component={Landing} />
@@ -54,7 +55,7 @@ class App extends React.Component {
             <Route path="/user/:id" component={UserDetails} />
             <Route component={NotFound} />
           </Switch>
-        </Paper>
+        </div>
       </BrowserRouter>
     );
   }
