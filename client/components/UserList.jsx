@@ -32,9 +32,6 @@ class UserList extends React.Component {
               </TableRow>)}
           </TableBody>
         </Table>
-        <ul>
-          {this.props.users.map(user => <li><Link to={`user/${user.name}`}>{JSON.stringify(user)}</Link></li>)}
-        </ul>
       </div >
     );
   }
