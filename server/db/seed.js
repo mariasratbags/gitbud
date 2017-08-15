@@ -10,26 +10,33 @@ const session = driver.session();
 
 const name = 'Brian';
 
-session
-  .run(`MATCH (n) DETACH DELETE n`)
-  .then(result => {
-    console.log('graph dropped');
-  })
-  .catch(error => {
+//call functions that seed the db
+dropGraph()
+  .then(populateGraph)
+  .catch(error => console.error)
+  .then(() => {
     session.close();
-    throw error;
-  })
-  .then(populateDatabase);
-
-function populateDatabase() {
-  session.run(`CREATE (u:User {name: '${name}'}) RETURN u`)
-  .then(result => {
-    session.close();
-
-    const singleRecord = result.records[0];
-    const node = singleRecord.get(0);
-
-    console.log(node.properties.name);
     driver.close();
   });
+
+//deletes all nodes and relationships in the graph
+function dropGraph() {
+  return session.run(`MATCH (n) DETACH DELETE n`)
+    .then(result => {
+    console.log('graph dropped');
+    })
+    .catch(error => {
+      session.close();
+      throw error;
+    });
+}
+
+//initializes graph with data
+function populateGraph() {
+  return session.run(`CREATE (u:User {name: '${name}'}) RETURN u`)
+    .then(result => {
+      const singleRecord = result.records[0];
+      const node = singleRecord.get(0);
+      console.log(node.properties.name);
+    });
 }
