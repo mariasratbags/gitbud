@@ -51,8 +51,8 @@ function addUsers() {
     });
 }
 
-var addProjectsQueryString = `CREATE (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner', userIds:[0, 1, 2]})
-  CREATE (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced', userIds:[0, 3]})`;
+var addProjectsQueryString = `CREATE (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner'})
+  CREATE (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced'})`;
 
 //add project nodes
 function addProjects() {
