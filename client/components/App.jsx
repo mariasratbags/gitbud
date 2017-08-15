@@ -46,7 +46,6 @@ class App extends React.Component {
         <Paper>
           <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome/></IconButton></Link> }/>
           <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) }/>
-          <Nav />
           <p>{ this.props.message }</p>
           <button onClick={ this.props.changeString }>Click</button>
           <Switch>
