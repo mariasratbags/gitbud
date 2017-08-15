@@ -10,6 +10,6 @@ const session = driver.session();
 // make available to other modules
 exports.runQuery = session.run.bind(session);
 
-exports.runQuery('MATCH (p {name: "Shaikat"}) RETURN p')
-  .then(console.log)
-  .catch(console.error);
+// exports.runQuery('MATCH (p {name: "Shaikat"}) RETURN p')
+//   .then(console.log)
+//   .catch(console.error);
