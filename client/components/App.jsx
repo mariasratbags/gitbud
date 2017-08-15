@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper';
+
 import Nav from './Nav';
 import Landing from './Landing';
 import UserDetails from './UserDetails';
@@ -29,7 +32,8 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <Paper>
+          <AppBar title="GitBud" />
           <Nav />
           <p>{ this.props.message }</p>
           <button onClick={ this.props.changeString }>Click</button>
@@ -41,7 +45,7 @@ class App extends React.Component {
             <Route path="/user/:id" component={UserDetails} />
             <Route component={NotFound} />
           </Switch>
-        </div>
+        </Paper>
       </BrowserRouter>
     );
   }
