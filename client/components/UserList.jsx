@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class UserList extends React.Component {
   constructor(props) {
@@ -9,7 +10,6 @@ class UserList extends React.Component {
   render() {
     return (
       <div>
-        <p>This is the User List Page</p>
         <ul>
           {this.props.users.map(user => <li><Link to={`user/${user.name}`}>{user.name}</Link></li>)}
         </ul>
