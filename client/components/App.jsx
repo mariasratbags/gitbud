@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-=======
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
->>>>>>> Create reducer for projects list, pass props down from App to ProjectList
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -35,14 +31,8 @@ class App extends React.Component {
   }
 
   getUsers() {
-<<<<<<< HEAD
     axios.get('/API/users')
       .then(users => {
-=======
-    axios.get('/API/recommended-pairs')
-      .then((users) => {
-        console.log('line 33: ', users)
->>>>>>> mapStateToProps for users data
         this.props.addUsers(users.data);
       })
       .catch(console.error);
