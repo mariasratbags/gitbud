@@ -4,7 +4,7 @@ const requestHandler = require('./server/request-handler');
 const db = require('./server/db');
 
 // make express server
-app = express();
+const app = express();
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
@@ -16,17 +16,19 @@ const session = require('express-session');
 
 // temporary clientID and clientSecret for dev purposes
 // https://github.com/organizations/cranebaes/settings/applications/574129
-passport.use(new GitHubStrategy({
+passport.use(new GitHubStrategy(
+  {
     clientID: '7ee693d863722e629a0d',
     clientSecret: 'bb125559a339291da94647972c31fe1da93969e1',
-    callbackURL: 'http://localhost:8080/auth/github/callback',
+    callbackURL: process.env.CALLBACK_URL || 'http://localhost:8080/auth/github/callback',
   },
   (accessToken, refreshToken, profile, done) => {
-    // we should use profile to store user data into our database
-    // e.g.
-      // User.findOrCreate({ githubId: profile.id }, function (err, user) {
-      //   return done(err, user);
-      // });
+    const dbSession = db.driver.session();
+    dbSession.run(`
+      MERGE (:User {username: '${profile.username}', ghId: ${profile._json.id},
+      avatarUrl: '${profile._json.avatar_url}', name: '${profile.displayName}', rating: 50}) 
+    `)
+      .then(() => dbSession.close())
     return done(null, profile);
   }
 ));
@@ -37,13 +39,19 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((user, done) => {
-  done(null, user);
+  const userInfo = {
+    displayName: user.displayName,
+    username: user.username,
+    profileUrl: user.profileUrl,
+    ghInfo: user._json
+  }
+  done(null, userInfo);
 });
 
 app.use(session({
-  secret: "This is a secret",
+  secret: 'This is a secret',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
 }));
 
 app.use(passport.initialize());
