@@ -24,7 +24,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       drawerOpen: false,
-    };
+      loggedIn: true,
+    }
     this.getUsers();
     this.getProjects();
     this.navTap = this.navTap.bind(this);
@@ -51,22 +52,25 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-      <BrowserRouter>
-        <div>
-          <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome color={ fullWhite }/></IconButton></Link> }/>
-          <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false }) }/>
-          <Switch>
-            <Route exact path="/" component={Landing} />
-            <Route path="/signup" component={Questionnaire} />
-            <Route exact path="/projects" component={ProjectList} />
-            <Route path="/projects/:id" component={ProjectDetails} />
-            <Route path="/user/:id" component={UserDetails} />
-            <Route component={NotFound} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    );
+    if (this.state.loggedIn) {
+      return (
+        <BrowserRouter>
+          <div>
+            <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome color={ fullWhite }/></IconButton></Link> }/>
+            <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/>
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route path="/signup" component={Questionnaire} />
+              <Route exact path="/projects" component={ProjectList} />
+              <Route path="/projects/:id" component={ProjectDetails} />
+              <Route path="/user/:id" component={UserDetails} />
+              <Route component={NotFound} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      );
+    }
+    return <Landing />;
   }
 }
 
