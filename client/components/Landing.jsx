@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
 import { Card, CardMedia } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -14,7 +15,9 @@ function Landing(props) {
         <img src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"/>
       </CardMedia>
       <div style={ { width: '90%', margin: 'auto' } }>
-        <RaisedButton label="Sign in with GitHub" secondary={ true }  fullWidth={ true }/>
+        <a href="/auth/github">
+          <RaisedButton label="Sign in with GitHub" secondary={ true }  fullWidth={ true } />
+        </a>
       </div>
     </Card>
   );
