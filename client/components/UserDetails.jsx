@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Card, CardMedia, CardText, CardTitle } from 'material-ui/Card';
 import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
@@ -16,13 +17,29 @@ class UserDetails extends React.Component {
     }
 
     this.expandCard = () => this.setState({ expanded: true });
+    // this.getIndexFromId = this.getIndexFromId.bind(this);
+    // console.log(this.props.match.params.id);
   }
 
+  getIndexFromId(id) {
+    var numberId = parseInt(id, 10);
+    var index;
+    for (var i = 0; i < this.props.users.length; i++) {
+      if( numberId === this.props.users[i].id) {
+        index = i;
+      }
+    }
+    return index;
+  }
+
+  // {this.props.users[getIndexFromId(this.props.match.params.id)].name}
+
   render() {
+    console.log('props inside userDetails:', this.props);
     return (
       <Card style={ {width: '40%', margin: 'auto', marginTop: 12, padding: 12 } }>
         <Card expanded={ this.state.expanded }>
-          <CardMedia overlay={ <CardTitle title='Username' subtitle='Experience: n00b'/> }>
+          <CardMedia overlay={ <CardTitle title={this.props.users[this.getIndexFromId(this.props.match.params.id)].name} subtitle='Experience: n00b'/> }>
             <img src='https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAyLAAAAJDQ4YzMwZTNlLTAwODItNGYwMC1iMGQxLWYzOGZiZjM5YWE3NQ.jpg'/>
           </CardMedia>
           <div style={ { width: '35%', float: 'right', padding: 15 } }>
@@ -36,14 +53,21 @@ class UserDetails extends React.Component {
             <RaisedButton label='Send' style={ { width: '60%' } } fullWidth={ true } icon={ <ContentSend /> } secondary={ true }/>
           </div>
           <div style={ { width: '60%' } } expandable={ true }>
-            <TextField multiLine={ true } 
-              floatingLabelText="Invite Username to code with you" hintText="Enter your message" 
+            <TextField multiLine={ true }
+              floatingLabelText="Invite Username to code with you" hintText="Enter your message"
               rows={ 2 } style={ { padding: 20 } }/>
           </div>
         </Card>
       </Card>
     );
-  } 
+  }
 }
 
-export default UserDetails;
+const mapStateToProps = (state) => {
+  console.log('called from userDetails: ', state);
+  return {
+    users: state.users,
+  };
+};
+
+export default connect(mapStateToProps)(UserDetails);
