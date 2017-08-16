@@ -9,7 +9,18 @@ const addUsers = (state, action) => {
   return action.type === 'USERS_ADD' ? action.users : state;
 };
 
+const listProjects = (state, action) => {
+  // console.log('state:', state)
+  // console.log('action:', action)
+  if (state === undefined) {
+    return [];
+  }
+  return action.type === 'LIST_PROJECTS' ? action.projects : state;
+};
+
+//hands off to container components with mapStateToProps
 export default combineReducers({
   message: changeString,
-  users: addUsers
+  users: addUsers,
+  projects: listProjects,
 });
