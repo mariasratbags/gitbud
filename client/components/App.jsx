@@ -33,7 +33,7 @@ class App extends React.Component {
 
   getUsers() {
     axios.get('/API/users')
-      .then(users => {
+      .then((users) => {
         this.props.addUsers(users.data);
       })
       .catch(console.error);
