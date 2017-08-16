@@ -14,15 +14,14 @@ fs.readFile(path.join(__dirname, '../../dist/index.html'), 'utf8', (err, data) =
 // serves index.html on react routes
 // and redirects /API request to appropriate endpoint
 exports.handler = function handler(req, res) {
+  // split URL to send to correct request handler
+  const urlParts = req.url.split('/');
 
   // react routes
-  if (routes.react.has(req.url)) {
+  if (routes.react.has(urlParts[1])) {
     res.send(exports.index);
-  }
-
   // API endpoints
-  const urlParts = req.url.split('/');
-  if (urlParts[1] === 'API' && routes.api[req.method].hasOwnProperty(urlParts[2])) {
+  } else if (urlParts[1] === 'API' && routes.api[req.method].hasOwnProperty(urlParts[2])) {
     routes.api[req.method][urlParts[2]](req)
       .then((data) => {
         res.statusCode = 200;
@@ -32,5 +31,9 @@ exports.handler = function handler(req, res) {
         console.error(err);
         res.end('sorry not sorry');
       });
+  // else -- incorrect path -- React will render NotFound component
+  } else {
+    res.statusCode = 404;
+    res.end(exports.index);
   }
 }
