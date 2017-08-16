@@ -34,7 +34,7 @@ class App extends React.Component {
   }
 
   getUsers() {
-    axios.get('/API/recommended-pairs')
+    axios.get('/API/users')
       .then(users => {
         this.props.addUsers(users.data);
       })
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => {
       type: 'CHANGE_STRING',
       text: 'some other message'
     }),
-    addUsers: (users) => dispatch({
+    addUsers: users => dispatch({
       type: 'USERS_ADD',
       users
     })

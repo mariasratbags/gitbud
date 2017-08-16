@@ -10,7 +10,7 @@ exports.User = class User {
 exports.Project = class Project {
   constructor(project) {
     this.id = project.identity.toNumber();
-    this.name = project.properties.project;
+    this.project = project.properties.project;
     this.language = project.properties.language;
     this.experience = project.properties.experience;
   }

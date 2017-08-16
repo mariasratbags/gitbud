@@ -42,8 +42,8 @@ class ProjectList extends React.Component {
           </TableHeader>
           <TableBody stripedRows={ true }>
             {this.state.projects.map(project =>
-              <TableRow key={ project.projectId }>
-                <TableRowColumn><Link to={`/projects/${ project.projectId }`}>{ project.project }</Link></TableRowColumn>
+              <TableRow key={ project.id }>
+                <TableRowColumn><Link to={`/projects/${ project.id }`}>{ project.project }</Link></TableRowColumn>
                 <TableRowColumn>Funtimes project</TableRowColumn>
               </TableRow>)}
           </TableBody>
