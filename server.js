@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const requestHandler = require('./server/request-handler');
@@ -18,9 +19,9 @@ const session = require('express-session');
 // https://github.com/organizations/cranebaes/settings/applications/574129
 passport.use(new GitHubStrategy(
   {
-    clientID: '7ee693d863722e629a0d',
-    clientSecret: 'bb125559a339291da94647972c31fe1da93969e1',
-    callbackURL: process.env.CALLBACK_URL || 'http://localhost:8080/auth/github/callback',
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: process.env.CALLBACK_URL,
   },
   (accessToken, refreshToken, profile, done) => {
     const dbSession = db.driver.session();
