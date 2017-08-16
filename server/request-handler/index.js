@@ -37,7 +37,9 @@ exports.handler = function handler(req, res) {
       res.json([]);
     }
   // else -- incorrect path -- React will render NotFound component
-  } else {
+  } else if (urlParts[1] === 'auth' && routes.auth[req.method].hasOwnProperty(urlParts[2])) {
+    routes.auth[req.method][urlParts[2]](req, res, urlParts);
+  } else  {
     res.statusCode = 404;
     res.end(exports.index);
   }

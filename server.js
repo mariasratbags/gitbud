@@ -65,18 +65,8 @@ app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
     // upon successful authentication, redirect to projects
     res.redirect('/projects');
-  });
-
-// destroy session and redirect to home
-app.get('/auth/signout', (req, res) => {
-  req.logout();
-  res.redirect('/');
-});
-
-// user check if signed in
-app.get('/auth/authenticated', (req, res) => {
-  res.send(req.isAuthenticated());
-});
+  }
+);
 
 // serve static files and user routes
 app.use(express.static(path.join(__dirname, 'dist')));
