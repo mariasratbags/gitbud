@@ -29,7 +29,6 @@ passport.use(new GitHubStrategy(
       avatarUrl: '${profile._json.avatar_url}', name: '${profile.displayName}', rating: 50}) 
     `)
       .then(() => dbSession.close())
-    console.log('strategy', profile);
     return done(null, profile);
   }
 ));
