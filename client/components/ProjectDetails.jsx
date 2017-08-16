@@ -44,11 +44,17 @@ class ProjectDetails extends React.Component {
               <RaisedButton primary={ true } label="I like this project!"/>
             </ToolbarGroup>
           </Toolbar>
-          < UserList />
+          <UserList {...this.props}/>
         </Paper>
       </Paper>
     )
   }
 }
 
-export default connect(state => ({ users: state.users }))(ProjectDetails);
+const mapStateToProps = (state) => {
+  return {
+    users: state.users,
+  };
+};
+
+export default connect(mapStateToProps)(ProjectDetails);
