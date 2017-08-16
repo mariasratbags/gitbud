@@ -1,8 +1,11 @@
 // Massages neo4j search results into more convenient objects
 exports.User = class User {
   constructor(user) {
+    Object.assign(this, user.properties);
     this.id = user.identity.toNumber();
-    this.name = user.properties.name;
+    if (this.ghId) {
+      this.ghId = user.properties.ghId.toNumber();
+    }
     this.rating = user.properties.rating.toNumber();
   }
 }
