@@ -6,8 +6,6 @@ const addUsers = (state, action) => {
   if (state === undefined) {
     return [];
   }
-  console.log('action: ', action);
-  console.log('state: ', state);
   return action.type === 'USERS_ADD' ? action.users : state;
 };
 

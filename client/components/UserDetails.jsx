@@ -17,8 +17,6 @@ class UserDetails extends React.Component {
     }
 
     this.expandCard = () => this.setState({ expanded: true });
-    // this.getIndexFromId = this.getIndexFromId.bind(this);
-    // console.log(this.props.match.params.id);
   }
 
   getIndexFromId(id) {
@@ -32,10 +30,7 @@ class UserDetails extends React.Component {
     return index;
   }
 
-  // {this.props.users[getIndexFromId(this.props.match.params.id)].name}
-
   render() {
-    console.log('props inside userDetails:', this.props);
     return (
       <Card style={ {width: '40%', margin: 'auto', marginTop: 12, padding: 12 } }>
         <Card expanded={ this.state.expanded }>
@@ -64,7 +59,6 @@ class UserDetails extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('called from userDetails: ', state);
   return {
     users: state.users,
   };
