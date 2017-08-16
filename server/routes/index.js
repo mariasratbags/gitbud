@@ -15,21 +15,11 @@ exports.api = {
       });
     },
     projects: function getProjects() {
-      return new Promise((resolve) => {
-        resolve([
-          { projectId: 1,
-            project: 'Hello GitBud',
-            languages: ['JavaScript', 'HTML', 'CSS'],
-            experience: 'beginner',
-            userIds: [0, 1, 2],
-          },
-          { projectId: 2,
-            project: 'N-Queens',
-            languages: ['JavaScript', 'HTML', 'BackBone'],
-            experience: 'Boss mode',
-            userIds: [0, 3],
-          },
-        ]);
+      return new Promise((resolve, reject) => {
+        console.log('GET projects');
+        db.runQuery(`MATCH (p:Project) RETURN p`)
+          .then(res => resolve(res.records.map(project => project._fields[0].properties)))
+          .catch(reject);
       });
     },
     'recommended-pairs': function getProjects() {
@@ -47,3 +37,25 @@ exports.api = {
     },
   },
 };
+
+// .then(res => console.log(res.records[0]._fields[0].properties));
+
+
+// projects: function getProjects() {
+//       return new Promise((resolve) => {
+//         resolve([
+//           { projectId: 1,
+//             project: 'Hello GitBud',
+//             languages: ['JavaScript', 'HTML', 'CSS'],
+//             experience: 'beginner',
+//             userIds: [0, 1, 2],
+//           },
+//           { projectId: 2,
+//             project: 'N-Queens',
+//             languages: ['JavaScript', 'HTML', 'BackBone'],
+//             experience: 'Boss mode',
+//             userIds: [0, 3],
+//           },
+//         ]);
+//       });
+//     },
