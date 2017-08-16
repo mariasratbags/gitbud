@@ -3,4 +3,5 @@ dist/bundle.js
 .DS_Store
 npm-debug.log
 .env
+*hot-update*
 
