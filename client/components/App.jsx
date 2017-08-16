@@ -35,8 +35,14 @@ class App extends React.Component {
   }
 
   getUsers() {
+<<<<<<< HEAD
     axios.get('/API/users')
       .then(users => {
+=======
+    axios.get('/API/recommended-pairs')
+      .then((users) => {
+        console.log('line 33: ', users)
+>>>>>>> mapStateToProps for users data
         this.props.addUsers(users.data);
       })
       .catch(console.error);
@@ -66,7 +72,10 @@ class App extends React.Component {
             <Route path="/signup" component={Questionnaire} />
             <Route exact path="/projects"
               render={() => (
-                <ProjectList projects={this.props.projects} />
+                <ProjectList
+                  projects={this.props.projects}
+                  users={this.props.users}
+                />
               )}
             />
             <Route path="/projects/:id" component={ProjectDetails} />
@@ -82,7 +91,8 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     message: state.message,
-    projects: state.projects
+    users: state.users,
+    projects: state.projects,
   };
 };
 

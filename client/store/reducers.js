@@ -18,6 +18,7 @@ const listProjects = (state, action) => {
   return action.type === 'LIST_PROJECTS' ? action.projects : state;
 };
 
+//hands off to container components with mapStateToProps
 export default combineReducers({
   message: changeString,
   users: addUsers,

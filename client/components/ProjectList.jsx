@@ -19,14 +19,18 @@ const ProjectList = (props) => {
         <TableHeader displaySelectAll={ false }>
           <TableRow>
             <TableHeaderColumn>Name</TableHeaderColumn>
-            <TableHeaderColumn>Description</TableHeaderColumn>
+            <TableHeaderColumn>Language</TableHeaderColumn>
+            <TableHeaderColumn>Experience</TableHeaderColumn>
+            <TableHeaderColumn>Users</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody stripedRows={ true }>
           {props.projects.map(project =>
             <TableRow key={ project.id }>
               <TableRowColumn><Link to={`/projects/${ project.id }`}>{ project.project }</Link></TableRowColumn>
-              <TableRowColumn>Funtimes project</TableRowColumn>
+              <TableRowColumn>{project.languages}</TableRowColumn>
+              <TableRowColumn>{project.experience}</TableRowColumn>
+              <TableRowColumn>{project.userIds}</TableRowColumn>
             </TableRow>)}
         </TableBody>
       </Table>
