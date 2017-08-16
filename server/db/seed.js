@@ -1,11 +1,4 @@
-// import neo4 driver
-const neo4j = require('neo4j-driver').v1;
-// set variables to connect
-const url = process.env.GRAPHENEDB_BOLT_URL || 'bolt://localhost';
-const username = process.env.GRAPHENEDB_BOLT_USERNAME || 'neo4j';
-const password = process.env.GRAPHENEDB_BOLT_PASSWORD || 'neo';
-// connect and create session
-const driver = neo4j.driver(url, neo4j.auth.basic(username, password));
+const driver = require('./index').driver;
 const session = driver.session();
 
 const name = 'Brian';
@@ -34,10 +27,12 @@ function dropGraph() {
     });
 }
 
-var addUsersQueryString = `CREATE (:User {name: 'Brian'})
-  CREATE (:User {name: 'Peter'})
-  CREATE (:User {name: 'Francis'})
-  CREATE (:User {name: 'Shaikat'})`;
+var addUsersQueryString = `
+  CREATE (:User {rating: 50, name: 'Brian'})
+  CREATE (:User {rating: 50, name: 'Peter'})
+  CREATE (:User {rating: 50, name: 'Francis'})
+  CREATE (:User {rating: 50, name: 'Shaikat'})
+  `;
 
 //add user nodes
 function addUsers() {
@@ -65,10 +60,3 @@ function addProjects() {
       throw error;
     });
 }
-
-
-
-
-
-
-// var createQuery = `CREATE (u:User {name: 'shaikat'}) RETURN u`;

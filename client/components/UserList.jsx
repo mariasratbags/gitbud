@@ -24,7 +24,7 @@ class UserList extends React.Component {
         <List>
           <Subheader>Users interested in this project</Subheader>
           { this.props.users.map((user, id) =>
-            <ListItem containerElement={ <Link to={ `/user/${id}` }/> } leftAvatar={ <Avatar src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAyLAAAAJDQ4YzMwZTNlLTAwODItNGYwMC1iMGQxLWYzOGZiZjM5YWE3NQ.jpg"/> }
+            <ListItem containerElement={ <Link to={ `/user/${ user.id }` }/> } leftAvatar={ <Avatar src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAyLAAAAJDQ4YzMwZTNlLTAwODItNGYwMC1iMGQxLWYzOGZiZjM5YWE3NQ.jpg"/> }
               key={ id } primaryText={ user.name } secondaryText={ "Rating: " + user.rating } />
           )}
         </List>
