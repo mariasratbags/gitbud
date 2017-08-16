@@ -8,6 +8,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
 function Landing(props) {
+  if (props.checkAuth) {
+    props.checkAuth();
+  }
   return (
     <Card style={ { width: '50%', margin: 'auto', paddingBottom: 12, marginTop: 12 } }>
       <AppBar title="Welcome to GitBud!" showMenuIconButton={ false }/>

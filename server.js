@@ -64,6 +64,11 @@ app.get('/auth/signout', (req, res) => {
   res.redirect('/');
 });
 
+// user check if signed in
+app.get('/auth/authenticated', (req, res) => {
+  res.send(req.isAuthenticated());
+});
+
 // serve static files and user routes
 app.use(express.static(path.join(__dirname, 'dist')));
 

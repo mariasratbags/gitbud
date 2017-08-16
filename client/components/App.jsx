@@ -24,15 +24,17 @@ class App extends React.Component {
     super(props);
     this.state = {
       drawerOpen: false,
-    };
+      loggedIn: false,
+    }
     this.getUsers();
     this.getProjects();
     this.navTap = this.navTap.bind(this);
+    this.checkAuthenticated = this.checkAuthenticated.bind(this);
   }
 
   getUsers() {
     axios.get('/API/users')
-      .then(users => {
+      .then((users) => {
         this.props.addUsers(users.data);
       })
       .catch(console.error);
@@ -50,23 +52,31 @@ class App extends React.Component {
     this.setState({ drawerOpen: !this.state.drawerOpen });
   }
 
+  checkAuthenticated() {
+    axios.get('/auth/authenticated')
+      .then(res => this.setState({ loggedIn: res.data }));
+  }
+
   render() {
-    return (
-      <BrowserRouter>
-        <div>
-          <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome color={ fullWhite }/></IconButton></Link> }/>
-          <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false }) }/>
-          <Switch>
-            <Route exact path="/" component={Landing} />
-            <Route path="/signup" component={Questionnaire} />
-            <Route exact path="/projects" component={ProjectList} />
-            <Route path="/projects/:id" component={ProjectDetails} />
-            <Route path="/user/:id" component={UserDetails} />
-            <Route component={NotFound} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    );
+    if (this.state.loggedIn) {
+      return (
+        <BrowserRouter>
+          <div>
+            <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome color={ fullWhite }/></IconButton></Link> }/>
+            <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/>
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route path="/signup" component={Questionnaire} />
+              <Route exact path="/projects" component={ProjectList} />
+              <Route path="/projects/:id" component={ProjectDetails} />
+              <Route path="/user/:id" component={UserDetails} />
+              <Route component={NotFound} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      );
+    }
+    return <Landing checkAuth={ this.checkAuthenticated } />;
   }
 }
 

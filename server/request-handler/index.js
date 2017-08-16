@@ -24,15 +24,20 @@ exports.handler = function handler(req, res) {
     res.send(exports.index);
   // API endpoints
   } else if (urlParts[1] === 'API' && routes.api[req.method].hasOwnProperty(urlParts[2])) {
-    routes.api[req.method][urlParts[2]](req)
-      .then((data) => {
-        res.statusCode = 200;
-        res.json(data);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.end('sorry not sorry');
-      });
+    if (req.isAuthenticated()) {
+      routes.api[req.method][urlParts[2]](req)
+        .then((data) => {
+          res.statusCode = 200;
+          res.json(data);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.end('sorry not sorry');
+        });
+    } else {
+      res.statusCode = 403;
+      res.json([]);
+    }
   // else -- incorrect path -- React will render NotFound component
   } else {
     res.statusCode = 404;
