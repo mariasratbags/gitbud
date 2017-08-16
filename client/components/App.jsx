@@ -41,8 +41,7 @@ class App extends React.Component {
   getProjects() {
     axios.get('/API/projects/')
       .then((project) => {
-        // console.log('line 41: ', project.data);
-        this.props.listProjects(project.data); //project.data => array
+        this.props.addProjectsList(project.data);
       })
       .catch(console.error);
   }
@@ -56,18 +55,11 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome color={ fullWhite }/></IconButton></Link> }/>
-          <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/>
+          <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false }) }/>
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route path="/signup" component={Questionnaire} />
-            <Route exact path="/projects"
-              render={() => (
-                <ProjectList
-                  projects={this.props.projects}
-                  users={this.props.users}
-                />
-              )}
-            />
+            <Route exact path="/projects" component={ProjectList} />
             <Route path="/projects/:id" component={ProjectDetails} />
             <Route path="/user/:id" component={UserDetails} />
             <Route component={NotFound} />
@@ -96,7 +88,7 @@ const mapDispatchToProps = (dispatch) => {
       type: 'USERS_ADD',
       users: users
     }),
-    listProjects: (projects) => dispatch({
+    addProjectsList: (projects) => dispatch({
       type: 'LIST_PROJECTS',
       projects: projects,
     }),
