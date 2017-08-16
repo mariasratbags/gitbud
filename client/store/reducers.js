@@ -9,7 +9,7 @@ const addUsers = (state, action) => {
   return action.type === 'USERS_ADD' ? action.users : state;
 };
 
-const listProjects = (state, action) => {
+const addProjectsList = (state, action) => {
   // console.log('state:', state)
   // console.log('action:', action)
   if (state === undefined) {
@@ -22,5 +22,5 @@ const listProjects = (state, action) => {
 export default combineReducers({
   message: changeString,
   users: addUsers,
-  projects: listProjects,
+  projects: addProjectsList,
 });

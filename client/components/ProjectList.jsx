@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {
@@ -21,16 +21,14 @@ const ProjectList = (props) => {
             <TableHeaderColumn>Name</TableHeaderColumn>
             <TableHeaderColumn>Language</TableHeaderColumn>
             <TableHeaderColumn>Experience</TableHeaderColumn>
-            <TableHeaderColumn>Users</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody stripedRows={ true }>
           {props.projects.map(project =>
             <TableRow key={ project.id }>
               <TableRowColumn><Link to={`/projects/${ project.id }`}>{ project.project }</Link></TableRowColumn>
-              <TableRowColumn>{project.languages}</TableRowColumn>
+              <TableRowColumn>{project.language}</TableRowColumn>
               <TableRowColumn>{project.experience}</TableRowColumn>
-              <TableRowColumn>{project.userIds}</TableRowColumn>
             </TableRow>)}
         </TableBody>
       </Table>
@@ -39,8 +37,17 @@ const ProjectList = (props) => {
   );
 };
 
-export default ProjectList;
+const mapStateToProps = (state) => {
+  return {
+    projects: state.projects,
+  };
+};
 
+const mapDispatchToProps = (dispatch) => {
+  return { };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectList);
 
 // class ProjectList extends React.Component {
 //   constructor(props) {
