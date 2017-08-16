@@ -16,9 +16,11 @@ fs.readFile(path.join(__dirname, '../../dist/index.html'), 'utf8', (err, data) =
 exports.handler = function handler(req, res) {
   // split URL to send to correct request handler
   const urlParts = req.url.split('/');
+  console.log(req.url);
 
   // react routes
   if (routes.react.has(urlParts[1])) {
+    console.log('index sent: ', req.url)
     res.send(exports.index);
   // API endpoints
   } else if (urlParts[1] === 'API' && routes.api[req.method].hasOwnProperty(urlParts[2])) {
