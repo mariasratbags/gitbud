@@ -24,11 +24,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       drawerOpen: false,
-      loggedIn: true,
+      loggedIn: false,
     }
     this.getUsers();
     this.getProjects();
     this.navTap = this.navTap.bind(this);
+    this.checkAuthenticated = this.checkAuthenticated.bind(this);
   }
 
   getUsers() {
@@ -51,6 +52,11 @@ class App extends React.Component {
     this.setState({ drawerOpen: !this.state.drawerOpen });
   }
 
+  checkAuthenticated() {
+    axios.get('/auth/authenticated')
+      .then(res => this.setState({ loggedIn: res.data }));
+  }
+
   render() {
     if (this.state.loggedIn) {
       return (
@@ -70,7 +76,7 @@ class App extends React.Component {
         </BrowserRouter>
       );
     }
-    return <Landing />;
+    return <Landing checkAuth={ this.checkAuthenticated } />;
   }
 }
 
