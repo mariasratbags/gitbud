@@ -1,9 +1,58 @@
 const driver = require('./index').driver;
 const session = driver.session();
 
-const name = 'Brian';
+// Deletes all nodes and relationships in the graph
+const dropGraph = function dropGraph() {
+  const dropGraphQueryString = 'MATCH (n) DETACH DELETE n';
+  return session.run(dropGraphQueryString)
+    .then((result) => {
+    console.log('Graph dropped');
+    })
+    .catch((error) => {
+      session.close();
+      throw error;
+    });
+}
 
-//call functions that seed the db
+const addUsersQueryString = `
+  CREATE
+    (:User {rating: 50, name: 'Brian', language: 'JavaScript'}),
+    (:User {rating: 50, name: 'Peter', language: 'JavaScript'}),
+    (:User {rating: 50, name: 'Francis', language: 'JavaScript'}),
+    (:User {rating: 50, name: 'Shaikat', language: 'JavaScript'})
+  `;
+
+// Add user nodes
+function addUsers() {
+  return session.run(addUsersQueryString)
+    .then((result) => {
+      console.log('users added');
+    })
+    .catch((error) => {
+      session.close();
+      throw error;
+    });
+}
+
+const addProjectsQueryString = `
+  CREATE
+    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner'}),
+    (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced'})
+  `;
+
+// Add project nodes
+const addProjects = function addProjects() {
+  return session.run(addProjectsQueryString)
+    .then((result) => {
+      console.log('projects added');
+    })
+    .catch((error) => {
+      session.close();
+      throw error;
+    });
+}
+
+// Call functions that seed the db
 dropGraph()
   .then(addUsers)
   .then(addProjects)
@@ -11,54 +60,3 @@ dropGraph()
     session.close();
     driver.close();
   });
-
-
-
-//deletes all nodes and relationships in the graph
-function dropGraph() {
-  var dropGraphQueryString = 'MATCH (n) DETACH DELETE n';
-  return session.run(dropGraphQueryString)
-    .then(result => {
-    console.log('graph dropped');
-    })
-    .catch(error => {
-      session.close();
-      throw error;
-    });
-}
-
-var addUsersQueryString = `
-  CREATE (:User {rating: 50, name: 'Brian', language: 'JavaScript'})
-  CREATE (:User {rating: 50, name: 'Peter', language: 'JavaScript'})
-  CREATE (:User {rating: 50, name: 'Francis', language: 'JavaScript'})
-  CREATE (:User {rating: 50, name: 'Shaikat', language: 'JavaScript'})
-  `;
-
-//add user nodes
-function addUsers() {
-  return session.run(addUsersQueryString)
-    .then(result => {
-      console.log('users added');
-    })
-    .catch(error => {
-      session.close();
-      throw error;
-    });
-}
-
-var addProjectsQueryString = `
-  CREATE (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner'})
-  CREATE (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced'})
-  `;
-
-//add project nodes
-function addProjects() {
-  return session.run(addProjectsQueryString)
-    .then(result => {
-      console.log('projects added');
-    })
-    .catch(error => {
-      session.close();
-      throw error;
-    });
-}
