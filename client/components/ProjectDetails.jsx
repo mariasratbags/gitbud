@@ -23,6 +23,19 @@ class ProjectDetails extends React.Component {
     };
 
     this.toggleLabel = this.toggleLabel.bind(this);
+    this.handleInterest = this.handleInterest.bind(this);
+  }
+
+  handleInterest() {
+    axios.post('/API/projects', {
+      interest: [],
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   toggleLabel(e) {
@@ -30,6 +43,7 @@ class ProjectDetails extends React.Component {
     this.setState({
       interest: !this.state.interest
     });
+    this.handleInterest();
   }
 
   render() {
