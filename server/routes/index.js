@@ -42,10 +42,10 @@ exports.api = {
       const dbSession = dbDriver.session();
       return new Promise((resolve, reject) => {
         console.log('GET users');
-        dbSession(`MATCH (user:User) RETURN user`)
+        dbSession.run(`MATCH (user:User) RETURN user`)
           .then(res => resolve(
             res.records.map(
-              user => new db.models.User(user.get('user'));
+              user => new db.models.User(user.get('user'))
             )
           ))
           .catch(reject);
