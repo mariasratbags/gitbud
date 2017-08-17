@@ -13,13 +13,15 @@ exports.getUserRepos = function getUserRepos(ghId) {
       OAuthToken = new db.models.User(res.records[0].get('user')).OAuthToken;
       return axios.get('https://api.github.com/user/repos', {
         params: {
-          access_token: OAuthToken
+          access_token: OAuthToken,
         }
       })
-        .then(res =>
-          ({ OAuthToken, repos: _map(res.data, ({ name, owner, languages_url }) => ({ name, owner: owner.login, languages_url }))})
-        );
-    });
+    })
+    .then(res =>
+      ({ OAuthToken, repos: _map(res.data, ({ name, owner, languages_url }) => 
+        ({ name, owner: owner.login, languages_url }))
+      })
+    );
 };
 
 exports.displayUserLanguages = function gl(ghId) {
