@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser')
 const requestHandler = require('./server/request-handler');
 const db = require('./server/db');
 
@@ -10,6 +11,8 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
+
+app.use(bodyParser.json());
 
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;

@@ -47,6 +47,20 @@ exports.api = {
       });
     },
   },
+    POST: {
+    interested: function addInterest(req) {
+      console.log(req.body.id);
+      const dbSession = dbDriver.session();
+      return new Promise((resolve, reject) => {
+        dbSession.run(`MATCH (p:Project) WHERE ID(p)=${Number(req.body.id)} return p`)
+          .then((res) => {
+            console.log(res);
+            resolve(res);
+            dbSession.close();
+        });
+      })
+    }
+  }
 };
 
 exports.auth = {
