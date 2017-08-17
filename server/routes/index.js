@@ -15,12 +15,9 @@ exports.api = {
         dbSession.run(`MATCH (user:User) RETURN user`)
           .then((res) => {
             resolve(res.records.map(user => new db.models.User(user.get('user'))));
-            dbSession.close();
           })
-          .catch((err) => {
-            reject(err);
-            dbSession.close();
-          });
+          .catch(reject)
+          .then(() => dbSession.close());
       });
     },
     projects: function getProjects() {
@@ -30,12 +27,9 @@ exports.api = {
         dbSession.run(`MATCH (project:Project) RETURN project`)
           .then((res) => {
             resolve(res.records.map(project => new db.models.Project(project.get('project'))))
-            dbSession.close();
           })
-          .catch((err) => {
-            reject(err);
-            dbSession.close();
-          });
+          .catch(reject)
+          .then(() => dbSession.close());;
       });
     },
     'recommended-pairs': function getProjects() {
@@ -48,7 +42,8 @@ exports.api = {
               user => new db.models.User(user.get('user'))
             )
           ))
-          .catch(reject);
+          .catch(reject)
+          .then(() => dbSession.close());;
       });
     },
   },
