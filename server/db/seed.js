@@ -52,10 +52,37 @@ const addProjects = function addProjects() {
     });
 }
 
+//Create INTERESTEDIN relationships between users and projects
+const addInterestedInRelationshipsQueryString = `
+  MATCH (brian:User) WHERE brian.name = "Brian"
+  MATCH (peter:User) WHERE peter.name = "Peter"
+  MATCH (francis:User) WHERE francis.name = "Francis"
+  MATCH (shaikat:User) WHERE shaikat.name = "Shaikat"
+  MATCH (helloGitBud:Project) WHERE helloGitBud.project = "Hello GitBud"
+  MATCH (nQueens:Project) WHERE nQueens.project = "N-Queens"
+  CREATE 
+    (brian)-[:INTERESTEDIN]->(helloGitBud),
+    (peter)-[:INTERESTEDIN]->(helloGitBud),
+    (francis)-[:INTERESTEDIN]->(nQueens),
+    (shaikat)-[:INTERESTEDIN]->(nQueens)
+  `;
+
+const addInterestedInRelationships = function addInterestedInRelationships() {
+  return session.run(addInterestedInRelationshipsQueryString)
+    .then((result) => {
+      console.log('INTERESTEDIN relationships added');
+    })
+    .catch((error) => {
+      session.close();
+      throw error;
+    });
+}
+
 // Call functions that seed the db
 dropGraph()
   .then(addUsers)
   .then(addProjects)
+  .then(addInterestedInRelationships)
   .then(() => {
     session.close();
     driver.close();
