@@ -69,7 +69,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // specify github strategy to authenticate request
-app.get('/auth/github', passport.authenticate('github'));
+app.get('/auth/github', passport.authenticate('github', { scope: ['user', 'repo'] }));
 
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
