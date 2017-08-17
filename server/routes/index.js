@@ -57,12 +57,6 @@ exports.api = {
 exports.auth = {
   GET: {
     signout: function signout(req, res) {
-      // remove session from database
-      const dbSession = dbDriver.session();
-      dbSession.run(`
-        MATCH (:User {ghId: ${ req.user.ghInfo.id }})-[:LOGGED_IN]->(session:Session)
-        DETACH DELETE session
-      `);
       // destroy session and redirect to home
       req.logout();
       res.redirect('/');
