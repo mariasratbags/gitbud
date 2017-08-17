@@ -1,12 +1,12 @@
 const db = require('../db');
 const axios = require('axios');
-const matchLanguages = require('./languages');
+const _map = require('lodash/map');
+const getLanguages = require('./languages');
 
 exports.getUserRepos = function getUserRepos(ghId) {
   var OAuthToken;
-  const languages = {};
   const dbSession = db.driver.session();
-  dbSession.run(`
+  return dbSession.run(`
     MATCH (user:User {ghId: ${ ghId }}) RETURN user
   `)
     .then((res) => {
@@ -17,7 +17,13 @@ exports.getUserRepos = function getUserRepos(ghId) {
         }
       })
         .then(res =>
-          _map(res.data, ({ name, owner, languages_url }) => ({ name, owner: owner.login, languages_url }))
+          ({ OAuthToken, repos: _map(res.data, ({ name, owner, languages_url }) => ({ name, owner: owner.login, languages_url }))})
         );
     });
 };
+
+exports.displayUserLanguages = function gl(ghId) {
+  exports.getUserRepos(ghId)
+    .then(getLanguages.getUserLanguages)
+    .then(console.log);
+}
