@@ -3,7 +3,7 @@ const session = driver.session();
 
 const name = 'Brian';
 
-//call functions that seed the db
+// Call functions that seed the db
 dropGraph()
   .then(addUsers)
   .then(addProjects)
@@ -14,11 +14,11 @@ dropGraph()
 
 
 
-//deletes all nodes and relationships in the graph
-function dropGraph() {
-  var dropGraphQueryString = 'MATCH (n) DETACH DELETE n';
+// Deletes all nodes and relationships in the graph
+const dropGraph = function dropGraph() {
+  const dropGraphQueryString = 'MATCH (n) DETACH DELETE n';
   return session.run(dropGraphQueryString)
-    .then(result => {
+    .then((result) => {
     console.log('graph dropped');
     })
     .catch(error => {
@@ -27,17 +27,18 @@ function dropGraph() {
     });
 }
 
-var addUsersQueryString = `
-  CREATE (:User {rating: 50, name: 'Brian', language: 'JavaScript'})
-  CREATE (:User {rating: 50, name: 'Peter', language: 'JavaScript'})
-  CREATE (:User {rating: 50, name: 'Francis', language: 'JavaScript'})
-  CREATE (:User {rating: 50, name: 'Shaikat', language: 'JavaScript'})
+const addUsersQueryString = `
+  CREATE
+    (:User {rating: 50, name: 'Brian', language: 'JavaScript'}),
+    (:User {rating: 50, name: 'Peter', language: 'JavaScript'}),
+    (:User {rating: 50, name: 'Francis', language: 'JavaScript'}),
+    (:User {rating: 50, name: 'Shaikat', language: 'JavaScript'})
   `;
 
-//add user nodes
+// Add user nodes
 function addUsers() {
   return session.run(addUsersQueryString)
-    .then(result => {
+    .then((result) => {
       console.log('users added');
     })
     .catch(error => {
@@ -46,18 +47,19 @@ function addUsers() {
     });
 }
 
-var addProjectsQueryString = `
-  CREATE (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner'})
-  CREATE (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced'})
+const addProjectsQueryString = `
+  CREATE
+    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner'}),
+    (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced'})
   `;
 
-//add project nodes
-function addProjects() {
+// Add project nodes
+const addProjects = function addProjects() {
   return session.run(addProjectsQueryString)
-    .then(result => {
+    .then((result) => {
       console.log('projects added');
     })
-    .catch(error => {
+    .catch((error) => {
       session.close();
       throw error;
     });
