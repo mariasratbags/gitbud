@@ -48,15 +48,24 @@ exports.api = {
     },
   },
   POST: {
-    interested: function addInterest(req) {
+    projects: function projects(req) {
+      console.log(req.user.ghInfo.id);
+      console.log(req.body.interest);
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
-        console.log('POST interested');
-        dbSession.run(`MATCH (project:Project) WHERE ID(project)=${Number(req.body.id)} return project`)
+        console.log('POST projects');
+        dbSession.run(
+          `
+          MATCH (user:User) WHERE user.ghId=${Number(req.user.ghInfo.id)}
+          MATCH (project:Project) WHERE project.project='${req.body.interest}'
+          CREATE (user)-[:INTERESTEDIN]->(project)
+          return user, project
+          `
+        )
           .then((res) => {
-            var project = new db.models.Project(res.records[0].get('project'));
-            console.log(project);
-            resolve(project);
+            // var project = new db.models.Project(res.records[0].get('project'));
+            console.log(res);
+            resolve(res);
           })
           .catch(reject)
           .then(() => dbSession.close());
