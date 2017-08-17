@@ -25,11 +25,12 @@ exports.getUserRepos = function getUserRepos(ghId) {
           }
         });
       });
-      Promise.all(languageQueries)
-        .then(responses => responses.forEach((res) => {
-          for (var i = 0, keys = Object.keys(res.data), n = keys.length; i < n; i++) {
-            languages[keys[i]] = res.data[keys[i]] + (languages[keys[i]] || 0);
-          }
-        })).then(() => console.log(languages));
-    });
+      return Promise.all(languageQueries)
+    })
+    .then(responses => responses.forEach((res) => {
+      for (var i = 0, keys = Object.keys(res.data), n = keys.length; i < n; i++) {
+        languages[keys[i]] = res.data[keys[i]] + (languages[keys[i]] || 0);
+      }
+    }))
+    .then(() => console.log(languages));
 };
