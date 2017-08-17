@@ -43,7 +43,7 @@ exports.getUserRepos = function getUserRepos(ghId) {
       const commitPromises = [];
       forEach(repos, (repo) => {
         if (repo.fork) {
-          // It's a fork. so qury for commits
+          // It's a fork. so query for commits
           commitPromises.push(axios.get(`https://api.github.com/repos/${ username }/${ repo.name }/commits`, {
             params: {
               access_token: OAuthToken,
