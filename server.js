@@ -26,10 +26,20 @@ passport.use(new GitHubStrategy(
   (accessToken, refreshToken, profile, done) => {
     const dbSession = db.driver.session();
     dbSession.run(`
-      MERGE (:User {username: '${profile.username}', ghId: ${profile._json.id},
-      avatarUrl: '${profile._json.avatar_url}', name: '${profile.displayName}', rating: 50}) 
+      MERGE
+        (user:User { ghId: ${profile._json.id} })
+      SET 
+        user.avatarUrl = '${profile._json.avatar_url}', user.name = '${profile.displayName}', user.rating = 50
+      MERGE
+        (session:Session { OAuthToken: '${ accessToken }' })
+      MERGE
+        (user)-[:LOGGED_IN]->(session)
     `)
       .then(() => dbSession.close())
+      .catch((err) => {
+        console.error(err);
+        dbSession.close();
+      });
     return done(null, profile);
   }
 ));
