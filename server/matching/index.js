@@ -1,5 +1,7 @@
 const db = require('../db');
 const axios = require('axios');
+const _map = require('lodash/map');
+const _forEach = require('lodash/forEach');
 
 exports.getUserRepos = function getUserRepos(ghId) {
   var OAuthToken;
@@ -17,8 +19,8 @@ exports.getUserRepos = function getUserRepos(ghId) {
       });
     })
     .then((res) => {
-      const repos = res.data.map(({ name, owner, languages_url }) => ({ name, owner: owner.login, languages_url }));
-      const languageQueries = repos.map((repo) => {
+      const repos = _map(res.data, ({ name, owner, languages_url }) => ({ name, owner: owner.login, languages_url }));
+      const languageQueries = _map(repos, (repo) => {
         return axios.get(repo.languages_url, {
           params: {
             access_token: OAuthToken
@@ -27,7 +29,7 @@ exports.getUserRepos = function getUserRepos(ghId) {
       });
       return Promise.all(languageQueries)
     })
-    .then(responses => responses.forEach((res) => {
+    .then(responses => _forEach(responses, (res) => {
       for (var i = 0, keys = Object.keys(res.data), n = keys.length; i < n; i++) {
         languages[keys[i]] = res.data[keys[i]] + (languages[keys[i]] || 0);
       }
