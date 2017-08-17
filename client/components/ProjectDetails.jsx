@@ -17,6 +17,19 @@ import UserList from './UserList';
 class ProjectDetails extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      interest: false,
+    };
+
+    this.toggleLabel = this.toggleLabel.bind(this);
+  }
+
+  toggleLabel(e) {
+    e.preventDefault();
+    this.setState({
+      interest: !this.state.interest
+    });
   }
 
   render() {
@@ -41,7 +54,7 @@ class ProjectDetails extends React.Component {
               <ToolbarTitle text="Interested in Project Name?" />
             </ToolbarGroup>
             <ToolbarGroup lastChild={ true }>
-              <RaisedButton primary={ true } label="I like this project!"/>
+              <RaisedButton primary={ true } onClick={this.toggleLabel} label={this.state.interest ? 'Project selected' : 'I like this project!'}/>
             </ToolbarGroup>
           </Toolbar>
           <UserList {...this.props}/>

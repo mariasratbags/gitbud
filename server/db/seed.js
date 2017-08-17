@@ -28,10 +28,10 @@ function dropGraph() {
 }
 
 var addUsersQueryString = `
-  CREATE (:User {rating: 50, name: 'Brian'})
-  CREATE (:User {rating: 50, name: 'Peter'})
-  CREATE (:User {rating: 50, name: 'Francis'})
-  CREATE (:User {rating: 50, name: 'Shaikat'})
+  CREATE (:User {rating: 50, name: 'Brian', language: 'JavaScript'})
+  CREATE (:User {rating: 50, name: 'Peter', language: 'JavaScript'})
+  CREATE (:User {rating: 50, name: 'Francis', language: 'JavaScript'})
+  CREATE (:User {rating: 50, name: 'Shaikat', language: 'JavaScript'})
   `;
 
 //add user nodes
@@ -46,8 +46,10 @@ function addUsers() {
     });
 }
 
-var addProjectsQueryString = `CREATE (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner'})
-  CREATE (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced'})`;
+var addProjectsQueryString = `
+  CREATE (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner'})
+  CREATE (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced'})
+  `;
 
 //add project nodes
 function addProjects() {
