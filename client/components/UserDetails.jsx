@@ -31,6 +31,7 @@ class UserDetails extends React.Component {
   }
 
   render() {
+    console.log(this.props.users);
     return (
       <Card style={ {width: '40%', margin: 'auto', marginTop: 12, padding: 12 } }>
         <Card expanded={ this.state.expanded }>
