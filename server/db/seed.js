@@ -1,8 +1,6 @@
 const driver = require('./index').driver;
 const session = driver.session();
 
-const name = 'Brian';
-
 // Call functions that seed the db
 dropGraph()
   .then(addUsers)
@@ -19,9 +17,9 @@ const dropGraph = function dropGraph() {
   const dropGraphQueryString = 'MATCH (n) DETACH DELETE n';
   return session.run(dropGraphQueryString)
     .then((result) => {
-    console.log('graph dropped');
+    console.log('Graph dropped');
     })
-    .catch(error => {
+    .catch((error) => {
       session.close();
       throw error;
     });
@@ -41,7 +39,7 @@ function addUsers() {
     .then((result) => {
       console.log('users added');
     })
-    .catch(error => {
+    .catch((error) => {
       session.close();
       throw error;
     });
