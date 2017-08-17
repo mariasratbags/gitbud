@@ -28,7 +28,7 @@ class ProjectDetails extends React.Component {
 
   handleInterest() {
     axios.post('/API/projects', {
-      interest: [],
+      interest: 'Hello GitBud',
     })
     .then((response) => {
       console.log(response);
