@@ -22,7 +22,7 @@ exports.handler = function handler(req, res) {
     res.send(exports.index);
   // API endpoints
   } else if (urlParts[1] === 'API' && routes.api[req.method].hasOwnProperty(urlParts[2])) {
-    if (req.isAuthenticated()) {
+    if (!req.isAuthenticated()) {
       routes.api[req.method][urlParts[2]](req)
         .then((data) => {
           res.statusCode = 200;

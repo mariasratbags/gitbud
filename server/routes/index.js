@@ -47,18 +47,20 @@ exports.api = {
       });
     },
   },
-    POST: {
+  POST: {
     interested: function addInterest(req) {
-      console.log(req.body.id);
-      const dbSession = dbDriver.session();
       return new Promise((resolve, reject) => {
-        dbSession.run(`MATCH (p:Project) WHERE ID(p)=${Number(req.body.id)} return p`)
+        const dbSession = dbDriver.session();
+        console.log('POST interested');
+        dbSession.run(`MATCH (project:Project) WHERE ID(project)=${Number(req.body.id)} return project`)
           .then((res) => {
-            console.log(res);
-            resolve(res);
-            dbSession.close();
-        });
-      })
+            var project = new db.models.Project(res.records[0].get('project'));
+            console.log(project);
+            resolve(project);
+          })
+          .catch(reject)
+          .then(() => dbSession.close());
+      });
     }
   }
 };

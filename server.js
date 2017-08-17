@@ -12,8 +12,6 @@ app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
 
-app.use(bodyParser.json());
-
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 const session = require('express-session');
@@ -76,6 +74,8 @@ app.get('/auth/github/callback',
     res.redirect('/projects');
   }
 );
+
+app.use(bodyParser.json());
 
 // serve static files and user routes
 app.use(express.static(path.join(__dirname, 'dist')));
