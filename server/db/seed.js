@@ -1,17 +1,6 @@
 const driver = require('./index').driver;
 const session = driver.session();
 
-// Call functions that seed the db
-dropGraph()
-  .then(addUsers)
-  .then(addProjects)
-  .then(() => {
-    session.close();
-    driver.close();
-  });
-
-
-
 // Deletes all nodes and relationships in the graph
 const dropGraph = function dropGraph() {
   const dropGraphQueryString = 'MATCH (n) DETACH DELETE n';
@@ -62,3 +51,12 @@ const addProjects = function addProjects() {
       throw error;
     });
 }
+
+// Call functions that seed the db
+dropGraph()
+  .then(addUsers)
+  .then(addProjects)
+  .then(() => {
+    session.close();
+    driver.close();
+  });
