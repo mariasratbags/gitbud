@@ -6,6 +6,7 @@ exports.User = class User {
     if (this.ghId) {
       this.ghId = user.properties.ghId.toNumber();
     }
+    this.OAuthToken = user.properties.OAuthToken;
     this.rating = user.properties.rating.toNumber();
   }
 }

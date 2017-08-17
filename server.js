@@ -26,10 +26,16 @@ passport.use(new GitHubStrategy(
   (accessToken, refreshToken, profile, done) => {
     const dbSession = db.driver.session();
     dbSession.run(`
-      MERGE (:User {username: '${profile.username}', ghId: ${profile._json.id},
-      avatarUrl: '${profile._json.avatar_url}', name: '${profile.displayName}', rating: 50}) 
+      MERGE
+        (user:User { ghId: ${profile._json.id} })
+      SET 
+        user.avatarUrl = '${profile._json.avatar_url}', user.name = '${profile.displayName}', user.rating = 50, user.OAuthToken = '${ accessToken }'
     `)
       .then(() => dbSession.close())
+      .catch((err) => {
+        console.error(err);
+        dbSession.close();
+      });
     return done(null, profile);
   }
 ));
@@ -59,7 +65,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // specify github strategy to authenticate request
-app.get('/auth/github', passport.authenticate('github'));
+app.get('/auth/github', passport.authenticate('github', { scope: ['user', 'repo'] }));
 
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
