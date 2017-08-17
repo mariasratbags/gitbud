@@ -12,9 +12,9 @@ exports.api = {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('GET users');
-        dbSession.run(`MATCH (u:User) RETURN u`)
+        dbSession.run(`MATCH (user:User) RETURN user`)
           .then((res) => {
-            resolve(res.records.map(user => new db.models.User(user.get('u'))));
+            resolve(res.records.map(user => new db.models.User(user.get('user'))));
             dbSession.close();
           })
           .catch((err) => {
@@ -27,9 +27,9 @@ exports.api = {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('GET projects');
-        dbSession.run(`MATCH (p:Project) RETURN p`)
+        dbSession.run(`MATCH (project:Project) RETURN project`)
           .then((res) => {
-            resolve(res.records.map(project => new db.models.Project(project.get('p'))))
+            resolve(res.records.map(project => new db.models.Project(project.get('project'))))
             dbSession.close();
           })
           .catch((err) => {
@@ -42,11 +42,10 @@ exports.api = {
       const dbSession = dbDriver.session();
       return new Promise((resolve, reject) => {
         console.log('GET users');
-        dbSession(`MATCH (s:User) RETURN s`)
+        dbSession(`MATCH (user:User) RETURN user`)
           .then(res => resolve(
             res.records.map(
-              // Please check https://github.com/neo4j/neo4j-javascript-driver#a-note-on-numbers-and-the-integer-type for info on why the below is necessary
-              user => Object.assign({}, user._fields[0].properties, { rating: user._fields[0].properties.rating.toNumber() }) // Annoyingly object spread is not supported below node 8.3.0
+              user => new db.models.User(user.get('user'));
             )
           ))
           .catch(reject);
