@@ -9,11 +9,9 @@ exports.react = new Set(['user', 'projects']);
 exports.api = {
   GET: {
     users: function getUsers(req) {
-      console.log('req called', req.headers);
       return new Promise((resolve, reject) => {
-        console.log(req.headers.project);
         const dbSession = dbDriver.session();
-        console.log('GET recommended-users');
+        console.log('GET users');
         dbSession.run(`
           MATCH (user:User)-[:INTERESTEDIN]-(project:Project)
           WHERE project.project = "${req.headers.project}"
