@@ -7,7 +7,9 @@ import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { fullWhite } from 'material-ui/styles/colors';
+import SocialPartyMode from 'material-ui/svg-icons/social/party-mode';
 
 import Nav from './Nav';
 import AppDrawer from './AppDrawer';
@@ -18,18 +20,19 @@ import ProjectList from './ProjectList';
 import Questionnaire from './Questionnaire';
 import NotFound from './NotFound';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       drawerOpen: false,
       loggedIn: false,
+      partyMode: false,
     }
 
     this.getProjects();
     this.navTap = this.navTap.bind(this);
     this.checkAuthenticated = this.checkAuthenticated.bind(this);
+    this.togglePartyMode = this.togglePartyMode.bind(this);
   }
 
   getProjects() {
@@ -49,6 +52,23 @@ class App extends React.Component {
       .then(res => this.setState({ loggedIn: res.data }));
   }
 
+  togglePartyMode() {
+    console.log('party')
+    const colors = ['blue', 'green', 'red', 'yellow', 'lilac'];
+    if (this.state.partyMode) {
+      clearInterval(this.state.partyMode);
+      document.body.setAttribute('style', `background-color:white`);
+      this.setState({ partyMode: false });
+    } else {
+      this.setState({partyMode: 
+        setInterval(() => {
+          const randomNum = Math.floor(Math.random() * colors.length);
+          document.body.setAttribute('style', `background-color:${colors[randomNum]}`);
+        }, 200),
+      });
+    }
+  }
+
   render() {
     if (this.state.loggedIn) {
       return (
@@ -64,6 +84,9 @@ class App extends React.Component {
               <Route path="/user/:id" component={UserDetails} />
               <Route component={NotFound} />
             </Switch>
+            <FloatingActionButton secondary={ true } style={ { position: "absolute", bottom: 20, left: 20 } } onClick={ this.togglePartyMode } >
+              <SocialPartyMode />
+            </FloatingActionButton >
           </div>
         </BrowserRouter>
       );
