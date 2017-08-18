@@ -25,11 +25,12 @@ const ProjectList = (props) => {
         </TableHeader>
         <TableBody stripedRows={ true }>
           {props.projects.map(project =>
-            <TableRow key={ project.id }>
+            (<TableRow key={ project.id }>
               <TableRowColumn><Link to={`/projects/${ project.id }`}>{ project.project }</Link></TableRowColumn>
-              <TableRowColumn>{project.language}</TableRowColumn>
-              <TableRowColumn>{project.experience}</TableRowColumn>
-            </TableRow>)}
+              <TableRowColumn>{ project.language }</TableRowColumn>
+              <TableRowColumn>{ project.experience }</TableRowColumn>
+            </TableRow>)
+          )}
         </TableBody>
       </Table>
       <RaisedButton label="I'm interested" primary={ true } fullWidth={ true } />
