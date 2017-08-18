@@ -8,7 +8,9 @@ const filter = require('lodash/filter');
 
 // Other server modules
 const db = require('../db');
-const getLanguages = require('./languages');
+// Other server modules for profiling
+const getUserLanguages = require('./languages');
+const getUserRepoStats = require('./repoStats');
 
 // Gets all repos that a user either created or has committed to
 exports.getUserRepos = function getUserRepos(ghId) {
@@ -28,18 +30,20 @@ exports.getUserRepos = function getUserRepos(ghId) {
       })
         .then(res => ({ OAuthToken, username, res }));
     })
-    .then(({OAuthToken, username, res}) =>
+    .then(({ OAuthToken, username, res }) =>
       // Then extract the useful information from those repos
-      // Here we're interested in the owner, name, whether it's forked and the url for its language stats
+      // Here we're interested in the owner, name, whether it's forked 
+      // and the url for its language stats
       ({
         OAuthToken,
         username,
-        repos: map(res.data, ({ name, owner, languages_url, fork }) => 
-          ({ name, owner: owner.login, languages_url, fork }))
+        repos: map(res.data, ({ name, owner, languages_url, fork, forks_count, stargazers_count, watchers_count }) => 
+          ({ name, owner: owner.login, languages_url, fork, forks_count, stargazers_count, watchers_count }))
       })
     )
     .then(({ username, OAuthToken, repos }) => {
-      // Then check if they're forks. If so, find out whether or not the user has actually committed to that repo.
+      // Then check if they're forks. 
+      // If so, find out whether or not the user has actually committed to that repo.
       const commitPromises = [];
       forEach(repos, (repo) => {
         if (repo.fork) {
@@ -69,6 +73,7 @@ exports.getUserRepos = function getUserRepos(ghId) {
         OAuthToken,
         username,
         repos: filter(repos, repo => repo.include),
+        profile: {}
       })
     );
 };
@@ -77,6 +82,8 @@ exports.getUserRepos = function getUserRepos(ghId) {
 // and one from the languages module to show a user's most-used languages
 exports.displayUserLanguages = function gl(ghId) {
   exports.getUserRepos(ghId)
-    .then(getLanguages.getUserLanguages)
-    .then(console.log);
+    // .then(getUserLanguages)
+    .then(getUserRepoStats)
+    .then(console.log)
+    .catch(console.error);
 }

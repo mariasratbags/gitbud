@@ -2,23 +2,41 @@ import { combineReducers } from 'redux';
 
 const changeString = (state = 'some message', action) => action.type === 'CHANGE_STRING' ? action.text : state;
 
-const addUsers = (state, action) => {
+const users = (state, action) => {
   if (state === undefined) {
     return [];
+  } else if (action.type === 'USERS_ADD') {
+    return action.users;
+  } else if (action.type === 'CHANGE_USER_PAIRING') {
+    return state.map((user) => {
+      if (user.id === action.userId) {
+        return Object.assign({}, user, { paired: action.projectId });
+      }
+      return user;
+    });
   }
-  return action.type === 'USERS_ADD' ? action.users : state;
+  return state;
 };
 
-const addProjectsList = (state, action) => {
+const projects = (state, action) => {
   if (state === undefined) {
     return [];
+  } else if (action.type === 'LIST_PROJECTS') {
+    return action.projects;
+  } else if (action.type === 'CHANGE_PROJECT_INTEREST') {
+    return state.map((project) => {
+      if (project.id === action.projectId) {
+        return Object.assign({}, project, { interested: action.value });
+      }
+      return project;
+    });
   }
-  return action.type === 'LIST_PROJECTS' ? action.projects : state;
+  return state;
 };
 
-//hands off to container components with mapStateToProps
+// hands off to container components with mapStateToProps
 export default combineReducers({
   message: changeString,
-  users: addUsers,
-  projects: addProjectsList,
+  users,
+  projects,
 });

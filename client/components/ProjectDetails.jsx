@@ -21,10 +21,8 @@ class ProjectDetails extends React.Component {
     this.state = {
       interest: false,
     };
-
+    this.toggleInterest = this.toggleInterest.bind(this);
     this.getUsers();
-    this.toggleLabel = this.toggleLabel.bind(this);
-    this.handleInterest = this.handleInterest.bind(this);
   }
 
   getUsers() {
@@ -39,24 +37,17 @@ class ProjectDetails extends React.Component {
       .catch(console.error);
   }
 
-  handleInterest() {
+  toggleInterest() {
     axios.post('/API/projects', {
-      id: this.props.match.params.id,
+      interest: this.props.project.id,
     })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
-
-  toggleLabel(e) {
-    e.preventDefault();
-    this.setState({
-      interest: !this.state.interest
-    });
-    this.handleInterest();
+      .then((response) => {
+        this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -65,7 +56,7 @@ class ProjectDetails extends React.Component {
         <Card style={ { marginBottom: 12 } }>
           <Toolbar>
             <ToolbarGroup>
-              <ToolbarTitle text="Project Name (with description)" />
+              <ToolbarTitle text={ this.props.project.project } />
             </ToolbarGroup>
             <ToolbarGroup lastChild={ true }>
               <RaisedButton secondary={ true } label="See on GitHub"/>
@@ -78,22 +69,24 @@ class ProjectDetails extends React.Component {
         <Paper>
           <Toolbar>
             <ToolbarGroup>
-              <ToolbarTitle text="Interested in Project Name?" />
+              <ToolbarTitle text={`Find a partner for ${ this.props.project.project }`} />
             </ToolbarGroup>
             <ToolbarGroup lastChild={ true }>
-              <RaisedButton primary={ true } onClick={this.toggleLabel} label={this.state.interest ? 'Project selected' : 'I like this project!'}/>
+              <RaisedButton primary={ true } onClick={ this.toggleInterest } label={ this.props.project.interested ? 'Project selected' : 'I like this project!'}/>
             </ToolbarGroup>
           </Toolbar>
-          <UserList {...this.props}/>
+          <UserList users={ this.props.users } projectId={ this.props.project.id } />
         </Paper>
       </Paper>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+  const projectId = Number(props.match.params.id);
   return {
     users: state.users,
+    project: state.projects.filter(project => project.id === projectId)[0],
   };
 };
 
@@ -103,6 +96,11 @@ const mapDispatchToProps = (dispatch) => {
       type: 'USERS_ADD',
       users: users
     }),
+    dispatchInterest: (projectId, value) => dispatch({
+      type: 'CHANGE_PROJECT_INTEREST',
+      projectId,
+      value,
+    })
   };
 };
 
