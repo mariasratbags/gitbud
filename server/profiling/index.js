@@ -8,7 +8,9 @@ const filter = require('lodash/filter');
 
 // Other server modules
 const db = require('../db');
+// Other server modules for profiling
 const getUserLanguages = require('./languages');
+const getUserRepoStats = require('./repoStats');
 
 // Gets all repos that a user either created or has committed to
 exports.getUserRepos = function getUserRepos(ghId) {
@@ -80,6 +82,7 @@ exports.getUserRepos = function getUserRepos(ghId) {
 // and one from the languages module to show a user's most-used languages
 exports.displayUserLanguages = function gl(ghId) {
   exports.getUserRepos(ghId)
-    // .then(getUserLanguages)
+    .then(getUserLanguages)
+    .then(getUserRepoStats)
     .then(console.log);
 }
