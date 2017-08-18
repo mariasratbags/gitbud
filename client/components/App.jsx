@@ -26,18 +26,10 @@ class App extends React.Component {
       drawerOpen: false,
       loggedIn: false,
     }
-    this.getUsers();
+
     this.getProjects();
     this.navTap = this.navTap.bind(this);
     this.checkAuthenticated = this.checkAuthenticated.bind(this);
-  }
-
-  getUsers() {
-    axios.get('/API/users')
-      .then((users) => {
-        this.props.addUsers(users.data);
-      })
-      .catch(console.error);
   }
 
   getProjects() {
@@ -83,7 +75,6 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     message: state.message,
-    users: state.users,
     projects: state.projects,
   };
 };
@@ -93,10 +84,6 @@ const mapDispatchToProps = (dispatch) => {
     changeString: () => dispatch({
       type: 'CHANGE_STRING',
       text: 'some other message'
-    }),
-    addUsers: users => dispatch({
-      type: 'USERS_ADD',
-      users: users
     }),
     addProjectsList: (projects) => dispatch({
       type: 'LIST_PROJECTS',

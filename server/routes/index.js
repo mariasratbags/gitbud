@@ -14,7 +14,7 @@ exports.api = {
         console.log('GET users');
         dbSession.run(`
           MATCH (user:User)-[:INTERESTEDIN]-(project:Project)
-          WHERE project.project = "${req.headers.project}"
+          WHERE ID(project) = ${Number(req.headers.id)}
           RETURN user
         `)
           .then((res) => {

@@ -29,7 +29,7 @@ class ProjectDetails extends React.Component {
 
   getUsers() {
     var config = {
-      headers: {'project': 'N-Queens'}
+      headers: {'id': this.props.match.params.id}
     };
 
     axios.get('/API/users', config)
