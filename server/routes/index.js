@@ -8,13 +8,19 @@ exports.react = new Set(['user', 'projects']);
 // request handlers for server routes
 exports.api = {
   GET: {
-    users: function getUsers() {
+    users: function getUsers(req) {
+      console.log('req called', req.headers);
       return new Promise((resolve, reject) => {
+        console.log(req.headers.project);
         const dbSession = dbDriver.session();
-        console.log('GET users');
-        dbSession.run(`MATCH (user:User) RETURN user`)
+        console.log('GET recommended-users');
+        dbSession.run(`
+          MATCH (user:User)-[:INTERESTEDIN]-(project:Project)
+          WHERE project.project = "${req.headers.project}"
+          RETURN user
+        `)
           .then((res) => {
-            resolve(res.records.map(user => new db.models.User(user.get('user'))));
+              resolve(res.records.map(user => new db.models.User(user.get('user'))))
           })
           .catch(reject)
           .then(() => dbSession.close());
@@ -30,23 +36,6 @@ exports.api = {
           })
           .catch(reject)
           .then(() => dbSession.close());;
-      });
-    },
-    'recommended-users': function getRecommendedUsers(req) {
-      return new Promise((resolve, reject) => {
-        console.log(req.headers.project);
-        const dbSession = dbDriver.session();
-        console.log('GET recommended-users');
-        dbSession.run(`
-          MATCH (user:User)-[:INTERESTEDIN]-(project:Project)
-          WHERE project.project = "${req.headers.project}"
-          RETURN user
-        `)
-          .then((res) => {
-              resolve(res.records.map(user => new db.models.User(user.get('user'))))
-          })
-          .catch(reject)
-          .then(() => dbSession.close());
       });
     },
   },
