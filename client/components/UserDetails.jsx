@@ -16,8 +16,14 @@ class UserDetails extends React.Component {
     this.state = {
       expanded: false
     }
-    console.log(this.props);
+    this.paired = false;
     this.expandCard = () => this.setState({ expanded: true });
+    this.togglePair = this.togglePair.bind(this);
+  }
+
+  togglePair() {
+    this.props.dispatchPairing(this.props.user.id, Number(this.props.match.params.projectId));
+    console.log(this.props.user);
   }
 
   render() {
@@ -28,7 +34,7 @@ class UserDetails extends React.Component {
             <img src={ this.props.user.avatarUrl } />
           </CardMedia>
           <div style={ { width: '35%', float: 'right', padding: 15 } }>
-            <RaisedButton label='Work With Me' style={ { margin: 2 } } fullWidth={ true } icon={ <ActionBuild /> } onClick={ this.expandCard } primary={ true }/>
+            <RaisedButton label='Work With Me' style={ { margin: 2, } } backgroundColor='#a4c639' fullWidth={ true } icon={ <ActionBuild /> } onClick={ this.togglePair } />
             <RaisedButton label='Message Me' style={ { margin: 2 } } fullWidth={ true } icon={ <ActionFace /> } onClick={ this.expandCard } secondary={ true }/>
           </div>
           <div style={ { width: '60%' } }>
@@ -56,4 +62,9 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps)(UserDetails);
+const mapDispatchToProps = dispatch =>
+  ({
+    dispatchPairing: (userId, projectId) => dispatch({ type: 'CHANGE_USER_PAIRING', userId, projectId })
+  });
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);

@@ -2,11 +2,20 @@ import { combineReducers } from 'redux';
 
 const changeString = (state = 'some message', action) => action.type === 'CHANGE_STRING' ? action.text : state;
 
-const addUsers = (state, action) => {
+const users = (state, action) => {
   if (state === undefined) {
     return [];
+  } else if (action.type === 'USERS_ADD') {
+    return action.users;
+  } else if (action.type === 'CHANGE_USER_PAIRING') {
+    return state.map((user) => {
+      if (user.id === action.userId) {
+        return Object.assign({}, user, { paired: action.projectId });
+      }
+      return user;
+    });
   }
-  return action.type === 'USERS_ADD' ? action.users : state;
+  return state;
 };
 
 const projects = (state, action) => {
@@ -29,6 +38,6 @@ const projects = (state, action) => {
 // hands off to container components with mapStateToProps
 export default combineReducers({
   message: changeString,
-  users: addUsers,
+  users,
   projects,
 });
