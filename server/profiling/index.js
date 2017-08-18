@@ -82,7 +82,8 @@ exports.getUserRepos = function getUserRepos(ghId) {
 // and one from the languages module to show a user's most-used languages
 exports.displayUserLanguages = function gl(ghId) {
   exports.getUserRepos(ghId)
-    .then(getUserLanguages)
+    // .then(getUserLanguages)
     .then(getUserRepoStats)
-    .then(console.log);
+    .then(console.log)
+    .catch(console.error);
 }
