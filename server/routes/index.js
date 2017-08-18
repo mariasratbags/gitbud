@@ -45,7 +45,7 @@ exports.api = {
         dbSession.run(
           `
           MATCH (user:User) WHERE user.ghId=${Number(req.user.ghInfo.id)}
-          MATCH (project:Project) WHERE project.project="${req.body.interest}"
+          MATCH (project:Project) WHERE ID(project) = ${Number(req.body.id)}
           MERGE (user)-[:INTERESTED_IN]->(project)
           return user, project
           `
