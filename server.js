@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser')
 const requestHandler = require('./server/request-handler');
 const db = require('./server/db');
 
@@ -73,6 +74,8 @@ app.get('/auth/github/callback',
     res.redirect('/projects');
   }
 );
+
+app.use(bodyParser.json());
 
 // serve static files and user routes
 app.use(express.static(path.join(__dirname, 'dist')));

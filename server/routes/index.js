@@ -32,21 +32,46 @@ exports.api = {
           .then(() => dbSession.close());;
       });
     },
-    'recommended-pairs': function getProjects() {
-      const dbSession = dbDriver.session();
+    'recommended-users': function getRecommendedUsers(req) {
       return new Promise((resolve, reject) => {
-        console.log('GET users');
-        dbSession.run(`MATCH (user:User) RETURN user`)
-          .then(res => resolve(
-            res.records.map(
-              user => new db.models.User(user.get('user'))
-            )
-          ))
+        console.log(req.headers.project);
+        const dbSession = dbDriver.session();
+        console.log('GET recommended-users');
+        dbSession.run(`
+          MATCH (user:User)-[:INTERESTEDIN]-(project:Project)
+          WHERE project.project = "${req.headers.project}"
+          RETURN user
+        `)
+          .then((res) => {
+              resolve(res.records.map(user => new db.models.User(user.get('user'))))
+          })
           .catch(reject)
-          .then(() => dbSession.close());;
+          .then(() => dbSession.close());
       });
     },
   },
+  POST: {
+    projects: function projects(req) {
+      return new Promise((resolve, reject) => {
+        const dbSession = dbDriver.session();
+        console.log('POST projects');
+        dbSession.run(
+          `
+          MATCH (user:User) WHERE user.ghId=${Number(req.user.ghInfo.id)}
+          MATCH (project:Project) WHERE project.project="${req.body.interest}"
+          CREATE (user)-[:INTERESTEDIN]->(project)
+          return user, project
+          `
+        )
+          .then((res) => {
+            console.log(res);
+            resolve(res);
+          })
+          .catch(reject)
+          .then(() => dbSession.close());
+      });
+    }
+  }
 };
 
 exports.auth = {
