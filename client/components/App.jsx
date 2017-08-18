@@ -108,9 +108,9 @@ const mapDispatchToProps = (dispatch) => {
       type: 'CHANGE_STRING',
       text: 'some other message'
     }),
-    addProjectsList: (projects) => dispatch({
+    addProjectsList: projects => dispatch({
       type: 'LIST_PROJECTS',
-      projects: projects,
+      projects,
     }),
   };
 };

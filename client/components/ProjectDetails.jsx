@@ -22,11 +22,7 @@ class ProjectDetails extends React.Component {
       interest: false,
     };
     this.toggleInterest = this.toggleInterest.bind(this);
-  }
-
     this.getUsers();
-    this.toggleLabel = this.toggleLabel.bind(this);
-    this.handleInterest = this.handleInterest.bind(this);
   }
 
   getUsers() {
@@ -41,22 +37,17 @@ class ProjectDetails extends React.Component {
       .catch(console.error);
   }
 
-  handleInterest() {
-    this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
-  }
-
-  OLD() {
-    this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
+  toggleInterest() {
     axios.post('/API/projects', {
       interest: this.props.project.id,
     })
-    .then((response) => {
-      this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((response) => {
+        this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {

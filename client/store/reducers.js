@@ -19,7 +19,6 @@ const users = (state, action) => {
 };
 
 const projects = (state, action) => {
-  console.log(state);
   if (state === undefined) {
     return [];
   } else if (action.type === 'LIST_PROJECTS') {
