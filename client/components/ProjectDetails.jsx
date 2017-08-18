@@ -41,7 +41,7 @@ class ProjectDetails extends React.Component {
 
   handleInterest() {
     axios.post('/API/projects', {
-      interest: 'Hello GitBud',
+      id: this.props.match.params.id,
     })
     .then((response) => {
       console.log(response);
