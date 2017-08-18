@@ -8,13 +8,17 @@ exports.react = new Set(['user', 'projects']);
 // request handlers for server routes
 exports.api = {
   GET: {
-    users: function getUsers() {
+    users: function getUsers(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('GET users');
-        dbSession.run(`MATCH (user:User) RETURN user`)
+        dbSession.run(`
+          MATCH (user:User)-[:INTERESTED_IN]-(project:Project)
+          WHERE ID(project) = ${Number(req.headers.id)}
+          RETURN user
+        `)
           .then((res) => {
-            resolve(res.records.map(user => new db.models.User(user.get('user'))));
+              resolve(res.records.map(user => new db.models.User(user.get('user'))))
           })
           .catch(reject)
           .then(() => dbSession.close());
@@ -29,23 +33,6 @@ exports.api = {
             resolve(res.records.map(project => new db.models.Project(project.get('project'))))
           })
           .catch(reject)
-          .then(() => dbSession.close());;
-      });
-    },
-    'recommended-users': function getRecommendedUsers(req) {
-      return new Promise((resolve, reject) => {
-        console.log(req.headers.project);
-        const dbSession = dbDriver.session();
-        console.log('GET recommended-users');
-        dbSession.run(`
-          MATCH (user:User)-[:INTERESTEDIN]-(project:Project)
-          WHERE project.project = "${req.headers.project}"
-          RETURN user
-        `)
-          .then((res) => {
-              resolve(res.records.map(user => new db.models.User(user.get('user'))))
-          })
-          .catch(reject)
           .then(() => dbSession.close());
       });
     },
@@ -58,8 +45,8 @@ exports.api = {
         dbSession.run(
           `
           MATCH (user:User) WHERE user.ghId=${Number(req.user.ghInfo.id)}
-          MATCH (project:Project) WHERE project.project="${req.body.interest}"
-          CREATE (user)-[:INTERESTEDIN]->(project)
+          MATCH (project:Project) WHERE ID(project) = ${Number(req.body.id)}
+          MERGE (user)-[:INTERESTED_IN]->(project)
           return user, project
           `
         )

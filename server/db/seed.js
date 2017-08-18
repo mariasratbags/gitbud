@@ -52,7 +52,7 @@ const addProjects = function addProjects() {
     });
 }
 
-//Create INTERESTEDIN relationships between users and projects
+//Create INTERESTED_IN relationships between users and projects
 const addInterestedInRelationshipsQueryString = `
   MATCH (brian:User) WHERE brian.name = "Brian"
   MATCH (peter:User) WHERE peter.name = "Peter"
@@ -61,16 +61,16 @@ const addInterestedInRelationshipsQueryString = `
   MATCH (helloGitBud:Project) WHERE helloGitBud.project = "Hello GitBud"
   MATCH (nQueens:Project) WHERE nQueens.project = "N-Queens"
   CREATE 
-    (brian)-[:INTERESTEDIN]->(helloGitBud),
-    (peter)-[:INTERESTEDIN]->(helloGitBud),
-    (francis)-[:INTERESTEDIN]->(nQueens),
-    (shaikat)-[:INTERESTEDIN]->(nQueens)
+    (brian)-[:INTERESTED_IN]->(helloGitBud),
+    (peter)-[:INTERESTED_IN]->(helloGitBud),
+    (francis)-[:INTERESTED_IN]->(nQueens),
+    (shaikat)-[:INTERESTED_IN]->(nQueens)
   `;
 
 const addInterestedInRelationships = function addInterestedInRelationships() {
   return session.run(addInterestedInRelationshipsQueryString)
     .then((result) => {
-      console.log('INTERESTEDIN relationships added');
+      console.log('INTERESTED_IN relationships added');
     })
     .catch((error) => {
       session.close();

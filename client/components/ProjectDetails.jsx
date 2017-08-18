@@ -22,13 +22,26 @@ class ProjectDetails extends React.Component {
       interest: false,
     };
 
+    this.getUsers();
     this.toggleLabel = this.toggleLabel.bind(this);
     this.handleInterest = this.handleInterest.bind(this);
   }
 
+  getUsers() {
+    var config = {
+      headers: {'id': this.props.match.params.id}
+    };
+
+    axios.get('/API/users', config)
+      .then((users) => {
+        this.props.addUsers(users.data);
+      })
+      .catch(console.error);
+  }
+
   handleInterest() {
     axios.post('/API/projects', {
-      interest: 'Hello GitBud',
+      id: this.props.match.params.id,
     })
     .then((response) => {
       console.log(response);
@@ -84,4 +97,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ProjectDetails);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addUsers: users => dispatch({
+      type: 'USERS_ADD',
+      users: users
+    }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetails);
