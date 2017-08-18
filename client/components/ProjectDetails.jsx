@@ -24,7 +24,6 @@ class ProjectDetails extends React.Component {
     this.toggleInterest = this.toggleInterest.bind(this);
   }
 
-<<<<<<< c1e1002e0dfa4212416a6be3173965687cce74b7
     this.getUsers();
     this.toggleLabel = this.toggleLabel.bind(this);
     this.handleInterest = this.handleInterest.bind(this);
@@ -43,18 +42,16 @@ class ProjectDetails extends React.Component {
   }
 
   handleInterest() {
-=======
-  toggleInterest() {
     this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
   }
 
   OLD() {
     this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
->>>>>>> ProjectDetails component dispatches user interest in project.
     axios.post('/API/projects', {
       interest: this.props.project.id,
     })
     .then((response) => {
+      this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
       console.log(response);
     })
     .catch((error) => {
