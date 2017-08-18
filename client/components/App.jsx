@@ -81,7 +81,7 @@ class App extends React.Component {
               <Route path="/signup" component={Questionnaire} />
               <Route exact path="/projects" component={ProjectList} />
               <Route path="/projects/:id" component={ProjectDetails} />
-              <Route path="/user/:id" component={UserDetails} />
+              <Route path="/user/:id/:projectId?" component={UserDetails} />
               <Route component={NotFound} />
             </Switch>
             <FloatingActionButton secondary={ true } style={ { position: "absolute", bottom: 20, left: 20 } } onClick={ this.togglePartyMode } >

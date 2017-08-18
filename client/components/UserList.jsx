@@ -20,7 +20,7 @@ const UserList = (props) => {
       { props.users.map((user, index) => {
         return (
           <ListItem
-            containerElement={ <Link to={ `/user/${ user.id }` }/> }
+            containerElement={ <Link to={ `/user/${ user.id }${ props.projectId ? '/' + props.projectId : null }` }/> }
             leftAvatar={
               <Avatar src={ user.avatarUrl } />
             }

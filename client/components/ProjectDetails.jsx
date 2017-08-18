@@ -84,7 +84,7 @@ class ProjectDetails extends React.Component {
               <RaisedButton primary={ true } onClick={ this.toggleInterest } label={ this.props.project.interested ? 'Project selected' : 'I like this project!'}/>
             </ToolbarGroup>
           </Toolbar>
-          <UserList users={ this.props.users } />
+          <UserList users={ this.props.users } projectId={ this.props.project.id } />
         </Paper>
       </Paper>
     )

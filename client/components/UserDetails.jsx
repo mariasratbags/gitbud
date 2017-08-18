@@ -5,6 +5,7 @@ import { Card, CardMedia, CardText, CardTitle } from 'material-ui/Card';
 import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import ActionFace from 'material-ui/svg-icons/action/face';
+import ActionBuild from 'material-ui/svg-icons/action/build';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import TextField from 'material-ui/TextField';
 
@@ -15,6 +16,7 @@ class UserDetails extends React.Component {
     this.state = {
       expanded: false
     }
+    console.log(this.props);
     this.expandCard = () => this.setState({ expanded: true });
   }
 
@@ -26,7 +28,8 @@ class UserDetails extends React.Component {
             <img src={ this.props.user.avatarUrl } />
           </CardMedia>
           <div style={ { width: '35%', float: 'right', padding: 15 } }>
-            <RaisedButton label='Message Me' style={ { width: '60%' } } fullWidth={ true } icon={ <ActionFace /> } onClick={ this.expandCard } primary={ true }/>
+            <RaisedButton label='Work With Me' style={ { margin: 2 } } fullWidth={ true } icon={ <ActionBuild /> } onClick={ this.expandCard } primary={ true }/>
+            <RaisedButton label='Message Me' style={ { margin: 2 } } fullWidth={ true } icon={ <ActionFace /> } onClick={ this.expandCard } secondary={ true }/>
           </div>
           <div style={ { width: '60%' } }>
             <CardTitle title='Languages' subtitle='JavaScript, React, Spanish'/>
