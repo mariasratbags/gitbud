@@ -9,16 +9,26 @@ const addUsers = (state, action) => {
   return action.type === 'USERS_ADD' ? action.users : state;
 };
 
-const addProjectsList = (state, action) => {
+const projects = (state, action) => {
+  console.log(state);
   if (state === undefined) {
     return [];
+  } else if (action.type === 'LIST_PROJECTS') {
+    return action.projects;
+  } else if (action.type === 'CHANGE_PROJECT_INTEREST') {
+    return state.map((project) => {
+      if (project.id === action.projectId) {
+        return Object.assign({}, project, { interested: action.value });
+      }
+      return project;
+    });
   }
-  return action.type === 'LIST_PROJECTS' ? action.projects : state;
+  return state;
 };
 
-//hands off to container components with mapStateToProps
+// hands off to container components with mapStateToProps
 export default combineReducers({
   message: changeString,
   users: addUsers,
-  projects: addProjectsList,
+  projects,
 });
