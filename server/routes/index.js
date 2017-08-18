@@ -51,13 +51,38 @@ exports.api = {
           `
         )
           .then((res) => {
-            console.log(res);
             resolve(res);
           })
           .catch(reject)
           .then(() => dbSession.close());
       });
     }
+  },
+  pair: function addPair(req) {
+    console.log(req.body);
+    return new Promise((resolve, reject) => {
+        const dbSession = dbDriver.session();
+        console.log('POST pair');
+        dbSession.run(
+          `
+          MATCH (project:Project) WHERE ID(project) = ${Number(req.body.project)}
+          MATCH (user:User) WHERE user.ghId=${Number(req.user.ghInfo.id)}
+          MATCH (pair:User) WHERE pair.ghId=${Number(req.body.partnered)}
+          CREATE (group:Group)
+          MERGE
+            (user)-[:PAIRED_WITH]->(group),
+            (pair)-[:PAIRED_WITH]->(group),
+            (group)-[:WORKING_ON]->(project)
+          return user, pair, group, project
+          `
+        )
+          .then((res) => {
+            console.log(res);
+            resolve(res);
+          })
+          .catch(reject)
+          .then(() => dbSession.close());
+      });
   }
 };
 
