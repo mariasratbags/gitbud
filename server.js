@@ -30,7 +30,8 @@ passport.use(new GitHubStrategy(
       MERGE
         (user:User { ghId: ${profile._json.id} })
       SET 
-        user.avatarUrl = '${profile._json.avatar_url}', user.name = '${profile.displayName}', user.rating = 50, user.OAuthToken = '${ accessToken }'
+        user.avatarUrl = '${profile._json.avatar_url}', user.name = '${profile.displayName}',
+        user.rating = 50, user.OAuthToken = '${ accessToken }', user.username = '${profile.username}'
     `)
       .then(() => dbSession.close())
       .catch((err) => {
