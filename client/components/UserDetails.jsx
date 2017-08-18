@@ -32,9 +32,9 @@ class UserDetails extends React.Component {
   }
 
   togglePair() {
-    axios.post('/API/projects', {
+    axios.post('/API/pair', {
       partnered: this.props.user.id,
-      project: this.props.projectId,
+      project: this.props.match.params.projectId,
     })
       .then((response) => {
         this.props.dispatchPairing(this.props.user.id, Number(this.props.match.params.projectId));
