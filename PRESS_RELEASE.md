@@ -1,29 +1,33 @@
-Project Name
+## Gitbud
 
-Heading
+### Sub-Heading
 
-Name the product in a way the reader (i.e. your target customers) will understand.
-Sub-Heading
+> Gitbud is an application that allows users to connect with others who are either at the same level or higher to work on open source projects. Users can view current projects, interested users, and pair up to work on a project together.
 
-Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
-Summary
+### Summary
 
-Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
-Problem
+> This application is made for new developers who want to begin contributing to open source projects. It is also made for experienced engineers who want to pair up with another developer to take on challenging sprint exercises or mentor.
 
-Describe the problem your product solves.
-Solution
+### Problem
 
-Describe how your product elegantly solves the problem.
-Quote from You
+> As a new developer, contributing to the open source can be daunting
 
-A quote from a spokesperson in your company.
-How to Get Started
+### Solution
 
-Describe how easy it is to get started.
-Customer Quote
+> By pairing up with a seasoned/experienced engineer, new developers can work through sprint exercises and make their first contribution to open source.
 
-Provide a quote from a hypothetical customer that describes how they experienced the benefit.
-Closing and Call to Action
+### Quote from You
 
-Wrap it up and give pointers where the reader should go next.
+> "GitBud provides new coders with their first real challenge; pushing them beyond tutorials on syntax and online games like CodeWars. It gets developers' hands dirty with their first real project or experience with with real-world code".
+
+### How to Get Started
+
+> Login to Gitbud with your Github account. From there, navigate through the list of projects and select a project that you want to get started on. Inside the project's detail, you can find a list of users who are also interested. Feel free to message them and let them know you want to pair up with them. Once the two of you are paired up, you can begin on the project.
+
+### Customer Quote
+
+> "Gitbud helped me get started on my first open source project with ease."
+
+### Closing and Call to Action
+
+> FILL_ME_IN
