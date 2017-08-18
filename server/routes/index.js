@@ -39,13 +39,14 @@ exports.api = {
   },
   POST: {
     projects: function projects(req) {
+      console.log()
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('POST projects');
         dbSession.run(
           `
           MATCH (user:User) WHERE user.ghId=${Number(req.user.ghInfo.id)}
-          MATCH (project:Project) WHERE ID(project) = ${Number(req.body.id)}
+          MATCH (project:Project) WHERE ID(project) = ${Number(req.body.projectId)}
           MERGE (user)-[:INTERESTED_IN]->(project)
           return user, project
           `
@@ -66,9 +67,7 @@ exports.api = {
             MATCH (project:Project) WHERE ID(project) = ${Number(req.body.project)}
             MATCH (user:User) WHERE user.ghId = ${Number(req.user.ghInfo.id)}
             MATCH (pair:User) WHERE ID(pair) = ${Number(req.body.partnered)}
-            CREATE (group:Group)
-            MERGE (user)-[:PAIRED_WITH]->(group)
-            MERGE (pair)-[:PAIRED_WITH]->(group)
+            MERGE (user)-[:PAIRED_WITH]->(group:Group)<-[:PAIRED_WITH]-(pair)
             MERGE (group)-[:WORKING_ON]->(project)
             return user, pair, group, project
             `
