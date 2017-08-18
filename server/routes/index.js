@@ -13,7 +13,7 @@ exports.api = {
         const dbSession = dbDriver.session();
         console.log('GET users');
         dbSession.run(`
-          MATCH (user:User)-[:INTERESTEDIN]-(project:Project)
+          MATCH (user:User)-[:INTERESTED_IN]-(project:Project)
           WHERE ID(project) = ${Number(req.headers.id)}
           RETURN user
         `)
@@ -33,7 +33,7 @@ exports.api = {
             resolve(res.records.map(project => new db.models.Project(project.get('project'))))
           })
           .catch(reject)
-          .then(() => dbSession.close());;
+          .then(() => dbSession.close());
       });
     },
   },
@@ -46,7 +46,7 @@ exports.api = {
           `
           MATCH (user:User) WHERE user.ghId=${Number(req.user.ghInfo.id)}
           MATCH (project:Project) WHERE project.project="${req.body.interest}"
-          CREATE (user)-[:INTERESTEDIN]->(project)
+          MERGE (user)-[:INTERESTED_IN]->(project)
           return user, project
           `
         )
