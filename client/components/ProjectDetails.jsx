@@ -41,7 +41,7 @@ class ProjectDetails extends React.Component {
 
   handleInterest() {
     axios.post('/API/projects', {
-      id: this.props.match.params.id,
+      interest: this.props.project.id,
     })
     .then((response) => {
       console.log(response);
@@ -54,7 +54,7 @@ class ProjectDetails extends React.Component {
   toggleLabel(e) {
     e.preventDefault();
     this.setState({
-      interest: !this.state.interest
+      interest: !this.state.interest,
     });
     this.handleInterest();
   }
@@ -65,7 +65,7 @@ class ProjectDetails extends React.Component {
         <Card style={ { marginBottom: 12 } }>
           <Toolbar>
             <ToolbarGroup>
-              <ToolbarTitle text="Project Name (with description)" />
+              <ToolbarTitle text={ this.props.project.project } />
             </ToolbarGroup>
             <ToolbarGroup lastChild={ true }>
               <RaisedButton secondary={ true } label="See on GitHub"/>
@@ -78,22 +78,24 @@ class ProjectDetails extends React.Component {
         <Paper>
           <Toolbar>
             <ToolbarGroup>
-              <ToolbarTitle text="Interested in Project Name?" />
+              <ToolbarTitle text={`Find a partner for ${ this.props.project.project }`} />
             </ToolbarGroup>
             <ToolbarGroup lastChild={ true }>
               <RaisedButton primary={ true } onClick={this.toggleLabel} label={this.state.interest ? 'Project selected' : 'I like this project!'}/>
             </ToolbarGroup>
           </Toolbar>
-          <UserList {...this.props}/>
+          <UserList {...this.props} />
         </Paper>
       </Paper>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+  const projectId = Number(props.match.params.id);
   return {
     users: state.users,
+    project: state.projects.filter(project => project.id === projectId)[0],
   };
 };
 
@@ -103,6 +105,10 @@ const mapDispatchToProps = (dispatch) => {
       type: 'USERS_ADD',
       users: users
     }),
+    dispatchInterest: projectId => dispatch({
+      type: 'TOGGLE_PROJECT_INTEREST',
+      projectId: this.props.project.id
+    })
   };
 };
 
