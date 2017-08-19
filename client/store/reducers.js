@@ -41,9 +41,21 @@ const projects = (state, action) => {
   return state;
 };
 
+const messages = (state, action) => {
+  if (state === undefined) {
+    return {};
+  } else if (action.type === 'MESSAGE_SEND') {
+    const newMessages = {};
+    newMessages[action.userId] = state[action.userId] ? state[action.userId].concat(action.message) : [action.message];
+    return Object.assign({}, state, newMessages);
+  }
+  return state;
+};
+
 // hands off to container components with mapStateToProps
 export default combineReducers({
   message: changeString,
   users,
   projects,
+  messages,
 });
