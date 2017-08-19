@@ -33,7 +33,12 @@ exports.api = {
           WITH user, group, project
           MATCH (pair:User)-->(group)-->(project)
           WHERE NOT pair = user
-          WITH COLLECT(ID(pair)) as pairs, project
+          WITH COLLECT(ID(pair)) as pairs,  project
+          RETURN pairs, project
+          UNION
+          MATCH (user:User {ghId: ${ req.user.ghInfo.id }}), (project:Project)
+          WHERE NOT (user)-->(:Group)-->(project)
+          WITH false as pairs, project
           RETURN pairs, project`)
           .then((res) => {
             resolve(res.records.map(project => 
