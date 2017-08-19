@@ -46,8 +46,10 @@ const messages = (state, action) => {
     return {};
   } else if (action.type === 'MESSAGE_SEND') {
     const newMessages = {};
-    newMessages[action.userId] = state[action.userId] ? state[action.userId].concat(action.message) : [action.message];
+    newMessages[action.userId] = state[action.userId] ? [action.message].concat(state[action.userId]) : [action.message];
     return Object.assign({}, state, newMessages);
+  } else if (action.type === 'MESSAGES_LOAD') {
+    return action.messages;
   }
   return state;
 };
