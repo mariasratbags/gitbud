@@ -115,6 +115,10 @@ exports.auth = {
           .then((result) => {
             res.json(new db.models.User(result.records[0].get('user')));
             dbSession.close();
+          })
+          .catch(() => {
+            res.send(false);
+            dbSession.close();
           });
       } else {
         res.send(false);
