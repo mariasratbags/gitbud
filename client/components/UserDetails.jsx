@@ -24,7 +24,7 @@ class UserDetails extends React.Component {
     this.expandCard = () => this.setState({ expanded: true });
     this.togglePair = this.togglePair.bind(this);
     this.pairButton = () => {
-      if (this.props.user.paired) {
+      if (this.props.user.paired.length > 0) {
         return <RaisedButton label='Partnered' labelColor={ fullWhite } backgroundColor='#a4c639' fullWidth={true} icon={ <ActionDone color={ fullWhite } /> } onClick={ this.togglePair } />
       } else if (this.props.match.params.projectId) {
         return <RaisedButton label='Work With Me' fullWidth={true} icon={ <ActionBuild /> } onClick={ this.togglePair } primary={ true } />
