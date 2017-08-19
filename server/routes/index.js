@@ -13,7 +13,7 @@ exports.api = {
         const dbSession = dbDriver.session();
         console.log('GET users');
         dbSession.run(`
-          MATCH (user:User)-[:INTERESTED_IN]-(project:Project)
+          MATCH (user:User)-[:INTERESTED_IN]->(project:Project)
           WHERE ID(project) = ${Number(req.headers.id)}
           RETURN user
         `)
@@ -106,8 +106,19 @@ exports.auth = {
       res.redirect('/');
     },
     authenticated: function checkAuthenticated(req, res) {
-      // Confirm if user signed in
-      res.send(req.isAuthenticated());
+      // If user signed in, send account details
+      if (req.isAuthenticated()) {
+        const dbSession = db.driver.session();
+        dbSession.run(`
+          MATCH (user:User {ghId: ${ req.user.ghInfo.id }}) RETURN user
+        `)
+          .then((result) => {
+            res.json(new db.models.User(result.records[0].get('user')));
+            dbSession.close();
+          });
+      } else {
+        res.send(false);
+      }
     },
     // Currently server handling--possibly review
     // github: function callback(req, res, urlParts) {
