@@ -55,7 +55,6 @@ class App extends React.Component {
   }
 
   togglePartyMode() {
-    console.log('party')
     const colors = ['blue', 'green', 'red', 'yellow', 'lilac'];
     if (this.state.partyMode) {
       clearInterval(this.state.partyMode);
@@ -83,8 +82,10 @@ class App extends React.Component {
               <Route path="/signup" component={Questionnaire} />
               <Route exact path="/projects" component={ProjectList} />
               <Route path="/projects/:id" component={ProjectDetails} />
+
               {/*Temporary until we implement logic for projects status page*/}
               <Route path="/status" component={ProjectStatus} />
+
               <Route path="/my-projects" component={MyProjects} />
               <Route path="/user/:id/:projectId?" component={UserDetails} />
               <Route component={NotFound} />
