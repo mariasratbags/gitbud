@@ -55,8 +55,7 @@ class UserDetails extends React.Component {
   }
 
   pairButton() {
-    const isPaired = this.props.user.paired;
-    if (isPaired) {
+    if (this.props.user.paired.length > 0) {
       return <RaisedButton
         label='Partnered'
         labelColor={ fullWhite }
