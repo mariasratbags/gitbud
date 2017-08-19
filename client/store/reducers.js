@@ -30,6 +30,13 @@ const projects = (state, action) => {
       }
       return project;
     });
+  } else if (action.type === 'CHANGE_USER_PAIRING') {
+    return state.map((project) => {
+      if (project.id === action.projectId) {
+        return Object.assign({}, project, { paired: action.userId });
+      }
+      return project;
+    });
   }
   return state;
 };

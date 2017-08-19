@@ -25,7 +25,9 @@ function AppDrawer(props) {
           <Link to='/projects'>
             <RaisedButton label="Find Projects" fullWidth={ true } primary={ true } onClick={ props.closeDrawer } icon={ <DeviceDeveloperMode/> }/>
           </Link>
-          <RaisedButton label="My Projects" fullWidth={ true } onClick={ props.closeDrawer }/>
+          <Link to='/my-projects'>
+            <RaisedButton label="My Projects" fullWidth={ true } onClick={ props.closeDrawer }/>
+          </Link>
           </div>
         </Card>
       <Card style={ { margin: 12, width: '90%', paddingBottom: 12 } }>
