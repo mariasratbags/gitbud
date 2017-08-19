@@ -15,7 +15,7 @@ import Nav from './Nav';
 import AppDrawer from './AppDrawer';
 import Landing from './Landing';
 import UserDetails from './UserDetails';
-import ProjectDetails from './ProjectDetails';
+import Project from './Project';
 import ProjectStatus from './ProjectStatus';
 import ProjectList from './ProjectList';
 import Questionnaire from './Questionnaire';
@@ -40,6 +40,7 @@ class App extends React.Component {
   getProjects() {
     axios.get('/API/projects/')
       .then((project) => {
+        console.log(project);
         this.props.addProjectsList(project.data);
       })
       .catch(console.error);
@@ -81,7 +82,7 @@ class App extends React.Component {
               <Route exact path="/" component={Landing} />
               <Route path="/signup" component={Questionnaire} />
               <Route exact path="/projects" component={ProjectList} />
-              <Route path="/projects/:id" component={ProjectDetails} />
+              <Route path="/projects/:id" component={Project} />
 
               {/*Temporary until we implement logic for projects status page*/}
               <Route path="/status" component={ProjectStatus} />
