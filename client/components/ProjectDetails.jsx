@@ -83,7 +83,7 @@ class ProjectDetails extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-  const projectId = Number(props.match.params.id);
+  const projectId = Number(props.routedProjectId);
   return {
     users: state.users,
     project: state.projects.filter(project => project.id === projectId)[0],
