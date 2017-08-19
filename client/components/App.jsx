@@ -14,6 +14,7 @@ import SocialPartyMode from 'material-ui/svg-icons/social/party-mode';
 import Nav from './Nav';
 import AppDrawer from './AppDrawer';
 import Landing from './Landing';
+import UserProfile from './UserProfile';
 import UserDetails from './UserDetails';
 import Project from './Project';
 import ProjectStatus from './ProjectStatus';
@@ -40,7 +41,6 @@ class App extends React.Component {
   getProjects() {
     axios.get('/API/projects/')
       .then((project) => {
-        console.log(project);
         this.props.addProjectsList(project.data);
       })
       .catch(console.error);
@@ -52,7 +52,9 @@ class App extends React.Component {
 
   checkAuthenticated() {
     axios.get('/auth/authenticated')
-      .then(res => this.setState({ loggedIn: res.data }));
+      .then(res => {
+        this.setState({ loggedIn: res.data })
+      });
   }
 
   togglePartyMode() {
@@ -88,6 +90,11 @@ class App extends React.Component {
               <Route path="/status" component={ProjectStatus} />
 
               <Route path="/my-projects" component={MyProjects} />
+
+              {/* {console.log('loggedIn: ', this.state.loggedIn)} */}
+              <Route exact path='/user'
+                render={() => (<UserProfile user={this.state.loggedIn} />) } />
+
               <Route path="/user/:id/:projectId?" component={UserDetails} />
               <Route component={NotFound} />
             </Switch>
