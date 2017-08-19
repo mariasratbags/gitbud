@@ -16,6 +16,7 @@ import AppDrawer from './AppDrawer';
 import Landing from './Landing';
 import UserDetails from './UserDetails';
 import ProjectDetails from './ProjectDetails';
+import ProjectStatus from './ProjectStatus';
 import ProjectList from './ProjectList';
 import Questionnaire from './Questionnaire';
 import NotFound from './NotFound';
@@ -61,7 +62,7 @@ class App extends React.Component {
       document.body.setAttribute('style', `background-color:white`);
       this.setState({ partyMode: false });
     } else {
-      this.setState({partyMode: 
+      this.setState({partyMode:
         setInterval(() => {
           const randomNum = Math.floor(Math.random() * colors.length);
           document.body.setAttribute('style', `background-color:${colors[randomNum]}`);
@@ -82,6 +83,8 @@ class App extends React.Component {
               <Route path="/signup" component={Questionnaire} />
               <Route exact path="/projects" component={ProjectList} />
               <Route path="/projects/:id" component={ProjectDetails} />
+              {/*Temporary until we implement logic for projects status page*/}
+              <Route path="/status" component={ProjectStatus} />
               <Route path="/my-projects" component={MyProjects} />
               <Route path="/user/:id/:projectId?" component={UserDetails} />
               <Route component={NotFound} />
