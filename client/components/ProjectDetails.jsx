@@ -59,7 +59,7 @@ class ProjectDetails extends React.Component {
               <ToolbarTitle text={ this.props.project.project } />
             </ToolbarGroup>
             <ToolbarGroup lastChild={ true }>
-              <RaisedButton secondary={ true } label="See on GitHub"/>
+              <RaisedButton secondary={ true } label="See on GitHub" href={this.props.project.link} target="_blank"/>
             </ToolbarGroup>
           </Toolbar>
           <CardText>
