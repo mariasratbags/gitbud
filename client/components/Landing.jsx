@@ -16,7 +16,7 @@ function Landing(props) {
     props.checkAuth();
   }
   return (
-    <Card style={ { width: '25%', margin: 'auto', paddingBottom: 12, marginTop: 12 } }>
+    <Card style={ { maxWidth: '300px', width: '75%', margin: 'auto', paddingBottom: 12, marginTop: 12 } }>
       <AppBar title="Welcome to GitBud!" style={style} showMenuIconButton={ false }/>
       <CardMedia>
         <img src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"/>
