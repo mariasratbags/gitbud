@@ -10,7 +10,7 @@ const users = (state, action) => {
   } else if (action.type === 'CHANGE_USER_PAIRING') {
     return state.map((user) => {
       if (user.id === action.userId) {
-        return Object.assign({}, user, { paired: action.projectId });
+        return Object.assign({}, user, { paired: user.paired.concat(action.projectId) });
       }
       return user;
     });
@@ -33,7 +33,7 @@ const projects = (state, action) => {
   } else if (action.type === 'CHANGE_USER_PAIRING') {
     return state.map((project) => {
       if (project.id === action.projectId) {
-        return Object.assign({}, project, { paired: action.userId });
+        return Object.assign({}, project, { paired: project.paired.concat(action.userId) });
       }
       return project;
     });

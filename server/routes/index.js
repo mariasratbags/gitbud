@@ -12,13 +12,23 @@ exports.api = {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('GET users');
+        const ghId = req.user.ghInfo.id;
+        const projectId = Number(req.headers.id);
         dbSession.run(`
-          MATCH (user:User)-[:INTERESTED_IN]->(project:Project)
-          WHERE ID(project) = ${Number(req.headers.id)}
-          RETURN user
+          MATCH (pair:User)-->(group:Group)<--(user:User {ghId: ${ghId}}),
+            (group)-->(pairedProject:Project),
+            (pair)-[:INTERESTED_IN]->(project:Project)
+          WHERE ID(project) = ${projectId}
+          RETURN pair, COLLECT(ID(pairedProject)) as projects
+          UNION
+          MATCH (pair:User)-[:INTERESTED_IN]->(project:Project)
+          WHERE ID(project) = ${projectId} AND NOT (pair)-->(:Group)<--(:User {ghId: ${ghId}})
+          RETURN pair, false as projects
         `)
           .then((res) => {
-            resolve(res.records.map(user => new db.models.User(user.get('user'))))
+            resolve(
+              res.records.map(user => new db.models.User(user.get('pair'), user.get('projects')))
+            )
           })
           .catch(reject)
           .then(() => dbSession.close());
@@ -28,18 +38,19 @@ exports.api = {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('GET projects');
+        const ghId = req.user.ghInfo.id;
         dbSession.run(`
-            MATCH (user:User {ghId: ${ req.user.ghInfo.id }})-->(group:Group)-->(project:Project)
+            MATCH (user:User {ghId: ${ghId}})-->(group:Group)-->(project:Project)
             WITH user, group, project
             MATCH (pair:User)-->(group)-->(project)
             WHERE NOT pair = user
             RETURN COLLECT(ID(pair)) as pairs, true as interested, project
             UNION
-            MATCH (user:User {ghId: ${ req.user.ghInfo.id }})-[:INTERESTED_IN]->(project:Project)
+            MATCH (user:User {ghId: ${ghId}})-[:INTERESTED_IN]->(project:Project)
             WHERE NOT (user)-->(:Group)-->(project)
             RETURN false as pairs, true as interested, project
             UNION
-            MATCH (user:User {ghId: ${ req.user.ghInfo.id }}), (project:Project)
+            MATCH (user:User {ghId: ${ghId}}), (project:Project)
             WHERE NOT (user)-->(:Group)-->(project) AND NOT (user)-[:INTERESTED_IN]->(project)
             RETURN false as pairs, false as interested, project
          `)
