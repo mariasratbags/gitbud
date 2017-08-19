@@ -16,17 +16,17 @@ const dropGraph = function dropGraph() {
 
 const addUsersQueryString = `
   CREATE
-    (:User {rating: 50, name: 'Brian', language: 'JavaScript'}),
-    (:User {rating: 50, name: 'Peter', language: 'JavaScript'}),
-    (:User {rating: 50, name: 'Francis', language: 'JavaScript'}),
-    (:User {rating: 50, name: 'Shaikat', language: 'JavaScript'})
+    (:User {rating: 80, name: 'Robb Stark', language: 'JavaScript'}),
+    (:User {rating: 90, name: 'Arya Stark', language: 'JavaScript'}),
+    (:User {rating: 100, name: 'Jon Snow', language: 'JavaScript'}),
+    (:User {rating: 70, name: 'Bran Stark', language: 'JavaScript'})
   `;
 
 // Add user nodes
 function addUsers() {
   return session.run(addUsersQueryString)
     .then((result) => {
-      console.log('users added');
+      console.log('Users added');
     })
     .catch((error) => {
       session.close();
@@ -36,15 +36,15 @@ function addUsers() {
 
 const addProjectsQueryString = `
   CREATE
-    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner', link: 'https://github.com/cranebaes/hello-gitbud'}),
-    (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced', link: 'https://github.com/cranebaes'})
+    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'Beginner', link: 'https://github.com/cranebaes/hello-gitbud'}),
+    (:Project {project: 'N-Queens', language:'JavaScript', experience: 'Advanced', link: 'https://github.com/cranebaes'})
   `;
 
 // Add project nodes
 const addProjects = function addProjects() {
   return session.run(addProjectsQueryString)
     .then((result) => {
-      console.log('projects added');
+      console.log('Projects added');
     })
     .catch((error) => {
       session.close();
@@ -54,17 +54,17 @@ const addProjects = function addProjects() {
 
 //Create INTERESTED_IN relationships between users and projects
 const addInterestedInRelationshipsQueryString = `
-  MATCH (brian:User) WHERE brian.name = "Brian"
-  MATCH (peter:User) WHERE peter.name = "Peter"
-  MATCH (francis:User) WHERE francis.name = "Francis"
-  MATCH (shaikat:User) WHERE shaikat.name = "Shaikat"
+  MATCH (robb:User) WHERE robb.name = "Robb Stark"
+  MATCH (arya:User) WHERE arya.name = "Arya Stark"
+  MATCH (jon:User) WHERE jon.name = "Jon Snow"
+  MATCH (bran:User) WHERE bran.name = "Bran Stark"
   MATCH (helloGitBud:Project) WHERE helloGitBud.project = "Hello GitBud"
   MATCH (nQueens:Project) WHERE nQueens.project = "N-Queens"
   CREATE
-    (brian)-[:INTERESTED_IN]->(helloGitBud),
-    (peter)-[:INTERESTED_IN]->(helloGitBud),
-    (francis)-[:INTERESTED_IN]->(nQueens),
-    (shaikat)-[:INTERESTED_IN]->(nQueens)
+    (robb)-[:INTERESTED_IN]->(helloGitBud),
+    (arya)-[:INTERESTED_IN]->(helloGitBud),
+    (jon)-[:INTERESTED_IN]->(nQueens),
+    (bran)-[:INTERESTED_IN]->(nQueens)
   `;
 
 const addInterestedInRelationships = function addInterestedInRelationships() {
@@ -80,20 +80,20 @@ const addInterestedInRelationships = function addInterestedInRelationships() {
 
 // Add pair
 const addPairQueryString = `
-  MATCH (brian:User) WHERE brian.name = "Brian"
-  MATCH (shaikat:User) WHERE shaikat.name = "Shaikat"
+  MATCH (robb:User) WHERE robb.name = "Robb Stark"
+  MATCH (bran:User) WHERE bran.name = "Bran Stark"
   MATCH (nQueens:Project) WHERE nQueens.project = "N-Queens"
   CREATE
     (group:Group),
-    (brian)-[:PAIRED_WITH]->(group),
-    (shaikat)-[:PAIRED_WITH]->(group),
+    (robb)-[:PAIRED_WITH]->(group),
+    (bran)-[:PAIRED_WITH]->(group),
     (group)-[:WORKING_ON]->(nQueens)
   `;
 
 const addPair = function addPair() {
   return session.run(addPairQueryString)
     .then((result) => {
-      console.log('pair added');
+      console.log('PAIRED_WITH relationships added');
     })
     .catch((error) => {
       session.close();
