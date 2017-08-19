@@ -11,7 +11,7 @@
 */
 
 exports.User = class User {
-  constructor(user) {
+  constructor(user, pairs) {
     this.id = user.identity.toNumber();
     this.username = user.properties.username;
     this.name = user.properties.name;
@@ -20,6 +20,7 @@ exports.User = class User {
       this.ghId = user.properties.ghId.toNumber();
     }
     this.rating = user.properties.rating.toNumber();
+    this.paired = pairs ? pairs.map(pair => pair.toNumber()) : [];
   }
 }
 
@@ -38,7 +39,7 @@ exports.Project = class Project {
     this.language = project.properties.language;
     this.experience = project.properties.experience;
     this.link = project.properties.link;
-    this.paired = pairs ? pairs.map(pair => pair.toNumber()) : pairs;
+    this.paired = pairs ? pairs.map(pair => pair.toNumber()) : [];
     this.interested = interested;
   }
 }
