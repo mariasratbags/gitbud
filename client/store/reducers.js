@@ -54,10 +54,38 @@ const messages = (state, action) => {
   return state;
 };
 
+const projectProgress = (state, action) => {
+  if (state === undefined) {
+    return {
+      277:
+        [
+          {
+            text: 'Do the thing',
+            complete: false,
+          },
+          {
+            text: 'Do the other thing',
+            complete: true,
+          }
+        ]
+    }
+  } else if (action.type === 'PROGRESS_CHANGE_ITEM') {
+    const newProgress = {};
+    const stateProject = state[action.projectId];
+    newProgress[action.projectId] = stateProject.slice();
+    const updatedProject = newProgress[action.projectId];
+    updatedProject[action.itemIndex] = Object.assign({}, stateProject[action.itemIndex]);
+    updatedProject[action.itemIndex].complete = !updatedProject[action.itemIndex].complete;
+    return newProgress;
+  }
+  return state;
+};
+
 // hands off to container components with mapStateToProps
 export default combineReducers({
   message: changeString,
   users,
   projects,
   messages,
+  projectProgress,
 });
