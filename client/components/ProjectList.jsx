@@ -35,7 +35,7 @@ const ProjectList = (props) => {
               <TableHeaderColumn>Experience</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody stripedRows={ true }>
+          <TableBody stripedRows={ true } displayRowCheckbox={ false }>
             {props.projects.map(project =>
               (<TableRow key={ project.id }>
                 <TableRowColumn><Link to={`/projects/${ project.id }`}>{ project.project }</Link></TableRowColumn>
