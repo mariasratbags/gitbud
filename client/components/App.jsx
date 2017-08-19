@@ -19,6 +19,7 @@ import ProjectDetails from './ProjectDetails';
 import ProjectList from './ProjectList';
 import Questionnaire from './Questionnaire';
 import NotFound from './NotFound';
+import MyProjects from './MyProjects';
 
 class App extends React.Component {
   constructor(props) {
@@ -81,6 +82,7 @@ class App extends React.Component {
               <Route path="/signup" component={Questionnaire} />
               <Route exact path="/projects" component={ProjectList} />
               <Route path="/projects/:id" component={ProjectDetails} />
+              <Route path="/my-projects" component={MyProjects} />
               <Route path="/user/:id/:projectId?" component={UserDetails} />
               <Route component={NotFound} />
             </Switch>
