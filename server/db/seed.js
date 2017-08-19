@@ -78,11 +78,35 @@ const addInterestedInRelationships = function addInterestedInRelationships() {
     });
 }
 
+// Add pair
+const addPairQueryString = `
+  MATCH (brian:User) WHERE brian.name = "Brian"
+  MATCH (shaikat:User) WHERE shaikat.name = "Shaikat"
+  MATCH (nQueens:Project) WHERE nQueens.project = "N-Queens"
+  CREATE 
+    (group:Group),
+    (brian)-[:PAIRED_WITH]->(group),
+    (shaikat)-[:PAIRED_WITH]->(group),
+    (group)-[:WORKING_ON]->(nQueens)
+  `;
+
+const addPair = function addPair() {
+  return session.run(addPairQueryString)
+    .then((result) => {
+      console.log('pair added');
+    })
+    .catch((error) => {
+      session.close();
+      throw error;
+    });
+}
+
 // Call functions that seed the db
 dropGraph()
   .then(addUsers)
   .then(addProjects)
   .then(addInterestedInRelationships)
+  .then(addPair)
   .then(() => {
     session.close();
     driver.close();

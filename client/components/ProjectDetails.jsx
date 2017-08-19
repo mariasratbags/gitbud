@@ -39,7 +39,7 @@ class ProjectDetails extends React.Component {
 
   toggleInterest() {
     axios.post('/API/projects', {
-      interest: this.props.project.id,
+      projectId: this.props.project.id,
     })
       .then((response) => {
         this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
