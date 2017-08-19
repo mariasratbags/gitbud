@@ -20,3 +20,10 @@ exports.Project = class Project {
     this.link = project.properties.link;
   }
 }
+
+exports.ProjectInProgress = class ProjectInProgress extends exports.Project {
+  constructor(project, pairs) {
+    super(project);
+    this.pairs = pairs;
+  }
+}

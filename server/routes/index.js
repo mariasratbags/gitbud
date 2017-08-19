@@ -24,13 +24,21 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
-    projects: function getProjects() {
+    projects: function getProjects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('GET projects');
-        dbSession.run(`MATCH (project:Project) RETURN project`)
+        dbSession.run(`
+          MATCH (user:User {ghId: ${ req.user.ghInfo.id }})-->(group:Group)-->(project:Project)
+          WITH user, group, project
+          MATCH (pair:User)-->(group)-->(project)
+          WHERE NOT pair = user
+          WITH COLLECT(ID(pair)) as pairs, project
+          RETURN pairs, project`)
           .then((res) => {
-            resolve(res.records.map(project => new db.models.Project(project.get('project'))))
+            resolve(res.records.map(project => 
+              new db.models.ProjectInProgress(project.get('project'), project.get('pairs').map(pair => pair.toNumber()))
+            ));
           })
           .catch(reject)
           .then(() => dbSession.close());
