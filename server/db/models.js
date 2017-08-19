@@ -12,18 +12,13 @@ exports.User = class User {
 }
 
 exports.Project = class Project {
-  constructor(project) {
+  constructor(project, pairs, interested) {
     this.id = project.identity.toNumber();
     this.project = project.properties.project;
     this.language = project.properties.language;
     this.experience = project.properties.experience;
     this.link = project.properties.link;
-  }
-}
-
-exports.ProjectInProgress = class ProjectInProgress extends exports.Project {
-  constructor(project, pairs) {
-    super(project);
     this.paired = pairs ? pairs.map(pair => pair.toNumber()) : pairs;
+    this.interested = interested;
   }
 }
