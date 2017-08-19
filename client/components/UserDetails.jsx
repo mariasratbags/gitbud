@@ -18,12 +18,26 @@ class UserDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false
+      expanded: false,
+      message: '',
     }
     this.paired = false;
     this.expandCard = () => this.setState({ expanded: true });
     this.togglePair = this.togglePair.bind(this);
     this.pairButton = this.pairButton.bind(this);
+    this.setMessageText = (_, text) => this.setState({ message: text });
+    this.sendMessage = () => {
+      axios.post('/API/messages', {
+        text: this.state.message,
+        recipient: this.props.user.id,
+      })
+        .then(() => {
+          this.props.dispatchMessage(this.props.user.id, {
+            text: this.state.message,
+            sender: true,
+          });
+        });
+    };
   }
 
   togglePair() {
@@ -84,10 +98,17 @@ class UserDetails extends React.Component {
               floatingLabelText="Ask user to pair up"
               hintText="Enter your message"
               style={{ padding: 20 }}
+              onChange={ this.setMessageText }
             />
           </div>
           <div expandable={true}>
-            <RaisedButton label="Send" fullWidth={true} icon={<ContentSend />} secondary={true}/>
+            <RaisedButton label="Send" onClick={ this.sendMessage } fullWidth={true} icon={<ContentSend />} secondary={true}/>
+            { this.props.messages.map((message, index) =>
+              <Card key={ index }>
+                <CardTitle>{ message.sender ? 'You' : this.props.user.name }</CardTitle>
+                <CardText>{ message.text }</CardText>
+              </Card>
+            )}
           </div>
         </Card>
       </Paper>
@@ -98,13 +119,15 @@ class UserDetails extends React.Component {
 const mapStateToProps = (state, props) => {
   const userId = Number(props.match.params.id);
   return {
-    user: state.users.filter(user => user.id === userId)[0]
+    user: state.users.filter(user => user.id === userId)[0],
+    messages: state.messages[userId] || [],
   };
 };
 
 const mapDispatchToProps = dispatch =>
   ({
-    dispatchPairing: (userId, projectId) => dispatch({ type: 'CHANGE_USER_PAIRING', userId, projectId })
+    dispatchPairing: (userId, projectId) => dispatch({ type: 'CHANGE_USER_PAIRING', userId, projectId }),
+    dispatchMessage: (userId, message) => dispatch({ type: 'MESSAGE_SEND', userId, message }),
   });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);

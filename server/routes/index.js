@@ -8,6 +8,33 @@ exports.react = new Set(['user', 'projects']);
 // request handlers for server routes
 exports.api = {
   GET: {
+    messages: function getMessages(req) {
+      return new Promise((resolve, reject) => {
+        console.log('GET messages');
+        const dbSession = dbDriver.session();
+        dbSession.run(`
+          MATCH (:User {ghId: ${req.user.ghInfo.id}})-[to_user]-(message:Message)--(other:User)
+          RETURN message, to_user, other ORDER BY message.created_at DESC
+        `)
+          .then((res) => {
+            const messages = {};
+            res.records.forEach((record) => {
+              const text = record.get('message').properties.text;
+              const userId = record.get('other').identity.toNumber();
+              const sender = record.get('to_user').type === 'SENT';
+              console.log({ text, userId, sender });
+              messages[userId] = messages[userId]
+                ? messages[userId].concat({ sender, text })
+                : [{ sender, text }];
+            });
+            resolve(messages);
+          })
+          .catch((err) => {
+            reject(err);
+            dbSession.close();
+          });
+      });
+    },
     users: function getUsers(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -104,6 +131,26 @@ exports.api = {
           .catch(reject)
           .then(() => dbSession.close());
       });
+    },
+    messages: function sendMessage(req) {
+      return new Promise((resolve, reject) => {
+        const dbSession = dbDriver.session();
+        const message = req.body;
+        console.log('POST messages', message);
+        dbSession.run(`
+          MATCH (user:User {ghId: ${ req.user.ghInfo.id }}), (recipient:User)
+          WHERE ID(recipient) = ${ req.body.recipient }
+          CREATE (user)-[:SENT]->(:Message {text: '${ req.body.text.replace('\'', '\\\'') }', created_at: TIMESTAMP()})-[:RECEIVED]->(recipient)
+        `)
+          .then(() => {
+            resolve();
+            dbSession.close();
+          })
+          .catch((err) => {
+            reject(err);
+            dbSession.close();
+          })
+      });
     }
   },
 
@@ -119,7 +166,7 @@ exports.auth = {
     authenticated: function checkAuthenticated(req, res) {
       // If user signed in, send account details
       if (req.isAuthenticated()) {
-        const dbSession = db.driver.session();
+        const dbSession = dbDriver.session();
         dbSession.run(`
           MATCH (user:User {ghId: ${ req.user.ghInfo.id }}) RETURN user
         `)

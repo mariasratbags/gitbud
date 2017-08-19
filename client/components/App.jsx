@@ -33,6 +33,7 @@ class App extends React.Component {
     }
 
     this.getProjects();
+    this.getMessages();
     this.navTap = this.navTap.bind(this);
     this.checkAuthenticated = this.checkAuthenticated.bind(this);
     this.togglePartyMode = this.togglePartyMode.bind(this);
@@ -42,6 +43,15 @@ class App extends React.Component {
     axios.get('/API/projects/')
       .then((project) => {
         this.props.addProjectsList(project.data);
+      })
+      .catch(console.error);
+  }
+
+  getMessages() {
+    axios.get('/API/messages')
+      .then((res) => {
+        console.log(res.data);
+        this.props.loadMessages(res.data);
       })
       .catch(console.error);
   }
@@ -125,6 +135,10 @@ const mapDispatchToProps = (dispatch) => {
     addProjectsList: projects => dispatch({
       type: 'LIST_PROJECTS',
       projects,
+    }),
+    loadMessages: messages => dispatch({
+      type: 'MESSAGES_LOAD',
+      messages,
     }),
   };
 };
