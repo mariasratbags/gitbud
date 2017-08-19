@@ -26,7 +26,18 @@ class UserDetails extends React.Component {
     this.togglePair = this.togglePair.bind(this);
     this.pairButton = this.pairButton.bind(this);
     this.setMessageText = (_, text) => this.setState({ message: text });
-    this.sendMessage = () => this.props.dispatchMessage(this.props.user.id, { text: this.state.message, recipient: false });
+    this.sendMessage = () => {
+      axios.post('/API/messages', {
+        text: this.state.message,
+        recipient: this.props.user.id,
+      })
+        .then(() => {
+          this.props.dispatchMessage(this.props.user.id, {
+            text: this.state.message,
+            sender: true,
+          });
+        });
+    };
   }
 
   togglePair() {
@@ -92,9 +103,9 @@ class UserDetails extends React.Component {
           </div>
           <div expandable={true}>
             <RaisedButton label="Send" onClick={ this.sendMessage } fullWidth={true} icon={<ContentSend />} secondary={true}/>
-            { this.props.messages.map(message =>
-              <Card>
-                <CardTitle>{ message.recipient ? this.props.user.name : 'You' }</CardTitle>
+            { this.props.messages.map((message, index) =>
+              <Card key={ index }>
+                <CardTitle>{ message.sender ? 'You' : this.props.user.name }</CardTitle>
                 <CardText>{ message.text }</CardText>
               </Card>
             )}
