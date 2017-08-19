@@ -24,6 +24,6 @@ exports.Project = class Project {
 exports.ProjectInProgress = class ProjectInProgress extends exports.Project {
   constructor(project, pairs) {
     super(project);
-    this.pairs = pairs;
+    this.pairs = pairs.map(pair => pair.toNumber());
   }
 }

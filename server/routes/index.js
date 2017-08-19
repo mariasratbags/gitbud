@@ -37,7 +37,7 @@ exports.api = {
           RETURN pairs, project`)
           .then((res) => {
             resolve(res.records.map(project => 
-              new db.models.ProjectInProgress(project.get('project'), project.get('pairs').map(pair => pair.toNumber()))
+              new db.models.ProjectInProgress(project.get('project'), project.get('pairs'))
             ));
           })
           .catch(reject)

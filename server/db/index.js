@@ -8,4 +8,4 @@ const password = process.env.GRAPHENEDB_BOLT_PASSWORD || 'neo';
 exports.driver = neo4j.driver(url, neo4j.auth.basic(username, password));
 
 // exports models to deal with search results
-exports.models = require('./schema');
+exports.models = require('./models');
