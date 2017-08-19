@@ -39,7 +39,7 @@ exports.api = {
   },
   POST: {
     projects: function projects(req) {
-      console.log()
+      console.log(req.body)
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('POST projects');
@@ -81,7 +81,7 @@ exports.api = {
       });
     }
   },
-  
+
 };
 
 exports.auth = {

@@ -17,5 +17,6 @@ exports.Project = class Project {
     this.project = project.properties.project;
     this.language = project.properties.language;
     this.experience = project.properties.experience;
+    this.link = project.properties.link;
   }
 }

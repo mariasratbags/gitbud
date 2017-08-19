@@ -36,8 +36,8 @@ function addUsers() {
 
 const addProjectsQueryString = `
   CREATE
-    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner'}),
-    (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced'})
+    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'beginner', link: 'https://github.com/cranebaes/hello-gitbud'}),
+    (:Project {project: 'N-Queens', language:'Assembly', experience: 'advanced', link: 'https://github.com/cranebaes'})
   `;
 
 // Add project nodes
@@ -60,7 +60,7 @@ const addInterestedInRelationshipsQueryString = `
   MATCH (shaikat:User) WHERE shaikat.name = "Shaikat"
   MATCH (helloGitBud:Project) WHERE helloGitBud.project = "Hello GitBud"
   MATCH (nQueens:Project) WHERE nQueens.project = "N-Queens"
-  CREATE 
+  CREATE
     (brian)-[:INTERESTED_IN]->(helloGitBud),
     (peter)-[:INTERESTED_IN]->(helloGitBud),
     (francis)-[:INTERESTED_IN]->(nQueens),
@@ -83,7 +83,7 @@ const addPairQueryString = `
   MATCH (brian:User) WHERE brian.name = "Brian"
   MATCH (shaikat:User) WHERE shaikat.name = "Shaikat"
   MATCH (nQueens:Project) WHERE nQueens.project = "N-Queens"
-  CREATE 
+  CREATE
     (group:Group),
     (brian)-[:PAIRED_WITH]->(group),
     (shaikat)-[:PAIRED_WITH]->(group),
