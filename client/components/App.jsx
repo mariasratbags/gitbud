@@ -16,7 +16,6 @@ import AppDrawer from './AppDrawer';
 import Landing from './Landing';
 import UserDetails from './UserDetails';
 import Project from './Project';
-import ProjectDetails from './ProjectDetails';
 import ProjectStatus from './ProjectStatus';
 import ProjectList from './ProjectList';
 import Questionnaire from './Questionnaire';
