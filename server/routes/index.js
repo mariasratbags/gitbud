@@ -200,7 +200,14 @@ exports.api = {
     progress: function updateProgress(req) {
       return new Promise((resolve, reject) => {
         console.log(req.body);
-        resolve();
+        const dbSession = dbDriver.session();
+        dbSession.run(`
+          MATCH (:User {ghId: ${req.user.ghInfo.id}})-->(group:Group)-->(project:Project)
+          WHERE ID(project) = ${req.body.projectId}
+          SET group.progress = '${JSON.stringify(req.body.progress).replace('\'', '\\\'')}'
+        `)
+          .then(() => resolve())
+          .catch(reject);
       })
     }
   },
