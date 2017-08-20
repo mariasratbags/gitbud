@@ -21,6 +21,9 @@ exports.User = class User {
     }
     this.rating = user.properties.rating.toNumber();
     this.paired = pairs ? pairs.map(pair => pair.toNumber()) : [];
+    this.language = user.properties.language;
+    this.experience = user.properties.experience;
+    this.description = user.properties.description;
   }
 }
 
