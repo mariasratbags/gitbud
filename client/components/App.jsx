@@ -102,7 +102,6 @@ class App extends React.Component {
 
               <Route path="/my-projects" component={MyProjects} />
 
-              {/* {console.log('loggedIn: ', this.state.loggedIn)} */}
               <Route exact path='/user'
                 render={() => (<UserProfile user={this.state.loggedIn} />) } />
 
