@@ -28,14 +28,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       drawerOpen: false,
-      loggedIn: false,
+      loggedIn: this.checkAuthenticated,
       partyMode: false,
     }
 
     this.getProjects();
     this.getMessages();
     this.navTap = this.navTap.bind(this);
-    this.checkAuthenticated = this.checkAuthenticated.bind(this);
+    this.checkAuthenticated();
     this.togglePartyMode = this.togglePartyMode.bind(this);
   }
 
