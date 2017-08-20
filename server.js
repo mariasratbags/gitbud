@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 // Libraries for authentication and sessions
 const session = require('express-session');
 // GitBud modules
-const passport = require('./server/authentication');
+const passport = require('./server/authentication').passport;
 const requestHandler = require('./server/request-handler');
 const db = require('./server/db');
 
@@ -31,15 +31,6 @@ app.use(session({
 // Set server to use initialized passport from authentication module
 app.use(passport.initialize());
 app.use(passport.session());
-// Specify github strategy to authenticate request
-app.get('/auth/github', passport.authenticate('github', { scope: ['user', 'repo'] }));
-// Handle callback URL after authentication
-app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
-    // upon successful authentication, redirect to projects
-    res.redirect('/projects');
-  }
-);
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'dist')));

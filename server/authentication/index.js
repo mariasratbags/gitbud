@@ -45,4 +45,9 @@ passport.deserializeUser((user, done) => {
   done(null, userInfo);
 });
 
-module.exports = passport;
+// Export passport object as required for app and request-handler
+exports.passport = passport;
+// Tell passport to use GitHub strategy and set scope
+exports.authenticate = passport.authenticate('github', { scope: ['user', 'repo'] });
+// Handle callback URL after GitHub authentication
+exports.callback = (req, res) => passport.authenticate('github', { failureRedirect: '/' })(req, res, () => res.redirect('/projects'));
