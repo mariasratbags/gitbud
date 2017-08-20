@@ -2,8 +2,7 @@
   This module contains request handlers for most of the routes
   as well as a set for quick responses where index.html is required.
 
-  There's a lot of repeated code in the .then() and .catch() blocks for
-  db queries, which you may find it helpful to modularise.
+  There's a lot of repeated code in the db queries, which you may find it helpful to modularise.
 */
 
 const db = require('../db');
@@ -20,6 +19,33 @@ exports.react = new Set(['user', 'projects']);
 */
 exports.api = {
   GET: {
+    /*
+      GET METHODS
+    */
+    // Returns an object with numerical properties representing
+    // project IDs each with a value of an array of checkpoints of the form
+    // { text: prompt(string), hint: hint on how to tackle prompt(string), complete: completion status of prompt(bool) }
+    progress: function getProgress(req) {
+      return new Promise((resolve, reject) => {
+        console.log('GET progress');
+        const dbSession = dbDriver.session();
+        dbSession.run(`
+          MATCH (:User {ghId: ${req.user.ghInfo.id}})-->(group:Group)-->(project:Project)
+          RETURN group, project
+        `)
+          .then((res) => {
+            console.log(res);
+            const projectProgress = {};
+            res.records.forEach((record) => {
+              const group = record.get('group').properties;
+              projectProgress[record.get('project').identity] = group.progress ? JSON.parse(group.progress) : [];
+            });
+            resolve(projectProgress);
+          })
+          .catch(reject);
+      });
+    },
+
     messages: function getMessages(req) {
       return new Promise((resolve, reject) => {
         console.log('GET messages');
@@ -47,6 +73,7 @@ exports.api = {
           });
       });
     },
+
     users: function getUsers(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -73,6 +100,7 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
     projects: function getProjects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -103,6 +131,9 @@ exports.api = {
       });
     },
   },
+  /*
+    POST METHODS
+  */
   POST: {
     projects: function projects(req) {
       console.log(req.body)
@@ -124,6 +155,7 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
     pair: function addPair(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -144,6 +176,7 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
     messages: function sendMessage(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
