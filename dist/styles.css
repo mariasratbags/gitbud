@@ -1,8 +1,20 @@
 body {
-   font-family: 'Roboto', sans-serif; 
+   font-family: 'Roboto', sans-serif;
  }
 
 .menu-button {
   margin: auto;
   width: '10px'
+}
+
+.img-container {
+  margin: 10px;
+  text-align: center;
+  max-width: 50%:
+}
+
+.img-circle {
+  max-width: 50%;
+  min-width: 50%;
+  border-radius: 50%;
 }

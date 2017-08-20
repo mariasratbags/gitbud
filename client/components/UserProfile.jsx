@@ -7,12 +7,17 @@ import { Card, CardMedia, CardText, CardTitle } from 'material-ui/Card';
 function UserProfile(props) {
   return (
     <Paper style={{ width: '95%', margin: 'auto', marginTop: 12, padding: 12 }}>
-      <Card style={{ width: '50%', marginLeft: 'auto', marginRight: 'auto', marginBottom: 12 }}>
+      <Card style={{ width: '40%', marginLeft: 'auto', marginRight: 'auto', marginBottom: 12 }}>
         <Toolbar>
           <ToolbarGroup>
             <ToolbarTitle text="User Profile" />
           </ToolbarGroup>
         </Toolbar>
+        <CardMedia>
+          <div className="img-container">
+            <img className="img-circle" src={ props.user.avatarUrl } alt="" />
+          </div>
+        </CardMedia>
         <CardTitle title={ props.user.name } subtitle="Experience: Beginner" />
         <div>
           <CardTitle title="Languages" subtitle='JavaScript, React, Spanish'/>

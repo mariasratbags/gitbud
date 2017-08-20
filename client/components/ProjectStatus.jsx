@@ -32,7 +32,6 @@ class ProjectStatus extends React.Component {
     this.setState({
       open: true
     });
-    console.log(this.props);
     this.props.submitProgress()
   }
 
