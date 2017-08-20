@@ -70,6 +70,7 @@ const projectProgress = (state, action) => {
         ]
     }
   } else if (action.type === 'PROGRESS_CHANGE_ITEM') {
+    console.log(JSON.stringify(state));
     const newProgress = {};
     const stateProject = state[action.projectId];
     newProgress[action.projectId] = stateProject.slice();

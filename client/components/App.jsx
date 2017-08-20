@@ -32,10 +32,12 @@ class App extends React.Component {
       partyMode: false,
     }
 
-    this.getProjects();
-    this.getMessages();
-    this.navTap = this.navTap.bind(this);
     this.checkAuthenticated();
+    if (this.state.loggedIn) {
+      this.getProjects();
+      this.getMessages();
+    }
+    this.navTap = this.navTap.bind(this);
     this.togglePartyMode = this.togglePartyMode.bind(this);
   }
 
