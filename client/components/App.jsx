@@ -27,16 +27,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loggedIn: false,
       drawerOpen: false,
-      loggedIn: this.checkAuthenticated,
       partyMode: false,
     }
 
     this.checkAuthenticated();
-    if (this.state.loggedIn) {
-      this.getProjects();
-      this.getMessages();
-    }
+
     this.navTap = this.navTap.bind(this);
     this.togglePartyMode = this.togglePartyMode.bind(this);
   }
@@ -63,8 +60,10 @@ class App extends React.Component {
 
   checkAuthenticated() {
     axios.get('/auth/authenticated')
-      .then(res => {
-        this.setState({ loggedIn: res.data })
+      .then((res) => {
+        this.setState({ loggedIn: res.data });
+        this.getMessages();
+        this.getProjects();
       });
   }
 
@@ -92,7 +91,7 @@ class App extends React.Component {
             <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome color={ fullWhite }/></IconButton></Link> }/>
             <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/>
             <Switch>
-              <Route exact path="/" component={Landing} />
+              <Route exact path="/" component={ProjectList} />
               <Route path="/signup" component={Questionnaire} />
               <Route exact path="/projects" component={ProjectList} />
               <Route path="/projects/:id" component={Project} />
