@@ -16,10 +16,10 @@ const dropGraph = function dropGraph() {
 
 const addUsersQueryString = `
   CREATE
-    (:User {rating: 80, name: 'Robb Stark', language: 'JavaScript'}),
-    (:User {rating: 90, name: 'Arya Stark', language: 'JavaScript'}),
-    (:User {rating: 100, name: 'Jon Snow', language: 'JavaScript'}),
-    (:User {rating: 70, name: 'Bran Stark', language: 'JavaScript'})
+    (:User {rating: 80, name: 'Robb Stark', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/brqt5mo.jpg'}),
+    (:User {rating: 90, name: 'Arya Stark', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/yGmkAdQ.jpg'}),
+    (:User {rating: 100, name: 'Jon Snow', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/YoHDe9x.jpg'}),
+    (:User {rating: 70, name: 'Bran Stark', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/jzc2vxp.png'})
   `;
 
 // Add user nodes
