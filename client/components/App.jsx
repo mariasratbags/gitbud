@@ -28,14 +28,16 @@ class App extends React.Component {
     super(props);
     this.state = {
       drawerOpen: false,
-      loggedIn: false,
+      loggedIn: this.checkAuthenticated,
       partyMode: false,
     }
 
-    this.getProjects();
-    this.getMessages();
+    this.checkAuthenticated();
+    if (this.state.loggedIn) {
+      this.getProjects();
+      this.getMessages();
+    }
     this.navTap = this.navTap.bind(this);
-    this.checkAuthenticated = this.checkAuthenticated.bind(this);
     this.togglePartyMode = this.togglePartyMode.bind(this);
   }
 
@@ -50,8 +52,7 @@ class App extends React.Component {
   getMessages() {
     axios.get('/API/messages')
       .then((res) => {
-        console.log(res.data);
-        this.props.loadMessages(res.data);
+        this.props.loadMessages(res.data)
       })
       .catch(console.error);
   }

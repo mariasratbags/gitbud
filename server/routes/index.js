@@ -1,13 +1,50 @@
+/*
+  This module contains request handlers for most of the routes
+  as well as a set for quick responses where index.html is required.
+
+  There's a lot of repeated code in the db queries, which you may find it helpful to modularise.
+*/
+
 const db = require('../db');
 const dbDriver = db.driver;
 const neo4j = require('neo4j-driver').v1;
 
-// react routes that require index.html
+// React routes that require index.html.
 exports.react = new Set(['user', 'projects']);
 
-// request handlers for server routes
+/*
+  Request handlers for API routes.
+  These are stored on an object for easy lookup in the request-handler module and are indexed
+  first by method then by route.
+*/
 exports.api = {
   GET: {
+    /*
+      GET METHODS
+    */
+    // Returns an object with numerical properties representing
+    // project IDs each with a value of an array of checkpoints of the form
+    // { text: prompt(string), hint: hint on how to tackle prompt(string), complete: completion status of prompt(bool) }
+    progress: function getProgress(req) {
+      return new Promise((resolve, reject) => {
+        console.log('GET progress');
+        const dbSession = dbDriver.session();
+        dbSession.run(`
+          MATCH (:User {ghId: ${req.user.ghInfo.id}})-->(group:Group)-->(project:Project)
+          RETURN group, project
+        `)
+          .then((res) => {
+            const projectProgress = {};
+            res.records.forEach((record) => {
+              const group = record.get('group').properties;
+              projectProgress[record.get('project').identity] = group.progress ? JSON.parse(group.progress) : [];
+            });
+            resolve(projectProgress);
+          })
+          .catch(reject);
+      });
+    },
+
     messages: function getMessages(req) {
       return new Promise((resolve, reject) => {
         console.log('GET messages');
@@ -35,6 +72,7 @@ exports.api = {
           });
       });
     },
+
     users: function getUsers(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -61,6 +99,7 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
     projects: function getProjects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -91,6 +130,9 @@ exports.api = {
       });
     },
   },
+  /*
+    POST METHODS
+  */
   POST: {
     projects: function projects(req) {
       console.log(req.body)
@@ -112,6 +154,7 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
     pair: function addPair(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -122,6 +165,7 @@ exports.api = {
           MATCH (pair:User) WHERE ID(pair) = ${Number(req.body.partnered)}
           MERGE (user)-[:PAIRED_WITH]->(group:Group)<-[:PAIRED_WITH]-(pair)
           MERGE (group)-[:WORKING_ON]->(project)
+          SET group.progress = project.structure
           return user, pair, group, project
         `)
           .then((res) => {
@@ -132,6 +176,7 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
     messages: function sendMessage(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -151,11 +196,28 @@ exports.api = {
             dbSession.close();
           })
       });
+    },
+
+    progress: function updateProgress(req) {
+      return new Promise((resolve, reject) => {
+        console.log(req.body);
+        const dbSession = dbDriver.session();
+        dbSession.run(`
+          MATCH (:User {ghId: ${req.user.ghInfo.id}})-->(group:Group)-->(project:Project)
+          WHERE ID(project) = ${req.body.projectId}
+          SET group.progress = '${JSON.stringify(req.body.progress).replace('\'', '\\\'')}'
+        `)
+          .then(() => resolve())
+          .catch(reject);
+      })
     }
   },
 
 };
 
+// Request handlers for some authentication routes.
+// Perhaps these should all be in server.js or perhaps all here.
+// Currently (for convenience), they're split across the two, which is slightly confusing.
 exports.auth = {
   GET: {
     signout: function signout(req, res) {
@@ -182,7 +244,7 @@ exports.auth = {
         res.send(false);
       }
     },
-    // Currently server handling--possibly review
+    // Currently server.js handling--possibly review
     // github: function callback(req, res, urlParts) {
     //   // upon successful authentication, redirect to projects
     //   if (urlParts[3] === 'callback') {

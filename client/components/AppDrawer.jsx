@@ -28,20 +28,20 @@ function AppDrawer(props) {
           <Link to='/my-projects'>
             <RaisedButton label="My Projects" fullWidth={ true } onClick={ props.closeDrawer }/>
           </Link>
-          </div>
-        </Card>
+        </div>
+      </Card>
       <Card style={ { margin: 12, width: '90%', paddingBottom: 12 } }>
         <CardHeader title="Users"/>
         <div style={ {width:'90%', margin: 'auto'} }>
           <RaisedButton label="Find A Partner" fullWidth={ true } secondary={ true } onClick={ props.closeDrawer } icon={ <ActionFace/> }/>
           <RaisedButton label="My Partners" fullWidth={ true } onClick={ props.closeDrawer }/>
-          </div>
-        </Card>
+        </div>
+      </Card>
       <BottomNavigation style={ { position: "absolute", bottom: 0 } }>
         <a href="/auth/signout">
           <BottomNavigationItem label="Sign Out" icon={ <ActionEject/> }/>
         </a>
-        <Link to='/user'><BottomNavigationItem label="My Account" icon={ <ActionAccountCircle/> }/></Link>
+        <Link to='/user'><BottomNavigationItem label="My Account" icon={ <ActionAccountCircle/> } onClick={ props.closeDrawer }/></Link>
       </BottomNavigation>
     </Drawer>
   )

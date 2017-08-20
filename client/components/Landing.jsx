@@ -12,9 +12,6 @@ const style = {
 };
 
 function Landing(props) {
-  if (props.checkAuth) {
-    props.checkAuth();
-  }
   return (
     <Card style={ { maxWidth: '300px', width: '75%', margin: 'auto', paddingBottom: 12, marginTop: 12 } }>
       <AppBar title="Welcome to GitBud!" style={style} showMenuIconButton={ false }/>
