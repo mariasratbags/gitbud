@@ -36,7 +36,7 @@ class App extends React.Component {
     if (this.state.loggedIn) {
       this.getProjects();
       this.getMessages();
-      this.getProgress();
+      this.Project = () => (<Project getProgress={this.getProgress} />)
     }
     this.navTap = this.navTap.bind(this);
     this.togglePartyMode = this.togglePartyMode.bind(this);
@@ -55,14 +55,6 @@ class App extends React.Component {
       .then((res) => {
         this.props.loadMessages(res.data)
       })
-      .catch(console.error);
-  }
-
-  getProgress() {
-    axios.get('/API/progress')
-      .then(res => 
-        this.props.loadProgress(res.data)
-      )
       .catch(console.error);
   }
 
@@ -150,10 +142,6 @@ const mapDispatchToProps = (dispatch) => {
       type: 'MESSAGES_LOAD',
       messages,
     }),
-    loadProgress: progress => dispatch({
-      type: 'PROGRESS_LOAD_ITEMS',
-      progress,
-    })
   };
 };
 

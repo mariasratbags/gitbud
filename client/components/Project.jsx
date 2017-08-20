@@ -9,18 +9,30 @@ class Project extends React.Component {
   constructor(props) {
     super(props);
     this.POSTprogress = this.POSTprogress.bind(this);
+    this.GETprogress();
   }
 
-POSTprogress () {
-  axios.post('/API/progress', {
-    projectId: this.props.project.id,
-    progress: this.props.progress,
-  })
-  .catch(console.error);
-}
+  POSTprogress() {
+    axios.post('/API/progress', {
+      projectId: this.props.project.id,
+      progress: this.props.progress,
+    })
+    .catch(console.error);
+  }
+
+  GETprogress() {
+    axios.get('/API/progress')
+      .then(res => 
+        this.props.loadProgress(res.data)
+      )
+      .catch(console.error);
+  }
 
   render() {
       if (this.props.project.paired.length > 0) {
+        if (!this.props.project.progress) {
+          this.GETprogress();
+        }
         return <ProjectStatus project={this.props.project} progress={this.props.progress} dispatchProgress={this.props.dispatchProgress} submitProgress={this.POSTprogress} />
       } else {
         return <ProjectDetails routedProjectId={this.props.match.params.id} />
@@ -33,13 +45,21 @@ const mapStateToProps = (state, props) => {
   const project = state.projects.filter(project => project.id === projectId)[0];
   return {
     project,
-    progress: state.projectProgress[projectId],
+    progress: state.projectProgress[projectId] || [],
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    dispatchProgress: (projectId, itemIndex) => dispatch({ type: 'PROGRESS_CHANGE_ITEM', projectId, itemIndex }),
+    dispatchProgress: (projectId, itemIndex) => dispatch({
+      type: 'PROGRESS_CHANGE_ITEM',
+      projectId,
+      itemIndex
+    }),
+    loadProgress: progress => dispatch({
+      type: 'PROGRESS_LOAD_ITEMS',
+      progress,
+    })
   };
 };
 
