@@ -1,3 +1,16 @@
+/*
+  This module ensures all requests are processed in the correct way.
+
+  Generally, the flow for handling requests is:
+    1. Serve static files (server.js)
+    2. Serve index.html to React routes
+    3. Handle API endpoints
+    4. Serve index.html for React to render a 404
+
+  This order should mean that the quickest or simplest
+  requests are handled first.
+*/
+
 const fs = require('fs');
 const path = require('path');
 const routes = require('../routes');
