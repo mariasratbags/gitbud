@@ -14,10 +14,10 @@ const ProjectStatus = (props) => {
     <Paper>
       <Card>
         <CardHeader
-          title="Project Name"
+          title={props.project.project}
         />
         <CardText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {props.project.description || 'This project has no description. Here\'s some Latin: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' }
         </CardText>
          <div style={style}>
           {
@@ -36,7 +36,7 @@ const ProjectStatus = (props) => {
             )
           }
         </div> 
-        <RaisedButton label="Complete" primary={true} style={style} />
+        <RaisedButton label="Submit Progress" onClick={props.submitProgress} primary={true} style={style} />
       </Card>
     </Paper>
   );
@@ -50,7 +50,7 @@ const ProgressItem = (props) => {
     <div>
       <Checkbox checked={props.complete} label={props.text} onCheck={check} />
       <CardText>
-        {props.hint}
+        {props.hint || 'This prompt has no hint. Would you like some more Latin?'}
       </CardText>
     </div>
   )

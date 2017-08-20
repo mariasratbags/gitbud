@@ -34,7 +34,6 @@ exports.api = {
           RETURN group, project
         `)
           .then((res) => {
-            console.log(res);
             const projectProgress = {};
             res.records.forEach((record) => {
               const group = record.get('group').properties;
@@ -196,6 +195,13 @@ exports.api = {
             dbSession.close();
           })
       });
+    },
+
+    progress: function updateProgress(req) {
+      return new Promise((resolve, reject) => {
+        console.log(req.body);
+        resolve();
+      })
     }
   },
 

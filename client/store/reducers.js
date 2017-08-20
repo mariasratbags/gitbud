@@ -56,21 +56,10 @@ const messages = (state, action) => {
 
 const projectProgress = (state, action) => {
   if (state === undefined) {
-    return {
-      277:
-        [
-          {
-            text: 'Do the thing',
-            complete: false,
-          },
-          {
-            text: 'Do the other thing',
-            complete: true,
-          }
-        ]
-    }
+    return {};
+  } else if (action.type === 'PROGRESS_LOAD_ITEMS') {
+    return action.progress;
   } else if (action.type === 'PROGRESS_CHANGE_ITEM') {
-    console.log(JSON.stringify(state));
     const newProgress = {};
     const stateProject = state[action.projectId];
     newProgress[action.projectId] = stateProject.slice();
