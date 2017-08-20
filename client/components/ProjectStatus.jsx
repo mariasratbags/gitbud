@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
+import {
+  Toolbar,
+  ToolbarGroup,
+  ToolbarTitle
+} from 'material-ui/Toolbar';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -13,6 +18,15 @@ const ProjectStatus = (props) => {
   return (
     <Paper>
       <Card>
+        <Toolbar>
+          <ToolbarGroup>
+            <ToolbarTitle text="Project Name" />
+          </ToolbarGroup>
+          <ToolbarGroup lastChild={ true }>
+            {console.log(this.props.project)}
+            <RaisedButton secondary={ true } label="See on GitHub" href={this.props.project.link} target="_blank"/>
+          </ToolbarGroup>
+        </Toolbar>
         <CardHeader
           title={props.project.project}
         />
