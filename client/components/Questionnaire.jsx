@@ -12,6 +12,7 @@ class Questionnaire extends React.Component {
     super(props);
     this.state = {
       selectedLanguages: [],
+      selectedSkillLevel: null,
     };
   }
 
@@ -25,6 +26,11 @@ class Questionnaire extends React.Component {
       copy.splice(index, 1);
       this.setState({ selectedLanguages: copy }, () => console.log(this.state.selectedLanguages));
     }
+  }
+
+  onSkillLevelSelect(e) {
+    e = e.target.value;
+    this.setState({ selectedSkillLevel: e }, () => console.log(this.state.selectedSkillLevel));
   }
 
   render() {
@@ -46,10 +52,10 @@ class Questionnaire extends React.Component {
         <br />
 
         <p>Select your proficieny level at the chosen languages above:</p>
-        <RadioButtonGroup>
-          <RadioButton value="Beginner" label="Beginner" />
-          <RadioButton value="Intermediate" label="Intermediate" />
-          <RadioButton value="Advanced" label="Advanced" />
+        <RadioButtonGroup value={this.state.selectedSkillLevel} onChange={(e) => this.onSkillLevelSelect(e)}>
+          <RadioButton label="Beginner" value ="Beginner" />
+          <RadioButton label="Intermediate" value="Intermediate" />
+          <RadioButton label="Advanced" value="Advanced" />
         </RadioButtonGroup>
         <br />
         <p>Write a short introduction about yourself that other GitBud members can see:</p>
