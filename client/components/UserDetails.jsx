@@ -90,9 +90,9 @@ class UserDetails extends React.Component {
               <img className="img-circle" src={ this.props.user.avatarUrl } alt="" />
             </div>
           </CardMedia>
-          <CardTitle title={ this.props.user.name } subtitle="Experience: Beginner" />
+          <CardTitle title={ this.props.user.name } subtitle={'Experience: ' + this.props.user.experience} />
           <div>
-            <CardTitle title="Languages" subtitle='JavaScript, React, Spanish'/>
+            <CardTitle title="Language" subtitle={this.props.user.language}/>
           </div>
           <CardTitle title="Projects" subtitle='N Queens, Hello World'/>
           <div>

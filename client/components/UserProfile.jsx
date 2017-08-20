@@ -18,9 +18,9 @@ function UserProfile(props) {
             <img className="img-circle" src={ props.user.avatarUrl } alt="" />
           </div>
         </CardMedia>
-        <CardTitle title={ props.user.name } subtitle="Experience: Beginner" />
+        <CardTitle title={ props.user.name } subtitle={'Experience: ' + props.user.experience} />
         <div>
-          <CardTitle title="Languages" subtitle='JavaScript, React, Spanish'/>
+          <CardTitle title="Language" subtitle={props.user.language}/>
         </div>
         <CardTitle title="Projects" subtitle='N Queens, Hello World'/>
       </Card>
