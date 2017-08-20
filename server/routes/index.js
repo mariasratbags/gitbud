@@ -1,11 +1,23 @@
+/*
+  This module contains request handlers for most of the routes
+  as well as a set for quick responses where index.html is required.
+
+  There's a lot of repeated code in the .then() and .catch() blocks for
+  db queries, which you may find it helpful to modularise.
+*/
+
 const db = require('../db');
 const dbDriver = db.driver;
 const neo4j = require('neo4j-driver').v1;
 
-// react routes that require index.html
+// React routes that require index.html.
 exports.react = new Set(['user', 'projects']);
 
-// request handlers for server routes
+/*
+  Request handlers for API routes.
+  These are stored on an object for easy lookup in the request-handler module and are indexed
+  first by method then by route.
+*/
 exports.api = {
   GET: {
     messages: function getMessages(req) {
@@ -156,6 +168,9 @@ exports.api = {
 
 };
 
+// Request handlers for some authentication routes.
+// Perhaps these should all be in server.js or perhaps all here.
+// Currently (for convenience), they're split across the two, which is slightly confusing.
 exports.auth = {
   GET: {
     signout: function signout(req, res) {
@@ -182,7 +197,7 @@ exports.auth = {
         res.send(false);
       }
     },
-    // Currently server handling--possibly review
+    // Currently server.js handling--possibly review
     // github: function callback(req, res, urlParts) {
     //   // upon successful authentication, redirect to projects
     //   if (urlParts[3] === 'callback') {
