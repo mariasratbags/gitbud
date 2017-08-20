@@ -210,6 +210,12 @@ exports.api = {
           .then(() => resolve())
           .catch(reject);
       })
+    },
+
+    users: function addQuestionnaireData(req) {
+      return new Promise((resolve, reject) => {
+        console.log(req.body);
+      });
     }
   },
 
