@@ -31,14 +31,6 @@ app.use(session({
 // Set server to use initialized passport from authentication module
 app.use(passport.initialize());
 app.use(passport.session());
-// Handle callback URL after authentication
-// app.get('/auth/github/callback', (req, res) => passport.authenticate('github', { failureRedirect: '/' })(req, res, () => res.redirect('/projects')));
-//   passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
-//     // upon successful authentication, redirect to projects
-//     res.redirect('/projects');
-//     console.log('true');
-//   }
-// );
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'dist')));
