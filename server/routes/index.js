@@ -13,6 +13,7 @@
 // For info on how to do this better, check the hints in the db module.
 const db = require('../db');
 const dbDriver = db.driver;
+const passport = require('../authentication');
 
 // React routes that require index.html.
 exports.react = new Set(['user', 'projects']);
@@ -250,15 +251,15 @@ exports.auth = {
         res.send(false);
       }
     },
-    // Currently server.js handling--possibly review
-    // github: function callback(req, res, urlParts) {
-    //   // upon successful authentication, redirect to projects
-    //   if (urlParts[3] === 'callback') {
-    //     res.redirect('/projects');
-    //   } else {
-    //     res.statusCode = 400;
-    //     res.send('Invalid request');
-    //   }
-    // }
+    github: function authenticate(req, res) {
+      if (req.url === '/auth/github') {
+        passport.authenticate(req, res);
+      } else if (req.url.split('?')[0] === '/auth/github/callback') {
+        passport.callback(req, res);
+      } else {
+        // Not a valid URL
+        res.end(exports.index);
+      }
+    }
   }
-}
+};
