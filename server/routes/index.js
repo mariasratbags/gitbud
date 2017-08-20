@@ -165,6 +165,7 @@ exports.api = {
           MATCH (pair:User) WHERE ID(pair) = ${Number(req.body.partnered)}
           MERGE (user)-[:PAIRED_WITH]->(group:Group)<-[:PAIRED_WITH]-(pair)
           MERGE (group)-[:WORKING_ON]->(project)
+          SET group.progress = project.structure
           return user, pair, group, project
         `)
           .then((res) => {

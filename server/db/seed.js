@@ -36,8 +36,8 @@ function addUsers() {
 
 const addProjectsQueryString = `
   CREATE
-    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'Beginner', link: 'https://github.com/cranebaes/hello-gitbud'}),
-    (:Project {project: 'N-Queens', language:'JavaScript', experience: 'Advanced', link: 'https://github.com/cranebaes'})
+    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'Beginner', link: 'https://github.com/cranebaes/hello-gitbud', structure: '[{"text":"Do the thing","complete":false},{"text":"Do the other thing.","hint":"Do it well!","complete":false}]'}),
+    (:Project {project: 'N-Queens', language:'JavaScript', experience: 'Advanced', link: 'https://github.com/cranebaes', structure: '[{"text":"Do the thing","complete":false},{"text":"Do the other thing.","hint":"Do it well!","complete":false}]'})
   `;
 
 // Add project nodes
