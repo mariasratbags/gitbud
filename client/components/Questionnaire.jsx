@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Card } from 'material-ui/Card';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -39,6 +40,22 @@ class Questionnaire extends React.Component {
     this.setState({ description: e }, () => console.log(this.state.description));
   }
 
+  onButtonClick() {
+    // TO-DO: error handling if fields are empty
+    let userInfo = {
+      langauges: this.state.selectedLanguages,
+      experience: this.state.selectedSkillLevel,
+      description: this.state.description,
+    };
+    axios.post('/users', userInfo)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <Card style={ { width: '50%', margin: 'auto', padding: 12, marginTop: 12 } }>
@@ -56,7 +73,6 @@ class Questionnaire extends React.Component {
         <Checkbox label="C#" value="C#" onCheck={(e, b) => this.handleCheck(e, b)} />
         <Checkbox label="Objective-C" value="Objective-C" onCheck={(e, b) => this.handleCheck(e, b)} />
         <br />
-
         <p>Select your proficieny level at the chosen languages above:</p>
         <RadioButtonGroup value={this.state.selectedSkillLevel} onChange={(e) => this.onSkillLevelSelect(e)}>
           <RadioButton label="Beginner" value ="Beginner" />
@@ -67,7 +83,7 @@ class Questionnaire extends React.Component {
         <p>Write a short introduction about yourself that other GitBud members can see:</p>
         <TextField multiLine={ true } rows={ 2 } style ={ { width: '100%' } } onChange={(e) => this.onDescriptionChange(e)} />
         <br />
-        <RaisedButton label="Submit" secondary={ true }  fullWidth={ true } />
+        <RaisedButton label="Submit" secondary={ true }  fullWidth={ true } onClick={() => this.onButtonClick()} />
       </Card>
     );
   }
