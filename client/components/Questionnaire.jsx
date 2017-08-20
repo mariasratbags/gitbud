@@ -13,6 +13,7 @@ class Questionnaire extends React.Component {
     this.state = {
       selectedLanguages: [],
       selectedSkillLevel: null,
+      description: '',
     };
   }
 
@@ -31,6 +32,11 @@ class Questionnaire extends React.Component {
   onSkillLevelSelect(e) {
     e = e.target.value;
     this.setState({ selectedSkillLevel: e }, () => console.log(this.state.selectedSkillLevel));
+  }
+
+  onDescriptionChange(e) {
+    e = e.target.value;
+    this.setState({ description: e }, () => console.log(this.state.description));
   }
 
   render() {
@@ -59,7 +65,7 @@ class Questionnaire extends React.Component {
         </RadioButtonGroup>
         <br />
         <p>Write a short introduction about yourself that other GitBud members can see:</p>
-        <TextField multiLine={ true } rows={ 2 } style ={ { width: '100%' } } />
+        <TextField multiLine={ true } rows={ 2 } style ={ { width: '100%' } } onChange={(e) => this.onDescriptionChange(e)} />
         <br />
         <RaisedButton label="Submit" secondary={ true }  fullWidth={ true } />
       </Card>
