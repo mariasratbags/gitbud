@@ -200,16 +200,35 @@ exports.api = {
 
     progress: function updateProgress(req) {
       return new Promise((resolve, reject) => {
-        console.log(req.body);
         const dbSession = dbDriver.session();
+        console.log('POST progress')
         dbSession.run(`
           MATCH (:User {ghId: ${req.user.ghInfo.id}})-->(group:Group)-->(project:Project)
           WHERE ID(project) = ${req.body.projectId}
           SET group.progress = '${JSON.stringify(req.body.progress).replace('\'', '\\\'')}'
         `)
+          .then((res) => {
+            //console log to annoy peter
+            console.log(res);
+            resolve(res)
+          })
+          .catch(reject);
+      });
+    },
+
+    users: function addQuestionnaireData(req) {
+      return new Promise((resolve, reject) => {
+        const dbSession = dbDriver.session();
+        console.log('POST users');
+        dbSession.run(`
+          MATCH (user:User) WHERE user.ghId = ${Number(req.user.ghInfo.id)}
+          SET user.description = '${req.body.description}'
+          SET user.language = '${req.body.language}'
+          SET user.experience = '${req.body.experience}'
+        `)
           .then(() => resolve())
           .catch(reject);
-      })
+      });
     }
   },
 

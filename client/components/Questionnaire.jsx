@@ -42,13 +42,13 @@ class Questionnaire extends React.Component {
 
   onButtonClick() {
     let userInfo = {
-      langauges: this.state.selectedLanguages,
+      language: this.state.selectedLanguages[0],
       experience: this.state.selectedSkillLevel,
       description: this.state.description,
     };
 
     if (this.state.selectedLanguages.length > 0 && this.state.selectedSkillLevel && this.state.description.length > 0) {
-      axios.post('/users', userInfo)
+      axios.post('/API/users', userInfo)
         .then((response) => {
           console.log(response);
         })
