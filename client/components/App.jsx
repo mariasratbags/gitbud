@@ -36,7 +36,6 @@ class App extends React.Component {
     if (this.state.loggedIn) {
       this.getProjects();
       this.getMessages();
-      this.Project = () => (<Project getProgress={this.getProgress} />)
     }
     this.navTap = this.navTap.bind(this);
     this.togglePartyMode = this.togglePartyMode.bind(this);

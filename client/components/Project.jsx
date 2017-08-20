@@ -9,7 +9,9 @@ class Project extends React.Component {
   constructor(props) {
     super(props);
     this.POSTprogress = this.POSTprogress.bind(this);
-    this.GETprogress();
+    if (this.props.project.paired.length > 0 && this.props.progress.length < 1) {
+      this.GETprogress();
+    }
   }
 
   POSTprogress() {
@@ -30,9 +32,6 @@ class Project extends React.Component {
 
   render() {
       if (this.props.project.paired.length > 0) {
-        if (!this.props.project.progress) {
-          this.GETprogress();
-        }
         return <ProjectStatus project={this.props.project} progress={this.props.progress} dispatchProgress={this.props.dispatchProgress} submitProgress={this.POSTprogress} />
       } else {
         return <ProjectDetails routedProjectId={this.props.match.params.id} />
