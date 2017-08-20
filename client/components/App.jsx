@@ -52,7 +52,6 @@ class App extends React.Component {
   getMessages() {
     axios.get('/API/messages')
       .then((res) => {
-        console.log(res.data);
         this.props.loadMessages(res.data);
       })
       .catch(console.error);
