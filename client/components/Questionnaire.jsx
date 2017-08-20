@@ -41,19 +41,24 @@ class Questionnaire extends React.Component {
   }
 
   onButtonClick() {
-    // TO-DO: error handling if fields are empty
     let userInfo = {
       langauges: this.state.selectedLanguages,
       experience: this.state.selectedSkillLevel,
       description: this.state.description,
     };
-    axios.post('/users', userInfo)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    if (this.state.selectedLanguages.length > 0 && this.state.selectedSkillLevel && this.state.description.length > 0) {
+      axios.post('/users', userInfo)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      // TO-DO: replace alert with material-ui dialog
+      alert('Please enter all fields!');
+    }
   }
 
   render() {
