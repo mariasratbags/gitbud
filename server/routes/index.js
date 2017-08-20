@@ -2,12 +2,17 @@
   This module contains request handlers for most of the routes
   as well as a set for quick responses where index.html is required.
 
+  THINGS TO FIX:
   There's a lot of repeated code in the db queries, which you may find it helpful to modularise.
+
+  Also, the authentication endpoints are split across here and server.js, mostly for our convenience.
+  Consider refactoring.
 */
 
+// Required to create a db session and run a query.
+// For info on how to do this better, check the hints in the db module.
 const db = require('../db');
 const dbDriver = db.driver;
-const neo4j = require('neo4j-driver').v1;
 
 // React routes that require index.html.
 exports.react = new Set(['user', 'projects']);
@@ -241,6 +246,7 @@ exports.auth = {
             dbSession.close();
           });
       } else {
+        // Confirm not signed in
         res.send(false);
       }
     },
