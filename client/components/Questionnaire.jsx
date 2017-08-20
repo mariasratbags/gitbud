@@ -79,14 +79,14 @@ class Questionnaire extends React.Component {
         <Checkbox label="Objective-C" value="Objective-C" onCheck={(e, b) => this.handleCheck(e, b)} />
         <br />
         <p>Select your proficieny level at the chosen languages above:</p>
-        <RadioButtonGroup value={this.state.selectedSkillLevel} onChange={(e) => this.onSkillLevelSelect(e)}>
+        <RadioButtonGroup name="skillLevel" value={this.state.selectedSkillLevel} onChange={(e) => this.onSkillLevelSelect(e)}>
           <RadioButton label="Beginner" value ="Beginner" />
           <RadioButton label="Intermediate" value="Intermediate" />
           <RadioButton label="Advanced" value="Advanced" />
         </RadioButtonGroup>
         <br />
         <p>Write a short introduction about yourself that other GitBud members can see:</p>
-        <TextField multiLine={ true } rows={ 2 } style ={ { width: '100%' } } onChange={(e) => this.onDescriptionChange(e)} />
+        <TextField id="description" multiLine={ true } rows={ 2 } style ={ { width: '100%' } } onChange={(e) => this.onDescriptionChange(e)} />
         <br />
         <RaisedButton label="Submit" secondary={ true }  fullWidth={ true } onClick={() => this.onButtonClick()} />
       </Card>
