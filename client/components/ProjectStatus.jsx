@@ -16,15 +16,14 @@ const style = {
 
 const ProjectStatus = (props) => {
   return (
-    <Paper>
-      <Card>
+    <Paper style={ {width: '95%', margin: 'auto', marginTop: 12, padding: 12 } }>
+      <Card style={ { marginBottom: 12 } }>
         <Toolbar>
           <ToolbarGroup>
             <ToolbarTitle text="Project Name" />
           </ToolbarGroup>
           <ToolbarGroup lastChild={ true }>
-            {console.log(this.props.project)}
-            <RaisedButton secondary={ true } label="See on GitHub" href={this.props.project.link} target="_blank"/>
+            <RaisedButton secondary={ true } label="See on GitHub" href={props.project.link} target="_blank"/>
           </ToolbarGroup>
         </Toolbar>
         <CardHeader
@@ -35,7 +34,7 @@ const ProjectStatus = (props) => {
         </CardText>
          <div style={style}>
           {
-            props.progress.map((item, index) => 
+            props.progress.map((item, index) =>
               (
                 <ProgressItem
                   dispatchProgress={props.dispatchProgress}
@@ -49,7 +48,7 @@ const ProjectStatus = (props) => {
               )
             )
           }
-        </div> 
+        </div>
         <RaisedButton label="Submit Progress" onClick={props.submitProgress} primary={true} style={style} />
       </Card>
     </Paper>

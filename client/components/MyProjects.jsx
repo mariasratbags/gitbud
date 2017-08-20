@@ -27,7 +27,7 @@ const MyProjects = (props) => {
             <ToolbarTitle text="My Projects"/>
           </ToolbarGroup>
         </Toolbar>
-        <Table>
+        <Table style={{ width: '95%', margin: 'auto', marginTop: 12, padding: 12 }}>
           <TableHeader displaySelectAll={ false }>
             <TableRow>
               <TableHeaderColumn>Name</TableHeaderColumn>
