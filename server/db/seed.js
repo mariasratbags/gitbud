@@ -36,7 +36,7 @@ function addUsers() {
 
 const addProjectsQueryString = `
   CREATE
-    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'Beginner', link: 'https://github.com/cranebaes/hello-gitbud', structure: '[{"text":"Do the thing","complete":false},{"text":"Do the other thing.","hint":"Do it well!","complete":false}]'}),
+    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'Beginner', description: 'Hello, GitBud is a project to help beginners get familiar with contributing to open source projects. Some of the issue to work on is adding jQuery to the project.', link: 'https://github.com/cranebaes/hello-gitbud', structure: '[{"text":"Do the thing","complete":false},{"text":"Do the other thing.","hint":"Do it well!","complete":false}]'}),
     (:Project {project: 'N-Queens', language:'JavaScript', experience: 'Advanced', link: 'https://github.com/cranebaes', structure: '[{"text":"Do the thing","complete":false},{"text":"Do the other thing.","hint":"Do it well!","complete":false}]'})
   `;
 
