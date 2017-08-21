@@ -1,4 +1,7 @@
 /*
+  REQUEST HANDLER
+  (Core middleware--use()d in server.js)
+
   This module ensures all requests are processed in the correct way.
 
   Generally, the flow for handling requests is:

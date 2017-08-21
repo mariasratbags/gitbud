@@ -1,3 +1,11 @@
+/*
+ *  USER LANGUAGE PROFILING
+ * 
+ *  This module scrapes information from all repos that a user has committed to
+ *  and totals their language stats. It returns the usual object that the profiling
+ *  module uses in its (rather elaborate) Promise chains.
+ */
+
 // Libraries
 const axios = require('axios');
 const map = require('lodash/map');

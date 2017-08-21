@@ -1,4 +1,7 @@
 /*
+  ROUTES
+  (Functions all invoked in /server/request-handler)
+
   This module contains request handlers for most of the routes
   as well as a set for quick responses where index.html is required.
 

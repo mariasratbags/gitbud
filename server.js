@@ -1,3 +1,21 @@
+/*
+ * ENTRY POINT TO ALL THE SERVER SIDE CODE
+ * 
+ * Most of the server code is clearly modularised, so this
+ * is mostly uncontraversial requires and uses.
+ * 
+ * The other server modules are:
+ *    request-handler
+ *    --Sends correct response to each URL (mostly by calling appropriate function from routes)
+ *    routes
+ *    --Contains functions for generating responses (all called from various points in request-handler)
+ *    authentication
+ *    --Implements passport's GitHub strategy and exports its middleware for use in other modules in order to keep similar code together
+ *    profiling
+ *    --Builds a profile of user's experience by scraping data from GitHub and builds relationships in the db
+ *      by which to sort users in lists.
+ */
+
 // Allows storing of environment variables
 // in .env of root directory.
 require('dotenv').config();
@@ -10,7 +28,6 @@ const session = require('express-session');
 // GitBud modules
 const passport = require('./server/authentication').passport;
 const requestHandler = require('./server/request-handler');
-const db = require('./server/db');
 
 // Make express server
 const app = express();
