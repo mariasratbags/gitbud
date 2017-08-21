@@ -4,7 +4,6 @@ import { Card } from 'material-ui/Card';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
-import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -12,53 +11,38 @@ class Questionnaire extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedLanguages: [],
-      selectedSkillLevel: null,
+      selectedLanguage: 'JavaScript',
+      selectedSkillLevel: 'Beginner',
       description: '',
     };
   }
 
-  handleCheck(e, b) {
-    e = e.target.value;
-    if (b) {
-      this.setState({ selectedLanguages: this.state.selectedLanguages.concat([e]) }, () => console.log(this.state.selectedLanguages));
-    } else {
-      let index = this.state.selectedLanguages.indexOf(e);
-      let copy = this.state.selectedLanguages.slice(0);
-      copy.splice(index, 1);
-      this.setState({ selectedLanguages: copy }, () => console.log(this.state.selectedLanguages));
-    }
+  onLanguageSelect(val) {
+    this.setState({ selectedLanguage: val }, () => console.log(this.state.selectedLanguage));
   }
 
-  onSkillLevelSelect(e) {
-    e = e.target.value;
-    this.setState({ selectedSkillLevel: e }, () => console.log(this.state.selectedSkillLevel));
+  onSkillLevelSelect(val) {
+    this.setState({ selectedSkillLevel: val }, () => console.log(this.state.selectedSkillLevel));
   }
 
-  onDescriptionChange(e) {
-    e = e.target.value;
-    this.setState({ description: e }, () => console.log(this.state.description));
+  onDescriptionChange(val) {
+    this.setState({ description: val }, () => console.log(this.state.description));
   }
 
   onButtonClick() {
     let userInfo = {
-      language: this.state.selectedLanguages[0],
+      language: this.state.selectedLanguage,
       experience: this.state.selectedSkillLevel,
       description: this.state.description,
     };
 
-    if (this.state.selectedLanguages.length > 0 && this.state.selectedSkillLevel && this.state.description.length > 0) {
-      axios.post('/API/users', userInfo)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      // TO-DO: replace alert with material-ui dialog
-      alert('Please enter all fields!');
-    }
+    axios.post('/API/users', userInfo)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -67,26 +51,23 @@ class Questionnaire extends React.Component {
         <h1>Welcome, FIRST_NAME.</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam varius quam id quam aliquot, quis varius est euismod.</p>
         <br />
-        <p>Check all languages you are interested or, b have experience in:</p>
-        <Checkbox label="JavaScript" value="JavaScript" onCheck={(e, b) => this.handleCheck(e, b)} />
-        <Checkbox label="Ruby" value="Ruby" onCheck={(e, b) => this.handleCheck(e, b)} />
-        <Checkbox label="Python" value="Python" onCheck={(e, b) => this.handleCheck(e, b)} />
-        <Checkbox label="PHP" value="PHP" onCheck={(e, b) => this.handleCheck(e, b)} />
-        <Checkbox label="Perl" value="Perl" onCheck={(e, b) => this.handleCheck(e, b)} />
-        <Checkbox label="Java" value="Java" onCheck={(e, b) => this.handleCheck(e, b)} />
-        <Checkbox label="C++" value="C++" onCheck={(e, b) => this.handleCheck(e, b)} />
-        <Checkbox label="C#" value="C#" onCheck={(e, b) => this.handleCheck(e, b)} />
-        <Checkbox label="Objective-C" value="Objective-C" onCheck={(e, b) => this.handleCheck(e, b)} />
+        <p>Select your preferred language to use with other GitBud members:</p>
+        <DropDownMenu value={this.state.selectedLanguage} onChange={(e, idx, val) => this.onLanguageSelect(val)}>
+          <MenuItem value={"JavaScript"} primaryText="JavaScript" />
+          <MenuItem value={"Ruby"} primaryText="Ruby" />
+          <MenuItem value={"Python"} primaryText="Python" />
+          <MenuItem value={"PHP"} primaryText="PHP" />
+        </DropDownMenu>
         <br />
-        <p>Select your proficieny level at the chosen languages above:</p>
-        <RadioButtonGroup name="skillLevel" value={this.state.selectedSkillLevel} onChange={(e) => this.onSkillLevelSelect(e)}>
+        <p>Select your proficieny level at the chosen language above:</p>
+        <RadioButtonGroup name="skillLevel" defaultSelected={this.state.selectedSkillLevel} onChange={(e, val) => this.onSkillLevelSelect(val)}>
           <RadioButton label="Beginner" value ="Beginner" />
           <RadioButton label="Intermediate" value="Intermediate" />
           <RadioButton label="Advanced" value="Advanced" />
         </RadioButtonGroup>
         <br />
         <p>Write a short introduction about yourself that other GitBud members can see:</p>
-        <TextField id="description" multiLine={ true } rows={ 2 } style ={ { width: '100%' } } onChange={(e) => this.onDescriptionChange(e)} />
+        <TextField id="description" multiLine={ true } rows={ 2 } style ={ { width: '100%' } } onChange={(e, val) => this.onDescriptionChange(val)} />
         <br />
         <RaisedButton label="Submit" secondary={ true }  fullWidth={ true } onClick={() => this.onButtonClick()} />
       </Card>
