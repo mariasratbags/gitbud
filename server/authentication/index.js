@@ -3,6 +3,7 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 // GitBud modules
 const db = require('../db');
+const profiling = require('../profiling');
 
 // temporary clientID and clientSecret for dev purposes
 // https://github.com/organizations/cranebaes/settings/applications/574129
@@ -20,8 +21,17 @@ passport.use(new GitHubStrategy(
       SET 
         user.avatarUrl = '${profile._json.avatar_url}', user.name = '${profile.displayName}',
         user.rating = 50, user.OAuthToken = '${ accessToken }', user.username = '${profile.username}'
+      RETURN user
     `)
-      .then(() => dbSession.close())
+      .then((res) => {
+        dbSession.close();
+        const user = new db.models.ServerUser(res.records[0].get('user'));
+        if (!user.profile) {
+          console.log('No profile');
+          profiling.buildUserProfile(user.ghId)
+            .then(() => console.log(`Built profile for user ghId: ${user.ghId}`));
+        }
+      })
       .catch((err) => {
         console.error(err);
         dbSession.close();
