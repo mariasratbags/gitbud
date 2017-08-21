@@ -91,9 +91,8 @@ class UserDetails extends React.Component {
             </div>
           </CardMedia>
           <CardTitle title={ this.props.user.name } subtitle={'Experience: ' + this.props.user.experience} />
-          <div>
-            <CardTitle title="Language" subtitle={this.props.user.language}/>
-          </div>
+          <CardTitle title="Description" subtitle={this.props.user.description} />
+          <CardTitle title="Language" subtitle={this.props.user.language}/>
           <CardTitle title="Projects" subtitle='N Queens, Hello World'/>
           <div>
             { this.pairButton() }
