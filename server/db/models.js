@@ -1,5 +1,5 @@
-/*  
-    This module massages neo4j search results 
+/*
+    This module massages neo4j search results
     into more convenient objects.
 
     For information on the .toNumber() method, please check:
@@ -41,6 +41,7 @@ exports.Project = class Project {
     this.project = project.properties.project;
     this.language = project.properties.language;
     this.experience = project.properties.experience;
+    this.description = project.properties.description;
     this.link = project.properties.link;
     this.paired = pairs ? pairs.map(pair => pair.toNumber()) : [];
     this.interested = interested;
