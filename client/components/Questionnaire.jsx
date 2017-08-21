@@ -50,7 +50,7 @@ class Questionnaire extends React.Component {
   render() {
     return (
       <Card style={ { width: '50%', margin: 'auto', padding: 12, marginTop: 12 } }>
-        <h1>Welcome, FIRST_NAME.</h1>
+        <h1>Welcome, {this.props.user.name}</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam varius quam id quam aliquot, quis varius est euismod.</p>
         <br />
         <p>Select your preferred language to use with other GitBud members:</p>
