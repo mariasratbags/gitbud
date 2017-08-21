@@ -114,7 +114,7 @@ class App extends React.Component {
         </BrowserRouter>
       );
     } else if (this.state.loggedIn) {
-      return <Questionnaire />;
+      return <Questionnaire user={this.state.loggedIn} />;
     } else {
           return <Landing checkAuth={ this.checkAuthenticated } />;
     }
