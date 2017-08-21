@@ -41,7 +41,6 @@ exports.Project = class Project {
     this.project = project.properties.project;
     this.language = project.properties.language;
     this.experience = project.properties.experience;
-    this.description = project.properties.description;
     this.link = project.properties.link;
     this.description = project.properties.description;
     this.paired = pairs ? pairs.map(pair => pair.toNumber()) : [];
