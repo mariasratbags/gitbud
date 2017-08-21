@@ -139,6 +139,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);
 
 
 
-{/* <CardMedia overlay={ <CardTitle title={ this.props.user.name } subtitle='Experience: n00b'/> }>
+/* <CardMedia overlay={ <CardTitle title={ this.props.user.name } subtitle='Experience: n00b'/> }>
   <img src={ this.props.user.avatarUrl } />
-</CardMedia> */}
+</CardMedia> */
