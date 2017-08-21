@@ -86,19 +86,26 @@ exports.api = {
         const ghId = req.user.ghInfo.id;
         const projectId = Number(req.headers.id);
         dbSession.run(`
-          MATCH (pair:User)-->(group:Group)<--(user:User {ghId: ${ghId}}),
+          MATCH (user:User {ghId: ${ghId}})<-[xp:EXPERIENCE_DIFFERENCE]->(pair:User)
+          WITH user, pair, xp
+          MATCH (pair)-->(group:Group)<--(user),
             (group)-->(pairedProject:Project),
-            (pair)-[:INTERESTED_IN]->(project:Project)
+            (pair)-[i:INTERESTED_IN]->(project:Project)
           WHERE ID(project) = ${projectId}
-          RETURN pair, COLLECT(ID(pairedProject)) as projects
+          RETURN pair, COLLECT(ID(pairedProject)) as projects, xp
           UNION
-          MATCH (pair:User)-[:INTERESTED_IN]->(project:Project)
+          MATCH (user:User {ghId: ${ghId}})<-[xp:EXPERIENCE_DIFFERENCE]->(pair:User)
+          WITH user, xp, pair
+          MATCH (pair)-[:INTERESTED_IN]->(project:Project)
           WHERE ID(project) = ${projectId} AND NOT (pair)-->(:Group)<--(:User {ghId: ${ghId}})
-          RETURN pair, false as projects
+          RETURN pair, false as projects, xp
         `)
           .then((res) => {
             resolve(
-              res.records.map(user => new db.models.User(user.get('pair'), user.get('projects')))
+              res.records.map(user => 
+                new db.models.User(user.get('pair'), user.get('projects'), user.get('xp'))
+              )
+                .sort((a, b) => a.rating - b.rating)
             )
           })
           .catch(reject)
