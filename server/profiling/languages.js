@@ -11,7 +11,8 @@ module.exports = function getUserLanguages({ OAuthToken, username, repos, profil
       params: {
         access_token: OAuthToken
       }
-    });
+    })
+      .catch(console.error);
   });
   // Then wait for all queries to resolve and total language stats
   return Promise.all(languageQueries)
