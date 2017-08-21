@@ -1,3 +1,8 @@
+/*
+ * I hate this file. You hate this file. Everyone hates this file.
+ * 
+ * It's full or repeated code, it's ugly and it's stupid. Please kill it.
+ */
 const driver = require('./index').driver;
 const session = driver.session();
 
@@ -16,10 +21,10 @@ const dropGraph = function dropGraph() {
 
 const addUsersQueryString = `
   CREATE
-    (:User {rating: 80, name: 'Robb Stark', description: "I'm here to find a mentor who can guide me to make wise decisions.", experience: 'Beginner', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/brqt5mo.jpg'}),
-    (:User {rating: 90, name: 'Arya Stark', description: "Looking to practice and gain experience by pair programming on projects.", experience: 'Intermediate', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/yGmkAdQ.jpg'}),
-    (:User {rating: 100, name: 'Jon Snow', description: "I've hit a wall learning programming and would like to climb over it this winter by working on projects.", experience: 'Intermediate', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/YoHDe9x.jpg'}),
-    (:User {rating: 70, name: 'Bran Stark', description: "I have seen a lot of code, and would like to help others see what I've seen by pairing!", experience: 'Advanced', language: 'C++', avatarUrl: 'http://i.imgur.com/jzc2vxp.png'})
+    (:User {rating: 80, ghId: 0, name: 'Robb Stark', description: "I'm here to find a mentor who can guide me to make wise decisions.", experience: 'Beginner', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/brqt5mo.jpg', profile: '{"languages":{"Jupyter Notebook":12,"Python":19,"C": 5, "JavaScript":20,"CSS":18,"Shell":12.172740017049366},"repoStats":702}'}),
+    (:User {rating: 90, ghId: 1, name: 'Arya Stark', description: "Looking to practice and gain experience by pair programming on projects.", experience: 'Intermediate', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/yGmkAdQ.jpg', profile: '{"languages":{"Jupyter Notebook":12,"Python":24,"C": 5, "JavaScript":15,"CSS":18,"Shell":12.172740017049366},"repoStats":900}'}),
+    (:User {rating: 100, ghId: 2, name: 'Jon Snow', description: "I've hit a wall learning programming and would like to climb over it this winter by working on projects.", experience: 'Intermediate', language: 'JavaScript', avatarUrl: 'http://i.imgur.com/YoHDe9x.jpg', profile: '{"languages":{"Jupyter Notebook":12,"Python":19, "JavaScript":20,"CSS":26,"Shell":15},"repoStats":852}'}),
+    (:User {rating: 70, ghId: 3, name: 'Bran Stark', description: "I have seen a lot of code, and would like to help others see what I've seen by pairing!", experience: 'Advanced', language: 'C++', avatarUrl: 'http://i.imgur.com/jzc2vxp.png', profile: '{"languages":{"Python":59,"C": 5, "JavaScript":69,"CSS":18,"Shell":12.172740017049366},"repoStats":658}'})
   `;
 
 // Add user nodes

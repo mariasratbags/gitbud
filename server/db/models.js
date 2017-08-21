@@ -11,13 +11,13 @@
 */
 
 exports.User = class User {
-  constructor(user, pairs) {
+  constructor(user, pairs, rating) {
     this.id = user.identity.toNumber();
     this.username = user.properties.username;
     this.name = user.properties.name;
     this.avatarUrl = user.properties.avatarUrl;
     this.ghId = 'ghId' in user.properties ? user.properties.ghId.toNumber() : null;
-    this.rating = user.properties.rating.toNumber();
+    this.rating = rating ? rating.properties.difference.toNumber() :user.properties.rating.toNumber();
     this.paired = pairs ? pairs.map(pair => pair.toNumber()) : [];
     this.language = user.properties.language;
     this.experience = user.properties.experience;
@@ -30,7 +30,7 @@ exports.ServerUser = class extends exports.User {
   constructor(user) {
     super(user)
     this.OAuthToken = user.properties.OAuthToken;
-    this.profile = user.properties.profile || false;
+    this.profile = user.properties.profile ? JSON.parse(user.properties.profile) : false;
   }
 }
 
