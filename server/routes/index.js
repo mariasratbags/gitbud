@@ -101,7 +101,6 @@ exports.api = {
           RETURN pair, false as projects, xp
         `)
           .then((res) => {
-            console.log(res);
             resolve(
               res.records.map(user => 
                 new db.models.User(user.get('pair'), user.get('projects'), user.get('xp'))
@@ -113,7 +112,6 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
-// AND NOT pair.ghId = ${Number(ghId)}
     projects: function getProjects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
