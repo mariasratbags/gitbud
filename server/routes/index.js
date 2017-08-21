@@ -112,7 +112,6 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
-
     projects: function getProjects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -142,6 +141,26 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+    pairs: function getPairs(req) {
+      return new Promise((resolve, reject) => {
+        const dbSession = dbDriver.session();
+        console.log('GET pairs');
+        const ghId = req.user.ghInfo.id;
+        dbSession.run(`
+          MATCH (pair:User)-->(group:Group)<--(user:User)
+          WHERE user.ghId = ${Number(ghId)}
+          RETURN pair
+         `)
+          .then((res) => {
+            resolve(res.records.map(project => 
+              res.records.map(user => new db.models.User(user.get('pair')))
+            ));
+          })
+          .catch(reject)
+          .then(() => dbSession.close());
+      });
+    }
+
   },
   /*
     POST METHODS
