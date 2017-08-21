@@ -1,13 +1,21 @@
 /*
-    This module massages neo4j search results
-    into more convenient objects.
-
-    For information on the .toNumber() method, please check:
-      https://github.com/neo4j/neo4j-javascript-driver#a-note-on-numbers-and-the-integer-type
-    It is a workaround, provided by the driver, for dealing with  the differences
-    between JS and neo4j's number representation.
-
-    We have (perhaps riskily) assumed that our numbers will not exceed the MAX_SAFE_INTEGER.
+ *  DATABASE MODELS
+ *  (Used whenever db results are parsed--mostly
+ *  in request-handler) 
+ * 
+ *  This module massages neo4j search results
+ *  into more convenient objects. The constructors are
+ *  essentially parsers. This allows us to abstract the logic
+ *  of preparing objects from results and makes it easier to
+ *  separate out properties of the results in order to e.g. remove
+ *  sensitive information from Users before sending them.
+ *
+ *  For information on the .toNumber() method, please check:
+ *    https://github.com/neo4j/neo4j-javascript-driver#a-note-on-numbers-and-the-integer-type
+ *  It is a workaround, provided by the driver, for dealing with  the differences
+ *  between JS and neo4j's number representation.
+ *
+ *  We have (perhaps riskily) assumed that our numbers will not exceed the MAX_SAFE_INTEGER.
 */
 
 exports.User = class User {
@@ -17,7 +25,7 @@ exports.User = class User {
     this.name = user.properties.name;
     this.avatarUrl = user.properties.avatarUrl;
     this.ghId = 'ghId' in user.properties ? user.properties.ghId.toNumber() : null;
-    this.rating = rating ? rating.properties.difference.toNumber() :user.properties.rating.toNumber();
+    this.rating = rating ? rating.properties.difference.toNumber() : user.properties.rating.toNumber();
     this.paired = pairs ? pairs.map(pair => pair.toNumber()) : [];
     this.projects = projects ? projects.map(project => project.toNumber()) : this.paired;
     this.language = user.properties.language;
