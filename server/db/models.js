@@ -11,7 +11,7 @@
 */
 
 exports.User = class User {
-  constructor(user, pairs, rating) {
+  constructor(user, pairs, rating, projects) {
     this.id = user.identity.toNumber();
     this.username = user.properties.username;
     this.name = user.properties.name;
@@ -19,6 +19,7 @@ exports.User = class User {
     this.ghId = 'ghId' in user.properties ? user.properties.ghId.toNumber() : null;
     this.rating = rating ? rating.properties.difference.toNumber() :user.properties.rating.toNumber();
     this.paired = pairs ? pairs.map(pair => pair.toNumber()) : [];
+    this.projects = projects ? projects.map(project => project.toNumber()) : this.paired;
     this.language = user.properties.language;
     this.experience = user.properties.experience;
     this.description = user.properties.description;

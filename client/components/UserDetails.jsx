@@ -93,7 +93,7 @@ class UserDetails extends React.Component {
           <CardTitle title={ this.props.user.name } subtitle={'Experience: ' + this.props.user.experience} />
           <CardTitle title="Description" subtitle={this.props.user.description} />
           <CardTitle title="Language" subtitle={this.props.user.language}/>
-          <CardTitle title="Projects" subtitle='N Queens, Hello World'/>
+          <CardTitle title="Projects" subtitle={this.props.projects.map(project => project.project).join(' ')}/>
           <div>
             { this.pairButton() }
             <RaisedButton label='Message Me' fullWidth={true} icon={<ActionFace />} onClick={this.expandCard} secondary={true} />
@@ -123,8 +123,11 @@ class UserDetails extends React.Component {
 
 const mapStateToProps = (state, props) => {
   const userId = Number(props.match.params.id);
+  const user = state.users.filter(user => user.id === userId)[0];
+  const projects = state.projects.filter(project => user.projects.indexOf(project.id) > -1)
   return {
-    user: state.users.filter(user => user.id === userId)[0],
+    user,
+    projects,
     messages: state.messages[userId] || [],
   };
 };
