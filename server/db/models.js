@@ -17,7 +17,6 @@ exports.User = class User {
     this.name = user.properties.name;
     this.avatarUrl = user.properties.avatarUrl;
     this.ghId = 'ghId' in user.properties ? user.properties.ghId.toNumber() : null;
-    this.profile = user.properties.profile || false;
     this.rating = user.properties.rating.toNumber();
     this.paired = pairs ? pairs.map(pair => pair.toNumber()) : [];
     this.language = user.properties.language;
@@ -31,7 +30,7 @@ exports.ServerUser = class extends exports.User {
   constructor(user) {
     super(user)
     this.OAuthToken = user.properties.OAuthToken;
-    this.profile = user.properties.profile;
+    this.profile = user.properties.profile || false;
   }
 }
 

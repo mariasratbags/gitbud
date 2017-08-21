@@ -27,7 +27,7 @@ passport.use(new GitHubStrategy(
     `)
       .then((res) => {
         dbSession.close();
-        const user = new db.models.User(res.records[0].get('user'));
+        const user = new db.models.ServerUser(res.records[0].get('user'));
         if (!user.profile) {
           console.log('No profile');
           profiling.buildUserProfile(user.ghId)
