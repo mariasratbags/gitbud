@@ -90,7 +90,7 @@ exports.api = {
           WITH user, pair, xp
           MATCH (pair)-->(group:Group)<--(user),
             (group)-->(pairedProject:Project),
-            (pair)-[i:INTERESTED_IN]->(project:Project)
+            (pair)-[:INTERESTED_IN]->(project:Project)
           WHERE ID(project) = ${projectId}
           RETURN pair, COLLECT(ID(pairedProject)) as projects, xp
           UNION
