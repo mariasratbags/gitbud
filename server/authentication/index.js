@@ -1,5 +1,3 @@
-// node modules
-const cluster = require('cluster');
 // Libraries for authentication
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
