@@ -30,7 +30,7 @@ exports.ServerUser = class extends exports.User {
   constructor(user) {
     super(user)
     this.OAuthToken = user.properties.OAuthToken;
-    this.profile = user.properties.profile || false;
+    this.profile = JSON.parse(user.properties.profile) || false;
   }
 }
 
