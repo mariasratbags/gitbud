@@ -51,9 +51,9 @@ const saveUserProfile = function saveUserProfile({ username, OAuthToken, repos, 
 // This function chains together all the separate profiling functionality
 // to create a user profile and save it to their node on the db.
 exports.buildUserProfile = function buildUserProfile(ghId) {
-  getUserRepos(ghId)
+  return getUserRepos(ghId)
     .then(getUserLanguages)
     .then(getUserRepoStats)
     .then(saveUserProfile)
     .catch(console.error);
-}
+};
