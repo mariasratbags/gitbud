@@ -1,6 +1,6 @@
 # GitBud
 
-> Gitbud is an application that allows users to connect with others who are either at the same level or higher to work on open source projects. Users can view current projects, interested users, and pair up to work on a project together.
+> GitBud is an application that allows users to connect with others who are either at the same level or higher to work on open source projects. Users can view current projects, interested users, and pair up to work on a project together.
 
 ## Team
 

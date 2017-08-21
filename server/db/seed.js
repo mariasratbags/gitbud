@@ -36,8 +36,10 @@ function addUsers() {
 
 const addProjectsQueryString = `
   CREATE
-    (:Project {project: 'Hello GitBud', language:'JavaScript', experience: 'Beginner', description: 'Hello, GitBud is a project to help beginners get familiar with contributing to open source projects. Some of the issue to work on is adding jQuery to the project.', link: 'https://github.com/cranebaes/hello-gitbud', structure: '[{"text":"Do the thing","complete":false},{"text":"Do the other thing.","hint":"Do it well!","complete":false}]'}),
-    (:Project {project: 'N-Queens', language:'JavaScript', experience: 'Advanced', link: 'https://github.com/cranebaes', structure: '[{"text":"Do the thing","complete":false},{"text":"Do the other thing.","hint":"Do it well!","complete":false}]'})
+    (:Project {project: 'Hello GitBud', language: 'JavaScript', experience: 'Beginner', link: 'https://github.com/cranebaes/hello-gitbud', description: "Get familiar with contributing to open source projects by making a first pull request. In this project, you will learn to use CDN and make pull request.", structure: '[{"text":"Need to add jQuery to application","hint":"Hint: Look up what a content delivery network (CDN) is","complete":false},{"text":"Make your first pull request","hint":"Hint: Refer to the README.md in the repository","complete":false}]'}),
+    (:Project {project: 'Random Quote Machine', language: 'JavaScript', experience: 'Beginner', link: 'https://github.com/cranebaes/random-quote-machine', description: "Learn to work with pre-written code to analyze and debug possible issues. In this project, you will learn to locate and solve minor bugs in an existing codebase.", structure: '[{"text":"Missing jQuery library","hint":"Hint: Remember CDN?","complete":false},{"text":"script.js and styles.css are not being loaded","complete":false},{"text":"Quote Me button is not functioning","hint":"Hint: Which function is invoked on button click?","complete":false},{"text":"Quote Me button is not being stylized correctly","complete":false},{"text":"Typo in title of index.html","complete":false},{"text":"Dummy quote that was used for testing is included","complete":false}, {"text":"Make a pull request","hint":"Hint: Remember to end your files with a newline","complete":false}]'}),
+    (:Project {project: 'TBD-Intermediate', language: 'JavaScript', experience: 'Intermediate', link: 'https://github.com/cranebaes', description: "TBD", structure: '[{"text":"TBD","hint":"Hint: TBD","complete":false}]'}),
+    (:Project {project: 'TBD-Advanced', language: 'JavaScript', experience: 'Advanced', link: 'https://github.com/cranebaes', description: "TBD", structure: '[{"text":"TBD","hint":"Hint: TBD","complete":false}]'})
   `;
 
 // Add project nodes
@@ -59,12 +61,12 @@ const addInterestedInRelationshipsQueryString = `
   MATCH (jon:User) WHERE jon.name = "Jon Snow"
   MATCH (bran:User) WHERE bran.name = "Bran Stark"
   MATCH (helloGitBud:Project) WHERE helloGitBud.project = "Hello GitBud"
-  MATCH (nQueens:Project) WHERE nQueens.project = "N-Queens"
+  MATCH (randomQuoteMachine:Project) WHERE randomQuoteMachine.project = "Random Quote Machine"
   CREATE
     (robb)-[:INTERESTED_IN]->(helloGitBud),
     (arya)-[:INTERESTED_IN]->(helloGitBud),
-    (jon)-[:INTERESTED_IN]->(nQueens),
-    (bran)-[:INTERESTED_IN]->(nQueens)
+    (jon)-[:INTERESTED_IN]->(randomQuoteMachine),
+    (bran)-[:INTERESTED_IN]->(randomQuoteMachine)
   `;
 
 const addInterestedInRelationships = function addInterestedInRelationships() {
@@ -82,12 +84,12 @@ const addInterestedInRelationships = function addInterestedInRelationships() {
 const addPairQueryString = `
   MATCH (robb:User) WHERE robb.name = "Robb Stark"
   MATCH (bran:User) WHERE bran.name = "Bran Stark"
-  MATCH (nQueens:Project) WHERE nQueens.project = "N-Queens"
+  MATCH (randomQuoteMachine:Project) WHERE randomQuoteMachine.project = "Random Quote Machine"
   CREATE
     (group:Group),
     (robb)-[:PAIRED_WITH]->(group),
     (bran)-[:PAIRED_WITH]->(group),
-    (group)-[:WORKING_ON]->(nQueens)
+    (group)-[:WORKING_ON]->(randomQuoteMachine)
   `;
 
 const addPair = function addPair() {

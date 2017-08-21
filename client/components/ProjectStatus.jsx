@@ -106,7 +106,7 @@ const ProgressItem = (props) => {
     <div>
       <Checkbox checked={props.complete} label={props.text} onCheck={check} />
       <CardText>
-        {props.hint || 'This prompt has no hint. Would you like some more Latin?'}
+        { props.hint }
       </CardText>
     </div>
   )

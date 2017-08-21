@@ -63,7 +63,7 @@ class ProjectDetails extends React.Component {
             </ToolbarGroup>
           </Toolbar>
           <CardText>
-            {this.props.project.description || 'This project has no description.' }
+            { this.props.project.description || 'This project has no description.' }
           </CardText>
         </Card>
         <Paper>

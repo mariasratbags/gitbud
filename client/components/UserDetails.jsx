@@ -79,7 +79,7 @@ class UserDetails extends React.Component {
   render() {
     return (
       <Paper style={{ width: '95%', margin: 'auto', marginTop: 12, padding: 12 }}>
-        <Card expanded={ this.state.expanded } style={{ width: '40%', marginLeft: 'auto', marginRight: 'auto', marginBottom: 12 }}>
+        <Card expanded={this.state.expanded} style={{ width: '40%', marginLeft: 'auto', marginRight: 'auto', marginBottom: 12 }}>
           <Toolbar>
             <ToolbarGroup>
               <ToolbarTitle text="User Profile" />
@@ -87,7 +87,7 @@ class UserDetails extends React.Component {
           </Toolbar>
           <CardMedia>
             <div className="img-container">
-              <img className="img-circle" src={ this.props.user.avatarUrl } alt="" />
+              <img className="img-circle" src={this.props.user.avatarUrl} alt="" />
             </div>
           </CardMedia>
           <CardTitle title={ this.props.user.name } subtitle={'Experience: ' + this.props.user.experience} />
@@ -139,6 +139,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);
 
 
 
-{/* <CardMedia overlay={ <CardTitle title={ this.props.user.name } subtitle='Experience: n00b'/> }>
+/* <CardMedia overlay={ <CardTitle title={ this.props.user.name } subtitle='Experience: n00b'/> }>
   <img src={ this.props.user.avatarUrl } />
-</CardMedia> */}
+</CardMedia> */
