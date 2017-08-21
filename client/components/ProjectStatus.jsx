@@ -90,7 +90,7 @@ class ProjectStatus extends React.Component {
             open={this.state.open}
             onRequestClose={this.handleClose}
             >
-              Congratulations! You've completed this project!
+              Congrats on your progress!
           </Dialog>
         </Card>
       </Paper>
