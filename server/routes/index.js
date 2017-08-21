@@ -92,18 +92,20 @@ exports.api = {
             (group)-->(pairedProject:Project),
             (pair)-[:INTERESTED_IN]->(project:Project)
           WHERE ID(project) = ${projectId}
-          RETURN pair, COLLECT(ID(pairedProject)) as projects, xp
+          OPTIONAL MATCH (pair)--(:Group)--(pairsProjects:Project)
+          RETURN pair, COLLECT(ID(pairedProject)) as projects, COLLECT(ID(pairsProjects)) as pairsProjects, xp
           UNION
           MATCH (user:User {ghId: ${ghId}})<-[xp:EXPERIENCE_DIFFERENCE]->(pair:User)
           WITH user, xp, pair
           MATCH (pair)-[:INTERESTED_IN]->(project:Project)
           WHERE ID(project) = ${projectId} AND NOT (pair)-->(:Group)<--(:User {ghId: ${ghId}})
-          RETURN pair, false as projects, xp
+          OPTIONAL MATCH (pair)--(:Group)--(pairsProjects:Project)
+          RETURN pair, false as projects, COLLECT(ID(pairsProjects)) as pairsProjects, xp
         `)
           .then((res) => {
             resolve(
-              res.records.map(user => 
-                new db.models.User(user.get('pair'), user.get('projects'), user.get('xp'))
+              res.records.map(user => {  console.log(user.get('pairsProjects'))
+                return new db.models.User(user.get('pair'), user.get('projects'), user.get('xp'), user.get('pairsProjects')); }
               )
                 .sort((a, b) => a.rating - b.rating)
             )
@@ -281,10 +283,12 @@ exports.auth = {
       if (req.isAuthenticated()) {
         const dbSession = dbDriver.session();
         dbSession.run(`
-          MATCH (user:User {ghId: ${ req.user.ghInfo.id }}) RETURN user
+          MATCH (user:User {ghId: ${ req.user.ghInfo.id }})
+          OPTIONAL MATCH (user)--(:Group)--(project:Project)
+          RETURN user, COLLECT(ID(project)) as projects
         `)
           .then((result) => {
-            res.json(new db.models.User(result.records[0].get('user')));
+            res.json(new db.models.User(result.records[0].get('user'), false, false, result.records[0].get('projects')));
             dbSession.close();
           })
           .catch(() => {

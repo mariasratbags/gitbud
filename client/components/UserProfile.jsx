@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Paper from 'material-ui/Paper';
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
@@ -21,10 +22,16 @@ function UserProfile(props) {
         <CardTitle title={ props.user.name } subtitle={'Experience: ' + props.user.experience} />
         <CardTitle title="Description" subtitle={props.user.description} />
         <CardTitle title="Language" subtitle={props.user.language}/>
-        <CardTitle title="Projects" subtitle='N Queens, Hello World'/>
+        <CardTitle title="Projects" subtitle={props.projects.map(project => project.project).join(' ')} />
       </Card>
     </Paper>
   );
 }
 
-export default UserProfile;
+const mapStateToProps = (state, props) => (
+  {
+    projects: state.projects.filter(project => props.user.projects.indexOf(project.id) > -1)
+  }
+);
+
+export default connect(mapStateToProps)(UserProfile);
