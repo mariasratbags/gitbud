@@ -60,6 +60,7 @@ module.exports = function getUserRepos(ghId) {
               // Check for commits
               repo.include = res.data.length > 0;
             })
+            .catch(err => console.error('err:', err))
           );
         } else {
           // Not a fork.
