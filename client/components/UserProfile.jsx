@@ -20,9 +20,14 @@ function UserProfile(props) {
         </CardMedia>
         <CardTitle title={ props.user.name } subtitle={'Experience: ' + props.user.experience} />
         <div>
-          <CardTitle title="Language" subtitle={props.user.language}/>
+          <CardTitle title="Language" subtitle={props.user.language} />
         </div>
-        <CardTitle title="Projects" subtitle='N Queens, Hello World'/>
+        <div>
+          <CardTitle title="Projects" subtitle='N Queens, Hello World' />
+        </div>
+        <div>
+          <CardTitle title="Description" subtitle={ props.user.description } />
+        </div>
       </Card>
     </Paper>
   );

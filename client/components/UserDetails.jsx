@@ -79,7 +79,7 @@ class UserDetails extends React.Component {
   render() {
     return (
       <Paper style={{ width: '95%', margin: 'auto', marginTop: 12, padding: 12 }}>
-        <Card expanded={ this.state.expanded } style={{ width: '40%', marginLeft: 'auto', marginRight: 'auto', marginBottom: 12 }}>
+        <Card expanded={this.state.expanded} style={{ width: '40%', marginLeft: 'auto', marginRight: 'auto', marginBottom: 12 }}>
           <Toolbar>
             <ToolbarGroup>
               <ToolbarTitle text="User Profile" />
@@ -87,14 +87,19 @@ class UserDetails extends React.Component {
           </Toolbar>
           <CardMedia>
             <div className="img-container">
-              <img className="img-circle" src={ this.props.user.avatarUrl } alt="" />
+              <img className="img-circle" src={this.props.user.avatarUrl} alt="" />
             </div>
           </CardMedia>
-          <CardTitle title={ this.props.user.name } subtitle={'Experience: ' + this.props.user.experience} />
+          <CardTitle title={this.props.user.name} subtitle={'Experience: ' + this.props.user.experience} />
           <div>
-            <CardTitle title="Language" subtitle={this.props.user.language}/>
+            <CardTitle title="Language" subtitle={this.props.user.language} />
           </div>
-          <CardTitle title="Projects" subtitle='N Queens, Hello World'/>
+          <div>
+            <CardTitle title="Projects" subtitle='N Queens, Hello World' />
+          </div>
+          <div>
+            <CardTitle title="Description" subtitle={this.props.user.description} />
+          </div>
           <div>
             { this.pairButton() }
             <RaisedButton label='Message Me' fullWidth={true} icon={<ActionFace />} onClick={this.expandCard} secondary={true} />
