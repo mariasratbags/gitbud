@@ -1,7 +1,5 @@
 // Libraries
 const axios = require('axios');
-// lodash is used here, as there's a lot of iterating over arrays
-// and lodash is generally the fastest.
 const map = require('lodash/map');
 const forEach = require('lodash/forEach');
 
@@ -25,7 +23,7 @@ module.exports = function getUserLanguages({ OAuthToken, username, repos, profil
         }
       });
       forEach(Object.keys(languages), key =>
-        languages[key] = Math.log10(languages[key])
+        languages[key] = Math.log2(languages[key])
       );
       profile.languages = languages;
       return { OAuthToken, username, repos, profile };
