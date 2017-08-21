@@ -84,7 +84,7 @@ class App extends React.Component {
   }
 
   render() {
-    if (this.state.loggedIn) {
+    if (this.state.loggedIn.language) {
       return (
         <BrowserRouter>
           <div>
@@ -113,8 +113,11 @@ class App extends React.Component {
           </div>
         </BrowserRouter>
       );
+    } else if (this.state.loggedIn) {
+      return <Questionnaire />;
+    } else {
+          return <Landing checkAuth={ this.checkAuthenticated } />;
     }
-    return <Landing checkAuth={ this.checkAuthenticated } />;
   }
 }
 
