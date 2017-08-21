@@ -36,16 +36,20 @@ const db = require('../db');
 const getUserLanguages = require('./languages');
 const getUserRepoStats = require('./repoStats');
 const getUserRepos = require('./repos');
+exports.compareUser = require('./matching');
 
 // Takes a profile and saves it to the db
 const saveUserProfile = function saveUserProfile({ username, OAuthToken, repos, profile }) {
   const dbSession = db.driver.session();
-  dbSession.run(`
+  return dbSession.run(`
     MATCH (user:User {OAuthToken: '${OAuthToken}'})
     SET user.profile = '${JSON.stringify(profile).replace('\'', '\\\'')}'
   `)
-  .then(() => { username, OAuthToken, repos, profile })
-  .catch(console.error);
+    .then(() => {
+      dbSession.close();
+      return { username, OAuthToken, repos, profile }
+    })
+    .catch(console.error);
 };
 
 // This function chains together all the separate profiling functionality

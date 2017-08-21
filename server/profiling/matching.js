@@ -6,7 +6,7 @@ const db = require('../db');
 
 module.exports = function compareUser(ghId) {
   const dbSession = db.driver.session();
-  dbSession.run(`
+  return dbSession.run(`
     MATCH (user:User {ghId: ${ghId}})
     RETURN user
     UNION
@@ -40,5 +40,9 @@ module.exports = function compareUser(ghId) {
           .join('\n')
         }
       `)
+        .then((res) => {
+          dbSession.close();
+          return res;
+        })
     });
 };
