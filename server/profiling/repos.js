@@ -1,3 +1,15 @@
+/* 
+ * USER REPOS
+ * (Invoked from /server/profiling/index.js)
+ * 
+ * This module gets all repos that a user either created or has committed to
+ * from their GitHub id and passes on the first profiling object.
+ * 
+ * Due to the input and output, this will most likely always be the first
+ * 'link' in the chain of functions that build a profile.
+ * 
+ */
+
 // Libraries
 const axios = require('axios');
 const map = require('lodash/map');
@@ -7,14 +19,6 @@ const filter = require('lodash/filter');
 // Other server modules
 const db = require('../db');
 
-/* 
- * Gets all repos that a user either created or has committed to
- * from their GitHub id.
- * 
- * Due to the input and output, this will most likely always be the first
- * 'link' in the chain of functions that build a profile.
- * 
- */
 module.exports = function getUserRepos(ghId) {
   // First get user info from the db
   const dbSession = db.driver.session();

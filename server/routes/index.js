@@ -1,4 +1,7 @@
 /*
+  ROUTES
+  (Functions all invoked in /server/request-handler)
+
   This module contains request handlers for most of the routes
   as well as a set for quick responses where index.html is required.
 
@@ -51,6 +54,9 @@ exports.api = {
       });
     },
 
+    // Returns an object with numerical properties representing
+    // users IDs each with a value of an array of messages of the form
+    // { text: message(string), sender: whether or not the requesting user is the sender(bool) }
     messages: function getMessages(req) {
       return new Promise((resolve, reject) => {
         console.log('GET messages');
@@ -65,7 +71,6 @@ exports.api = {
               const text = record.get('message').properties.text;
               const userId = record.get('other').identity.toNumber();
               const sender = record.get('to_user').type === 'SENT';
-              console.log({ text, userId, sender });
               messages[userId] = messages[userId]
                 ? messages[userId].concat({ sender, text })
                 : [{ sender, text }];
@@ -79,6 +84,9 @@ exports.api = {
       });
     },
 
+    // Returns an array of user objects interested in the given project id
+    // NOTE: The project ID is sent in the headers. This is a hack to deal with our
+    // rubbish URL parsing. You may wish to fix it.
     users: function getUsers(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -104,8 +112,8 @@ exports.api = {
         `)
           .then((res) => {
             resolve(
-              res.records.map(user => {  console.log(user.get('pairsProjects'))
-                return new db.models.User(user.get('pair'), user.get('projects'), user.get('xp'), user.get('pairsProjects')); }
+              res.records.map(user =>
+                new db.models.User(user.get('pair'), user.get('projects'), user.get('xp'), user.get('pairsProjects'))
               )
                 .sort((a, b) => a.rating - b.rating)
             )
@@ -114,6 +122,9 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
+    // Returns an array of project objects.
+    // Returns all the projects in the database.
     projects: function getProjects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -143,6 +154,9 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
+    // Returns an array of user objects--one for each
+    // user with which the requesting user is paired
     pairs: function getPairs(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -164,12 +178,13 @@ exports.api = {
     }
 
   },
+
   /*
     POST METHODS
   */
   POST: {
+    // Sets requesting user's interest in a project from given project ID
     projects: function projects(req) {
-      console.log(req.body)
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('POST projects');
@@ -189,6 +204,8 @@ exports.api = {
       });
     },
 
+    // Sets requesting user as working on the project with project ID
+    // with the user with the given user ID
     pair: function addPair(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -202,20 +219,18 @@ exports.api = {
           SET group.progress = project.structure
           return user, pair, group, project
         `)
-          .then((res) => {
-            console.log(res);
-            resolve(res);
-          })
+          .then(resolve)
           .catch(reject)
           .then(() => dbSession.close());
       });
     },
 
+    // Adds a new message from the requesting user to the database
     messages: function sendMessage(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         const message = req.body;
-        console.log('POST messages', message);
+        console.log('POST messages');
         dbSession.run(`
           MATCH (user:User {ghId: ${ req.user.ghInfo.id }}), (recipient:User)
           WHERE ID(recipient) = ${ req.body.recipient }
@@ -232,6 +247,11 @@ exports.api = {
       });
     },
 
+    // Updates a group's progress in the database.
+    // NOTE: As users work in groups (currently pairs), their progress
+    // is stored on group nodes not user nodes.
+    // It's stored as JSON, as the database cannot hold objects per se
+    // and the databse has no need to udnerstand or operate on the data as an object.
     progress: function updateProgress(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -241,15 +261,13 @@ exports.api = {
           WHERE ID(project) = ${req.body.projectId}
           SET group.progress = '${JSON.stringify(req.body.progress).replace('\'', '\\\'')}'
         `)
-          .then((res) => {
-            //console log to annoy peter
-            console.log(res);
-            resolve(res)
-          })
-          .catch(reject);
+          .then(resolve)
+          .catch(reject)
+          .then(() => dbSession.close());
       });
     },
 
+    // Updates the db with data from the questionnaire.
     users: function addQuestionnaireData(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -268,9 +286,11 @@ exports.api = {
 
 };
 
-// Request handlers for some authentication routes.
-// Perhaps these should all be in server.js or perhaps all here.
-// Currently (for convenience), they're split across the two, which is slightly confusing.
+/*
+ *  REQUEST HANDLERS FOR AUTHENTICATION ROUTES
+ * 
+ *  These handlers deal with the response directly by convenience, not by good design.
+ */
 exports.auth = {
   GET: {
     signout: function signout(req, res) {
@@ -303,7 +323,7 @@ exports.auth = {
     github: function authenticate(req, res) {
       if (req.url === '/auth/github') {
         passport.authenticate(req, res);
-      } else if (req.url.indexOf('/auth/github/callback') === 0) {
+      } else if (/^\/auth\/github\/callback/.test(req.url)) {
         passport.callback(req, res);
       } else {
         // Not a valid URL

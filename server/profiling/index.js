@@ -8,10 +8,17 @@
  *  used to compare users by finding the absolute difference
  *  between their relative experience.
  * 
+ *  Most of these functions are called from the authentication module, which
+ *  has a lot of the middleware called at the beginning of sessions and allows
+ *  us to intervene with completely new users first login.
+ * 
  *  There's a lot of room to add features here, as GitHub's API
  *  is very generous with information. It is less generous, however,
  *  with allowances: we added some very cool features but quickly found
  *  that doing all the necessary API queries was blasting our rate limit.
+ *  The way round this would be to use their graphQL API (about which we
+ *  didn't find out until the last minute--the documentation wasn't easy to spot).
+ *  This allows many larger queries to be resolved in just one.
  * 
  *  NOTES:
  *  --lodash

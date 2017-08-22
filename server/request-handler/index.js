@@ -1,22 +1,30 @@
 /*
-  This module ensures all requests are processed in the correct way.
-
-  Generally, the flow for handling requests is:
-    1. Serve static files (server.js)
-    2. Serve index.html to React routes
-    3. Handle API endpoints
-    4. Serve index.html for React to render a 404
-
-  This order should mean that the quickest or simplest
-  requests are handled first.
-
-  THINGS TO FIX:
-  We really should have used a proper url parser (node has one in the box!) from the beginning.
-  
-  Our not doing so has led to a great example of pathway dependency. We never found the time to refactor.
-  For a great example of the problems this causes, check the incredible kludge of sending GET request info in the
-  headers rather than as URL params.
-*/
+ *  REQUEST HANDLER
+ *  (Core middleware--use()d in server.js)
+ *
+ *  This module ensures all requests are processed in the correct way.
+ *
+ *  Generally, the flow for handling requests is:
+ *    1. Serve static files (server.js)
+ *    2. Serve index.html to React routes
+ *    3. Handle API endpoints
+ *    4. Serve index.html for React to render a 404
+ *
+ *  This order should mean that the quickest or simplest
+ *  requests are handled first.
+ * 
+ *  Many of these functions make db queries. There's more information on these in the
+ *  db module, but importantly you will notice that with neo4j, we can extract the various
+ *  aliased fields of a response with the .get() method of a record. This is extremely useful
+ *  and we recommend making heavy use of it in order to build and parse complex queries efficiently.
+ *
+ *  THINGS TO FIX:
+ *  We really should have used a proper url parser (node has one in the box!) from the beginning.
+ *  
+ *  Our not doing so has led to a great example of pathway dependency. We never found the time to refactor.
+ *  For a great example of the problems this causes, check the incredible kludge of sending GET request info in the
+ *  headers rather than as URL params (/API/users).
+ */
 
 // Node librares
 const fs = require('fs');

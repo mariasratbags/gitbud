@@ -1,11 +1,11 @@
 // Libraries
 const forEach = require('lodash/forEach');
 const map = require('lodash/map');
+const union = require('lodash/union');
 // GitBud modules
 const db = require('../db');
 
-module.exports = function compareUser(ghId) {
-  const dbSession = db.driver.session();
+module.exports = function compareUser(dbSession, ghId) {
   return dbSession.run(`
     MATCH (user:User {ghId: ${ghId}})
     RETURN user
@@ -20,13 +20,12 @@ module.exports = function compareUser(ghId) {
       const comparisons = {};
       // Compare against every other user
       forEach(comparators, (comparator) => {
-        let difference = 0;
-        difference += Math.abs((comparator.profile.repoStats || 0) - user.profile.repoStats);
-        const languages = new Set(Object.keys(user.profile.languages).concat(Object.keys(comparator.profile.languages)));
+        let difference = Math.pow(comparator.profile.repoStats - user.profile.repoStats, 2);
+        const languages = union(Object.keys(user.profile.languages), Object.keys(comparator.profile.languages));
         forEach(languages, (language) => {
-          difference += (user.profile.language || 0) - (comparator.profile.language || 0);
+          difference += Math.pow((user.profile.languages[language] || 0) - (comparator.profile.languages[language] || 0), 2);
         });
-        comparisons[comparator.ghId] = difference;
+        comparisons[comparator.ghId] = Math.round(Math.sqrt(difference));
       });
       // Save comparisons in db as relationships
       return dbSession.run(`
