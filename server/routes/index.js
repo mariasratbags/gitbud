@@ -323,7 +323,7 @@ exports.auth = {
     github: function authenticate(req, res) {
       if (req.url === '/auth/github') {
         passport.authenticate(req, res);
-      } else if (req.url.indexOf('/auth/github/callback') === 0) {
+      } else if (/^\/auth\/github\/callback/.test(req.url)) {
         passport.callback(req, res);
       } else {
         // Not a valid URL
