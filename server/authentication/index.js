@@ -27,14 +27,12 @@ passport.use(new GitHubStrategy(
         dbSession.close();
         const user = new db.models.ServerUser(res.records[0].get('user'));
         if (!user.profile) {
-          console.log('No profile');
           profiling.buildUserProfile(user.ghId)
-            // The new profile is not available on the user's node instantly.
-            // I don't know why, and I'm sick of trying to fix it.
-            // For now, this arbitrary delay is enough.
-            // I hate it. Please fix it.
-            .then(() => setTimeout(profiling.compareUser.bind(null, user.ghId), 500))
-            .catch(console.error);
+            .then(() => profiling.compareUser(dbSession, user.ghId))
+            .catch((err) => {
+              console.error(err);
+              dbSession.close();
+            });
         }
       })
       .catch((err) => {

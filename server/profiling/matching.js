@@ -4,8 +4,8 @@ const map = require('lodash/map');
 // GitBud modules
 const db = require('../db');
 
-module.exports = function compareUser(ghId) {
-  const dbSession = db.driver.session();
+module.exports = function compareUser(dbSession, ghId) {
+  // const dbSession = db.driver.session();
   return dbSession.run(`
     MATCH (user:User {ghId: ${ghId}})
     RETURN user
