@@ -27,7 +27,7 @@
  *  the output.
  *
  *  Also, there's clearly scope to neaten most of the requests in the routes module
- *  by using the optional paramters object that can be sent with queries. At the moment,
+ *  by using the optional parameters object that can be sent with queries. At the moment,
  *  we're mostly using rather hairy template literals which aren't as readable and are
  *  easier to get wrong.
 */
