@@ -1,7 +1,19 @@
+/*
+  Reducers - decides how the change a state after receiving an action, and thus can be considered the entrance of a state change. A reducer is comprised of functions and it changes states by taking an action as argument, in which it then returns a new state.
+
+  The actions get sent to App component and other parent component where they can be pass through as props.
+*/
+
 import { combineReducers } from 'redux';
 
+// does nothing - implemented to test connecting Redux to React
 const changeString = (state = 'some message', action) => action.type === 'CHANGE_STRING' ? action.text : state;
 
+/*
+  first condition is the initial state
+  inside ProjectDetails component, we dispatch 'addUsers' to display users at initial load
+  inside UserDetails component, we dispatch 'dispatchPairing' when user select a partner to pair with
+*/
 const users = (state, action) => {
   if (state === undefined) {
     return [];
@@ -18,6 +30,12 @@ const users = (state, action) => {
   return state;
 };
 
+/*
+  first condition is the initial state
+  inside App component we dispatch 'LIST_PROJECTS' to display list of projects
+  inside ProjectDetails component we dispatch 'CHANGE_PROJECT_INTEREST' when user selects 'they are interested'
+  inside UserDetails component we dispatch 'CHANGE_USER' when user select 'they want to pair' button
+*/
 const projects = (state, action) => {
   if (state === undefined) {
     return [];
@@ -41,6 +59,14 @@ const projects = (state, action) => {
   return state;
 };
 
+/*
+  first condition is the initial state
+  inside UserDetails component we dispatch 'MESSAGE_SEND' when user sends a message to pairing user
+  inside UserDetails component we dispatch 'MESSAGE_LOAD' when user refreshes page to view new incoming messages
+
+  THINGS TO FIX: change messaging features to appear when sent
+  SUGGESTION: implement socket.io
+*/
 const messages = (state, action) => {
   if (state === undefined) {
     return {};
@@ -54,6 +80,11 @@ const messages = (state, action) => {
   return state;
 };
 
+/*
+  first condition is the initial state
+  inside Project component, we dispatch 'PROGRESS_LOAD_ITEMS' to load the user's latest progress on project
+  inside Project component, we dispatch 'PROGRESS_CHANGE_ITEM'
+*/
 const projectProgress = (state, action) => {
   if (state === undefined) {
     return {};
@@ -71,7 +102,7 @@ const projectProgress = (state, action) => {
   return state;
 };
 
-// hands off to container components with mapStateToProps
+// hands off state/dispatch to React components with mapStateToProps and mapDispatchToProps
 export default combineReducers({
   message: changeString,
   users,

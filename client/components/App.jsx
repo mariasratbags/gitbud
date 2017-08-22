@@ -1,3 +1,15 @@
+/*
+  This is the main (parent) component for the application.
+
+  Inside the App state component we are 3 ajax calls to the server
+    1. getting the list of projects from the database
+    2. getting the message from the database
+    3. checking authentication
+
+  You can find these routes inside server/routes/index.js
+
+ */
+
 import React from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -38,6 +50,7 @@ class App extends React.Component {
     this.togglePartyMode = this.togglePartyMode.bind(this);
   }
 
+  //gets list of projects
   getProjects() {
     axios.get('/API/projects/')
       .then((project) => {
@@ -46,6 +59,7 @@ class App extends React.Component {
       .catch(console.error);
   }
 
+  //gets messages
   getMessages() {
     axios.get('/API/messages')
       .then((res) => {
@@ -58,6 +72,7 @@ class App extends React.Component {
     this.setState({ drawerOpen: !this.state.drawerOpen });
   }
 
+  //gets authentication
   checkAuthenticated() {
     axios.get('/auth/authenticated')
       .then((res) => {
@@ -67,6 +82,7 @@ class App extends React.Component {
       });
   }
 
+  //party mode
   togglePartyMode() {
     const colors = ['blue', 'green', 'red', 'yellow', 'lilac'];
     if (this.state.partyMode) {
@@ -84,23 +100,36 @@ class App extends React.Component {
   }
 
   render() {
+    /*
+     Condition:
+     If user is registered and logs render all the components.
+     If user is new and logged in using github auth, render questionnaire
+     If user is not logged in (logged out) display landing page
+    */
     if (this.state.loggedIn.language) {
       return (
         <BrowserRouter>
           <div>
             <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome color={ fullWhite }/></IconButton></Link> }/>
+
+            {/* opens and closes side menu */}
             <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/>
+
+            {/*
+              Switch renders a route exclusively. Without it, it would route inclusively
+              LINK: https://reacttraining.com/react-router/web/api/Switch
+            */}
             <Switch>
               <Route exact path="/" component={ProjectList} />
               <Route path="/signup" component={Questionnaire} />
               <Route exact path="/projects" component={ProjectList} />
               <Route path="/projects/:id" component={Project} />
-
-              {/*Temporary until we implement logic for projects status page*/}
               <Route path="/status" component={ProjectStatus} />
-
               <Route path="/my-projects" component={MyProjects} />
 
+              {/*
+                given this path render this component and pass down the loggedIn state as user props
+              */}
               <Route exact path='/user'
                 render={() => (<UserProfile user={this.state.loggedIn} />) } />
 
@@ -121,6 +150,10 @@ class App extends React.Component {
   }
 }
 
+/*
+  Map our state to this component as props
+  State can be found in store/reducers.js
+*/
 const mapStateToProps = (state) => {
   return {
     message: state.message,
@@ -128,6 +161,10 @@ const mapStateToProps = (state) => {
   };
 };
 
+/*
+  Map our dispatch to this component as props
+  Dispatch can be found in
+*/
 const mapDispatchToProps = (dispatch) => {
   return {
     changeString: () => dispatch({
