@@ -68,7 +68,6 @@ exports.api = {
               const text = record.get('message').properties.text;
               const userId = record.get('other').identity.toNumber();
               const sender = record.get('to_user').type === 'SENT';
-              console.log({ text, userId, sender });
               messages[userId] = messages[userId]
                 ? messages[userId].concat({ sender, text })
                 : [{ sender, text }];
@@ -107,8 +106,8 @@ exports.api = {
         `)
           .then((res) => {
             resolve(
-              res.records.map(user => {  console.log(user.get('pairsProjects'))
-                return new db.models.User(user.get('pair'), user.get('projects'), user.get('xp'), user.get('pairsProjects')); }
+              res.records.map(user =>
+                new db.models.User(user.get('pair'), user.get('projects'), user.get('xp'), user.get('pairsProjects'))
               )
                 .sort((a, b) => a.rating - b.rating)
             )
@@ -172,7 +171,6 @@ exports.api = {
   */
   POST: {
     projects: function projects(req) {
-      console.log(req.body)
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         console.log('POST projects');
@@ -205,10 +203,7 @@ exports.api = {
           SET group.progress = project.structure
           return user, pair, group, project
         `)
-          .then((res) => {
-            console.log(res);
-            resolve(res);
-          })
+          .then(resolve)
           .catch(reject)
           .then(() => dbSession.close());
       });
@@ -218,7 +213,7 @@ exports.api = {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         const message = req.body;
-        console.log('POST messages', message);
+        console.log('POST messages');
         dbSession.run(`
           MATCH (user:User {ghId: ${ req.user.ghInfo.id }}), (recipient:User)
           WHERE ID(recipient) = ${ req.body.recipient }
@@ -244,12 +239,9 @@ exports.api = {
           WHERE ID(project) = ${req.body.projectId}
           SET group.progress = '${JSON.stringify(req.body.progress).replace('\'', '\\\'')}'
         `)
-          .then((res) => {
-            //console log to annoy peter
-            console.log(res);
-            resolve(res)
-          })
-          .catch(reject);
+          .then(resolve)
+          .catch(reject)
+          .then(() => dbSession.close());
       });
     },
 
