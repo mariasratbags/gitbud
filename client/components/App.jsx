@@ -23,7 +23,6 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { fullWhite } from 'material-ui/styles/colors';
 import SocialPartyMode from 'material-ui/svg-icons/social/party-mode';
 
-import Nav from './Nav';
 import AppDrawer from './AppDrawer';
 import Landing from './Landing';
 import UserProfile from './UserProfile';
