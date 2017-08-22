@@ -54,6 +54,9 @@ exports.api = {
       });
     },
 
+    // Returns an object with numerical properties representing
+    // users IDs each with a value of an array of messages of the form
+    // { text: message(string), sender: whether or not the requesting user is the sender(bool) }
     messages: function getMessages(req) {
       return new Promise((resolve, reject) => {
         console.log('GET messages');
@@ -81,6 +84,9 @@ exports.api = {
       });
     },
 
+    // Returns an array of user objects interested in the given project id
+    // NOTE: The project ID is sent in the headers. This is a hack to deal with our
+    // rubbish URL parsing. You may wish to fix it.
     users: function getUsers(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -116,6 +122,9 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
+    // Returns an array of project objects.
+    // Returns all the projects in the database.
     projects: function getProjects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -145,6 +154,9 @@ exports.api = {
           .then(() => dbSession.close());
       });
     },
+
+    // Returns an array of user objects--one for each
+    // user with which the requesting user is paired
     pairs: function getPairs(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -166,10 +178,12 @@ exports.api = {
     }
 
   },
+
   /*
     POST METHODS
   */
   POST: {
+    // Sets requesting user's interest in a project from given project ID
     projects: function projects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -190,6 +204,8 @@ exports.api = {
       });
     },
 
+    // Sets requesting user as working on the project with project ID
+    // with the user with the given user ID
     pair: function addPair(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -209,6 +225,7 @@ exports.api = {
       });
     },
 
+    // Adds a new message from the requesting user to the database
     messages: function sendMessage(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -230,6 +247,11 @@ exports.api = {
       });
     },
 
+    // Updates a group's progress in the database.
+    // NOTE: As users work in groups (currently pairs), their progress
+    // is stored on group nodes not user nodes.
+    // It's stored as JSON, as the database cannot hold objects per se
+    // and the databse has no need to udnerstand or operate on the data as an object.
     progress: function updateProgress(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -245,6 +267,7 @@ exports.api = {
       });
     },
 
+    // Updates the db with data from the questionnaire.
     users: function addQuestionnaireData(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
@@ -263,9 +286,11 @@ exports.api = {
 
 };
 
-// Request handlers for some authentication routes.
-// Perhaps these should all be in server.js or perhaps all here.
-// Currently (for convenience), they're split across the two, which is slightly confusing.
+/*
+ *  REQUEST HANDLERS FOR AUTHENTICATION ROUTES
+ * 
+ *  These handlers deal with the response directly by convenience, not by good design.
+ */
 exports.auth = {
   GET: {
     signout: function signout(req, res) {
