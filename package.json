@@ -8,7 +8,7 @@
     "webpack-dev-server": "webpack-dev-server --progress --hot --inline",
     "dev": "webpack -w",
     "postInstall": "webpack -p",
-    "start": "nodemon server.js -i client/ -i dist/",
+    "start": "nodemon server.js -i client/ -i dist/ & npm run webpack-dev-server",
     "seed": "node server/db/seed.js"
   },
   "repository": {
