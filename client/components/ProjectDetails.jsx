@@ -72,7 +72,7 @@ class ProjectDetails extends React.Component {
               <ToolbarTitle text={`Find a partner for ${ this.props.project.project }`} />
             </ToolbarGroup>
             <ToolbarGroup lastChild={ true }>
-              <RaisedButton primary={ true } onClick={ this.toggleInterest } label={ this.props.project.interested ? 'Project selected' : 'I like this project!'}/>
+              <RaisedButton primary={ true } onClick={ this.toggleInterest } label={ this.props.project.interested ? 'Project selected' : 'I want to work on this project!'}/>
             </ToolbarGroup>
           </Toolbar>
           <UserList users={ this.props.users } projectId={ this.props.project.id } />
