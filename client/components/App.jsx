@@ -21,7 +21,6 @@ import ActionHome from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { fullWhite } from 'material-ui/styles/colors';
-import SocialPartyMode from 'material-ui/svg-icons/social/party-mode';
 
 import AppDrawer from './AppDrawer';
 import Landing from './Landing';
@@ -40,13 +39,11 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       drawerOpen: false,
-      partyMode: false,
     }
 
     this.checkAuthenticated();
 
     this.navTap = this.navTap.bind(this);
-    this.togglePartyMode = this.togglePartyMode.bind(this);
   }
 
   //gets list of projects
@@ -79,23 +76,6 @@ class App extends React.Component {
         this.getMessages();
         this.getProjects();
       });
-  }
-
-  //party mode
-  togglePartyMode() {
-    const colors = ['blue', 'green', 'red', 'yellow', 'lilac'];
-    if (this.state.partyMode) {
-      clearInterval(this.state.partyMode);
-      document.body.setAttribute('style', `background-color:white`);
-      this.setState({ partyMode: false });
-    } else {
-      this.setState({partyMode:
-        setInterval(() => {
-          const randomNum = Math.floor(Math.random() * colors.length);
-          document.body.setAttribute('style', `background-color:${colors[randomNum]}`);
-        }, 200),
-      });
-    }
   }
 
   render() {
@@ -135,9 +115,7 @@ class App extends React.Component {
               <Route path="/user/:id/:projectId?" component={UserDetails} />
               <Route component={NotFound} />
             </Switch>
-            <FloatingActionButton secondary={ true } style={ { position: "absolute", bottom: 20, left: 20 } } onClick={ this.togglePartyMode } >
-              <SocialPartyMode />
-            </FloatingActionButton >
+
           </div>
         </BrowserRouter>
       );
