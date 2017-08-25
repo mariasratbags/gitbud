@@ -30,13 +30,7 @@ function AppDrawer(props) {
           </Link>
         </div>
       </Card>
-      <Card style={ { margin: 12, width: '90%', paddingBottom: 12 } }>
-        <CardHeader title="Users"/>
-        <div style={ {width:'90%', margin: 'auto'} }>
-          <RaisedButton label="Find A Partner" fullWidth={ true } secondary={ true } onClick={ props.closeDrawer } icon={ <ActionFace/> }/>
-          <RaisedButton label="My Partners" fullWidth={ true } onClick={ props.closeDrawer }/>
-        </div>
-      </Card>
+      
       <BottomNavigation style={ { position: "absolute", bottom: 0 } }>
         <a href="/auth/signout">
           <BottomNavigationItem label="Sign Out" icon={ <ActionEject/> }/>
