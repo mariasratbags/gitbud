@@ -17,6 +17,8 @@ import axios from 'axios';
 
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import ActionHome from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -32,12 +34,6 @@ import ProjectList from './ProjectList';
 import Questionnaire from './Questionnaire';
 import NotFound from './NotFound';
 import MyProjects from './MyProjects';
-
-var styles = {
-    title: {
-    cursor: 'pointer',
-    },
-  };
 
 class App extends React.Component {
   constructor(props) {
@@ -78,7 +74,6 @@ class App extends React.Component {
       });
   }
 
-
   render() {
     /*
      Condition:
@@ -90,7 +85,12 @@ class App extends React.Component {
       return (
         <BrowserRouter>
           <div>
-            <AppBar title={<span style={styles.title}>Gitbud</span>} onTitleTouchTap={()=><Link to='/'>YOLO</Link>}  showMenuIconButton={false}/>
+            <AppBar 
+            iconElementLeft={<Link to='/my-projects'><RaisedButton label="My Projects" fullWidth={ true }/></Link>}
+            title={<Link to='/'style={{ textDecoration: 'none', color:'white'}}><span>GITBUD</span></Link>} 
+            titleStyle={{cursor: 'pointer', textAlign:'center'}}  
+            />
+            
 
             {/* opens and closes side menu */}
             {/* <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/> */}
