@@ -54,7 +54,7 @@ const MyProjects = (props) => {
 const mapStateToProps = (state) => {
   console.log(state.projects);
   return {
-    projects: state.projects.filter(project => project.paired.length > 0),
+    projects: state.projects.filter(project => project.interested === true),
   };
 };
 

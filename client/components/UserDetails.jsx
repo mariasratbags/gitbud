@@ -57,6 +57,9 @@ class UserDetails extends React.Component {
   }
 
   pairButton() {
+    console.log('line 60', this.props.user);
+    console.log('line 61', this.props.user.paired);
+
     if (this.props.user.paired.length > 0) {
       return <RaisedButton
         label='Partnered'
@@ -65,8 +68,9 @@ class UserDetails extends React.Component {
         fullWidth={true}
         icon={ <ActionDone
           color={ fullWhite } /> }
-          onClick={ this.togglePair } />
+        onClick={ this.togglePair } />
     } else if (this.props.match.params.projectId) {
+      console.log('line 73', this.props.match);
       return <RaisedButton
         label='Work With Me'
         fullWidth={true}
