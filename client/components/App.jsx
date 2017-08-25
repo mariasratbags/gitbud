@@ -33,17 +33,21 @@ import Questionnaire from './Questionnaire';
 import NotFound from './NotFound';
 import MyProjects from './MyProjects';
 
+var styles = {
+    title: {
+    cursor: 'pointer',
+    },
+  };
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
-      drawerOpen: false,
+      loggedIn: false
     }
 
     this.checkAuthenticated();
 
-    this.navTap = this.navTap.bind(this);
   }
 
   //gets list of projects
@@ -64,10 +68,6 @@ class App extends React.Component {
       .catch(console.error);
   }
 
-  navTap() {
-    this.setState({ drawerOpen: !this.state.drawerOpen });
-  }
-
   //gets authentication
   checkAuthenticated() {
     axios.get('/auth/authenticated')
@@ -77,6 +77,7 @@ class App extends React.Component {
         this.getProjects();
       });
   }
+
 
   render() {
     /*
@@ -89,10 +90,10 @@ class App extends React.Component {
       return (
         <BrowserRouter>
           <div>
-            <AppBar title='GitBud' onLeftIconButtonTouchTap={ this.navTap } iconElementRight={ <Link to='/'><IconButton><ActionHome color={ fullWhite }/></IconButton></Link> }/>
+            <AppBar title={<span style={styles.title}>Gitbud</span>} onTitleTouchTap={()=><Link to='/'>YOLO</Link>}  showMenuIconButton={false}/>
 
             {/* opens and closes side menu */}
-            <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/>
+            {/* <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/> */}
 
             {/*
               Switch renders a route exclusively. Without it, it would route inclusively
