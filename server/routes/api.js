@@ -236,13 +236,17 @@ module.exports = {
     // is stored on group nodes not user nodes.
     // It's stored as JSON, as the database cannot hold objects per se
     // and the databse has no need to udnerstand or operate on the data as an object.
-    progress: function updateProgress(req) {
+    newproject: function createProject(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         dbSession.run(`
-          MATCH (:User {ghId: ${req.user.ghInfo.id}})-->(group:Group)-->(project:Project)
-          WHERE ID(project) = ${req.body.projectId}
-          SET group.progress = '${JSON.stringify(req.body.progress).replace('\'', '\\\'')}'
+          CREATE (:Project {
+            project: ${req.body.name},
+            language: ${req.body.language},
+            description: ${req.body.description},
+            experience: ${req.body.experience},
+            link: ${req.body.link}
+          }
         `)
           .then(resolve)
           .catch(reject)
