@@ -23,8 +23,8 @@ import {
 
 const UserList = (props) => {
 
-  let togglePair = function(user) {
-
+  let togglePair = (user) => {
+    console.log('line 27', user);
     axios.post('/API/pair', {
       partnered: user.id,
       project: props.projectId
@@ -37,25 +37,23 @@ const UserList = (props) => {
       });
   }
 
-  let pairButton = function(user, index) {
+  let pairButton = (user, index) => {
     if (user.paired.length > 0) {
       return <RaisedButton
         style={ {marginLeft: 'auto', width: 200, height: 40} }
-        key={ index }
         label='Partnered'
         labelColor={ fullWhite }
         backgroundColor='#a4c639'
         fullWidth={ false }
         icon={ <ActionDone
           color={ fullWhite } /> }
-        onClick={ togglePair(user) } />
+        onClick={ () => { togglePair(user)} } />
     } else {
       return <RaisedButton
         style={ {marginLeft: 'auto', width: 200, height: 40} }
-        key={ index }
         label='Work With Me'
         icon={ <ActionBuild /> }
-        onClick={ togglePair(user) }
+        onClick={ () => { togglePair(user)} }
         primary={ true } />
     }
   }
@@ -76,7 +74,7 @@ const UserList = (props) => {
               primaryText={ user.name }
               secondaryText={ "Rating: " + user.rating }
             />
-          <div>{ pairButton(user, index) }</div>
+          <div>{ pairButton(user) }</div>
           </div>
         );
       },
