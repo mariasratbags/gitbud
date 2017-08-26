@@ -28,7 +28,6 @@ const UserList = (props) => {
     })
       .then((response) => {
         this.props.dispatchPairing(this.props.user.id, Number(this.props.match.params.projectId));
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -36,9 +35,6 @@ const UserList = (props) => {
   }
 
   let pairButton = function(user, index) {
-    console.log('line 34', user);
-    //console.log('line 61', this.props.user.paired);
-    //
     if (user.paired.length > 0) {
       return <RaisedButton
         style={ {marginLeft: 'auto', width: 200, height: 40} }
