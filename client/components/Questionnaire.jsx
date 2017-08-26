@@ -26,7 +26,7 @@ class Questionnaire extends React.Component {
   }
 
   onDescriptionChange(val) {
-    this.setState({ description: val }, () => console.log(this.state.description));
+    this.setState({ description: val }, () => this.state.description);
   }
 
   onButtonClick() {
