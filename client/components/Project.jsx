@@ -24,18 +24,18 @@ class Project extends React.Component {
 
   GETprogress() {
     axios.get('/API/progress')
-      .then(res => 
+      .then(res =>
         this.props.loadProgress(res.data)
       )
       .catch(console.error);
   }
 
   render() {
-      if (this.props.project.paired.length > 0) {
-        return <ProjectStatus project={this.props.project} progress={this.props.progress} dispatchProgress={this.props.dispatchProgress} submitProgress={this.POSTprogress} />
-      } else {
-        return <ProjectDetails routedProjectId={this.props.match.params.id} />
-      }
+      // if (this.props.project.paired.length > 0) {
+      //   return <ProjectStatus project={this.props.project} progress={this.props.progress} dispatchProgress={this.props.dispatchProgress} submitProgress={this.POSTprogress} />
+      // } else {
+         return <ProjectDetails routedProjectId={this.props.match.params.id} />
+      // }
   }
 }
 
