@@ -75,6 +75,7 @@ class App extends React.Component {
   checkAuthenticated() {
     axios.get('/auth/authenticated')
       .then((res) => {
+        console.log(res);
         this.setState({ loggedIn: res.data });
         this.getMessages();
         this.getProjects();
