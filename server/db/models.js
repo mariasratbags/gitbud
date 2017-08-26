@@ -38,7 +38,6 @@ exports.User = class User {
 exports.ServerUser = class extends exports.User {
   constructor(user) {
     super(user)
-    console.log(user);
     this.OAuthToken = user.properties.OAuthToken;
     this.profile = user.properties.profile ? JSON.parse(user.properties.profile) : false;
   }

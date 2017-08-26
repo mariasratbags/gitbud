@@ -30,9 +30,10 @@ const MyProjects = (props) => {
         <Table style={{ width: '95%', margin: 'auto', marginTop: 12, padding: 12 }}>
           <TableHeader displaySelectAll={ false }>
             <TableRow>
-              <TableHeaderColumn>Name</TableHeaderColumn>
+              <TableHeaderColumn>Project Name</TableHeaderColumn>
               <TableHeaderColumn>Language</TableHeaderColumn>
               <TableHeaderColumn>Experience</TableHeaderColumn>
+              <TableHeaderColumn>Partner Name</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody stripedRows={ true } displayRowCheckbox={ false }>
