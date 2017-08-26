@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
 
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
@@ -21,10 +23,11 @@ import {
 
 const UserList = (props) => {
 
-  let togglePair = function() {
+  let togglePair = function(user) {
+
     axios.post('/API/pair', {
-      partnered: this.props.user.id,
-      project: this.props.match.params.projectId,
+      partnered: user.id,
+      project: props.projectId
     })
       .then((response) => {
         this.props.dispatchPairing(this.props.user.id, Number(this.props.match.params.projectId));
@@ -45,16 +48,17 @@ const UserList = (props) => {
         fullWidth={ false }
         icon={ <ActionDone
           color={ fullWhite } /> }
-        onClick={ togglePair } />
+        onClick={ togglePair(user) } />
     } else {
       return <RaisedButton
         style={ {marginLeft: 'auto', width: 200, height: 40} }
         label='Work With Me'
         icon={ <ActionBuild /> }
-        onClick={ togglePair }
+        onClick={ togglePair(user) }
         primary={ true } />
     }
   }
+
 
   return (
     <List>
@@ -80,4 +84,10 @@ const UserList = (props) => {
   );
 };
 
-export default UserList;
+const mapDispatchToProps = (dispatch) =>
+  ({
+    dispatchPairing: (userId, projectId) => dispatch({ type: 'CHANGE_USER_PAIRING', userId, projectId })
+  });
+
+export default connect(mapDispatchToProps)(UserList);
+// export default UserList;
