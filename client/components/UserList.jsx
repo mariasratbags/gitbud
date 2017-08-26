@@ -30,7 +30,7 @@ const UserList = (props) => {
       project: props.projectId
     })
       .then((response) => {
-        this.props.dispatchPairing(this.props.user.id, Number(this.props.match.params.projectId));
+        props.dispatchPairing(user.id, Number(props.projectId));
       })
       .catch((error) => {
         console.log(error);
@@ -52,6 +52,7 @@ const UserList = (props) => {
     } else {
       return <RaisedButton
         style={ {marginLeft: 'auto', width: 200, height: 40} }
+        key={ index }
         label='Work With Me'
         icon={ <ActionBuild /> }
         onClick={ togglePair(user) }
@@ -84,10 +85,11 @@ const UserList = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) =>
-  ({
+const mapDispatchToProps = (dispatch) => {
+  return {
     dispatchPairing: (userId, projectId) => dispatch({ type: 'CHANGE_USER_PAIRING', userId, projectId })
-  });
+  };
+}
 
-export default connect(mapDispatchToProps)(UserList);
+export default connect(null, mapDispatchToProps)(UserList);
 // export default UserList;
