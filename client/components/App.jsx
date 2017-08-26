@@ -27,6 +27,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import ActionEject from 'material-ui/svg-icons/action/eject';
+import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle';
+
 
 import AppDrawer from './AppDrawer';
 import Landing from './Landing';
@@ -99,8 +101,8 @@ class App extends React.Component {
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               >
               <MenuItem primaryText="Notifications" />
-              <MenuItem primaryText="Profile" />
-              <MenuItem primaryText="Sign out" rightIcon={ <ActionEject/>}  /> 
+              <Link to='/user' style={{ textDecoration: 'none'}}><MenuItem primaryText="Profile" rightIcon={ <ActionAccountCircle/>}/> </Link>
+              <a href="/auth/signout" style={{ textDecoration: 'none'}} ><MenuItem primaryText="Sign out" rightIcon={ <ActionEject/>} /></a> 
             </IconMenu>}
             />
             
