@@ -52,7 +52,6 @@ const MyProjects = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.projects);
   return {
     projects: state.projects.filter(project => project.interested === true),
   };
