@@ -156,7 +156,7 @@ module.exports = {
           RETURN pair
          `)
           .then((res) => {
-            resolve(res.records.map(project =>
+            resolve(res.records.map(() =>
               res.records.map(user => new db.models.User(user.get('pair')))
             ));
           })
@@ -215,7 +215,6 @@ module.exports = {
     messages: function sendMessage(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
-        const message = req.body;
         dbSession.run(`
           MATCH (user:User {ghId: ${ req.user.ghInfo.id }}), (recipient:User)
           WHERE ID(recipient) = ${ req.body.recipient }
