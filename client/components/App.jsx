@@ -40,6 +40,7 @@ import ProjectList from './ProjectList';
 import Questionnaire from './Questionnaire';
 import NotFound from './NotFound';
 import MyProjects from './MyProjects';
+import NewProject from './NewProject'
 
 class App extends React.Component {
   constructor(props) {
@@ -91,21 +92,21 @@ class App extends React.Component {
       return (
         <BrowserRouter>
           <div>
-            <AppBar 
-            iconElementLeft={<Link to='/my-projects'><RaisedButton label="My Projects" fullWidth={ true }/></Link>}
-            title={<Link to='/'style={{ textDecoration: 'none', color:'white'}}><span>GITBUD</span></Link>} 
-            titleStyle={{cursor: 'pointer', textAlign:'center'}}  
-            iconElementRight={<IconMenu
-              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              targetOrigin={{horizontal: 'right', vertical: 'top'}}
-              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-              >
-              <MenuItem primaryText="Notifications" />
-              <Link to='/user' style={{ textDecoration: 'none'}}><MenuItem primaryText="Profile" rightIcon={ <ActionAccountCircle/>}/> </Link>
-              <a href="/auth/signout" style={{ textDecoration: 'none'}} ><MenuItem primaryText="Sign out" rightIcon={ <ActionEject/>} /></a> 
-            </IconMenu>}
+            <AppBar
+              iconElementLeft={<Link to='/my-projects'><RaisedButton label="My Projects" fullWidth={ true }/></Link>}
+              title={<Link to='/'style={{ textDecoration: 'none', color:'white'}}><span>GITBUD</span></Link>}
+              titleStyle={{cursor: 'pointer', textAlign:'center'}}
+              iconElementRight={<IconMenu
+                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                                >
+                <MenuItem primaryText="Notifications" />
+                <Link to='/user' style={{ textDecoration: 'none'}}><MenuItem primaryText="Profile" rightIcon={ <ActionAccountCircle/>}/> </Link>
+                <a href="/auth/signout" style={{ textDecoration: 'none'}} ><MenuItem primaryText="Sign out" rightIcon={ <ActionEject/>} /></a>
+              </IconMenu>}
             />
-            
+
 
             {/* opens and closes side menu */}
             {/* <AppDrawer open={ this.state.drawerOpen } changeOpenState={ open => this.setState({ drawerOpen: open }) } closeDrawer={ () => this.setState({ drawerOpen: false}) }/> */}
@@ -121,6 +122,7 @@ class App extends React.Component {
               <Route path="/projects/:id" component={Project} />
               <Route path="/status" component={ProjectStatus} />
               <Route path="/my-projects" component={MyProjects} />
+              <Route path="/newproject" component={NewProject} />
 
               {/*
                 given this path render this component and pass down the loggedIn state as user props
