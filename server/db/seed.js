@@ -7,7 +7,7 @@ const driver = require('./index').driver;
 const session = driver.session();
 
 // Deletes all nodes and relationships in the graph
-const dropGraph = function dropGraph() {
+const dropGraph = function () {
   const dropGraphQueryString = 'MATCH (n) DETACH DELETE n';
   return session.run(dropGraphQueryString)
     .then((result) => {
@@ -48,7 +48,7 @@ const addProjectsQueryString = `
   `;
 
 // Add project nodes
-const addProjects = function addProjects() {
+const addProjects = function () {
   return session.run(addProjectsQueryString)
     .then((result) => {
       console.log('Projects added');
@@ -97,7 +97,7 @@ const addPairQueryString = `
     (group)-[:WORKING_ON]->(randomQuoteMachine)
   `;
 
-const addPair = function addPair() {
+const addPair = function () {
   return session.run(addPairQueryString)
     .then((result) => {
       console.log('PAIRED_WITH relationships added');
