@@ -61,11 +61,14 @@ class NewProject extends React.Component {
         title="Dialog With Custom Width"
         modal={true}
         open={this.state.open}
-        >
+      >
         <form action="/" method="POST" onSubmit={(e) => { e.preventDefault(); alert('Submitted form!'); this.handleClose(); } }>
           This dialog spans the entire width of the screen.
-          <TextField name="email" hintText="Email" />
-          <TextField name="pwd" type="password" hintText="Password" />
+          <TextField name="project" hintText="Project Name" />
+          <TextField name="language" hintText="Project Language" />
+          <TextField name="description" hintText="Project Description" />
+          <TextField name="experience" hintText="Experience Level" />
+          <TextField name="link" hintText="Link to the Github repo" />
           <div style={{ textAlign: 'right', padding: 8, margin: '24px -24px -24px -24px' }}>
             {actions}
           </div>

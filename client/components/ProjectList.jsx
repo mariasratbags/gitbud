@@ -34,11 +34,9 @@ const ProjectList = (props) => {
             <ToolbarTitle text="Projects"/>
           </ToolbarGroup>
           <ToolbarGroup>
-<<<<<<< 55848cd977e11179f1d4de055dcac9eed51f26cd
+
             <Link to='/newproject'><RaisedButton label="Create Project" fullWidth={ true }/></Link>
-=======
-            <ToolbarTitle text="Projects"/>
->>>>>>> added proper descriptions and column
+            
           </ToolbarGroup>
         </Toolbar>
         <Table style={{ width: '95%', margin: 'auto', marginTop: 12, padding: 12 }}>
