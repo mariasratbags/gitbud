@@ -22,7 +22,7 @@ function UserProfile(props) {
         <CardTitle title={ props.user.name } subtitle={'Experience: ' + props.user.experience} />
         <CardTitle title="Description" subtitle={props.user.description} />
         <CardTitle title="Language" subtitle={props.user.language}/>
-        <CardTitle title="Projects" subtitle={props.projects.map(project => project.project).join(' ')} />
+        <CardTitle title="Projects" subtitle={props.projects.map(project => project.project).join(', ')} />
       </Card>
     </Paper>
   );
@@ -30,7 +30,7 @@ function UserProfile(props) {
 
 const mapStateToProps = (state, props) => (
   {
-    projects: state.projects.filter(project => props.user.projects.indexOf(project.id) > -1)
+    projects: state.projects.filter(project => project.interested === true)
   }
 );
 
