@@ -16,7 +16,7 @@ import {
 const UserList = (props) => {
   return (
     <List>
-      <Subheader>Users interested in this project</Subheader>
+      <Subheader>Users working on this project</Subheader>
       { props.users.map((user, index) => {
         return (
           <ListItem
