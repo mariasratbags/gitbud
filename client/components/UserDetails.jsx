@@ -99,10 +99,10 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   ({
     dispatchPairing: (userId, projectId) => dispatch({ type: 'CHANGE_USER_PAIRING', userId, projectId }),
-    dispatchMessage: (userId, message) => dispatch({ type: 'MESSAGE_SEND', userId, message }),
+    dispatchMessage: (userId, message) => dispatch({ type: 'MESSAGE_SEND', userId, message })
   });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);
