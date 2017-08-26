@@ -43,7 +43,6 @@ class ProjectDetails extends React.Component {
     })
       .then((response) => {
         this.props.dispatchInterest(this.props.project.id, !this.props.project.interested);
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
