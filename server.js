@@ -1,9 +1,9 @@
 /*
  * ENTRY POINT TO ALL THE SERVER SIDE CODE
- * 
+ *
  * Most of the server code is clearly modularised, so this
  * is mostly uncontraversial requires and uses.
- * 
+ *
  * The other server modules are:
  *    request-handler
  *    --Sends correct response to each URL (mostly by calling appropriate function from routes)
@@ -32,9 +32,7 @@ const requestHandler = require('./server/request-handler');
 // Make express server
 const app = express();
 const port = process.env.PORT || 8080;
-app.listen(port, () => {
-  console.log(`Listening on port: ${port}`);
-});
+app.listen(port);
 
 // Save sessions
 // NOTE: This is using a bad memory store
