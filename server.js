@@ -22,6 +22,7 @@ require('dotenv').config();
 // Libraries for handling requests
 const express = require('express');
 const path = require('path');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 // Libraries for authentication and sessions
 const session = require('express-session');
@@ -36,7 +37,9 @@ app.listen(port);
 
 // Save sessions
 // NOTE: This is using a bad memory store
-// https://www.npmjs.com/package/express-session#sessionoptions
+// https://www.npmjs.com/package/express-session#sessionoptions\
+
+app.use(morgan('dev'));
 app.use(session({
   secret: 'This is a secret',
   resave: false,
