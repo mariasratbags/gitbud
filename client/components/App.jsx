@@ -23,6 +23,10 @@ import ActionHome from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { fullWhite } from 'material-ui/styles/colors';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import MenuItem from 'material-ui/MenuItem';
+import IconMenu from 'material-ui/IconMenu';
+import ActionEject from 'material-ui/svg-icons/action/eject';
 
 import AppDrawer from './AppDrawer';
 import Landing from './Landing';
@@ -89,6 +93,15 @@ class App extends React.Component {
             iconElementLeft={<Link to='/my-projects'><RaisedButton label="My Projects" fullWidth={ true }/></Link>}
             title={<Link to='/'style={{ textDecoration: 'none', color:'white'}}><span>GITBUD</span></Link>} 
             titleStyle={{cursor: 'pointer', textAlign:'center'}}  
+            iconElementRight={<IconMenu
+              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+              >
+              <MenuItem primaryText="Notifications" />
+              <MenuItem primaryText="Profile" />
+              <MenuItem primaryText="Sign out" rightIcon={ <ActionEject/>}  /> 
+            </IconMenu>}
             />
             
 
