@@ -10,7 +10,7 @@ const session = driver.session();
 const dropGraph = function () {
   const dropGraphQueryString = 'MATCH (n) DETACH DELETE n';
   return session.run(dropGraphQueryString)
-    .then((result) => {
+    .then(() => {
     console.log('Graph dropped');
     })
     .catch((error) => {
@@ -30,7 +30,7 @@ const addUsersQueryString = `
 // Add user nodes
 function addUsers() {
   return session.run(addUsersQueryString)
-    .then((result) => {
+    .then(() => {
       console.log('Users added');
     })
     .catch((error) => {
@@ -50,7 +50,7 @@ const addProjectsQueryString = `
 // Add project nodes
 const addProjects = function () {
   return session.run(addProjectsQueryString)
-    .then((result) => {
+    .then(() => {
       console.log('Projects added');
     })
     .catch((error) => {
