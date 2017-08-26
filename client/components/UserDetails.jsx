@@ -25,8 +25,8 @@ class UserDetails extends React.Component {
     this.expandCard = () => {
       this.setState({ expanded: true });
     }
-    this.togglePair = this.togglePair.bind(this);
-    this.pairButton = this.pairButton.bind(this);
+    // this.togglePair = this.togglePair.bind(this);
+    // this.pairButton = this.pairButton.bind(this);
     this.setMessageText = (_, text) => this.setState({ message: text });
     this.sendMessage = () => {
       axios.post('/API/messages', {
@@ -42,43 +42,7 @@ class UserDetails extends React.Component {
     };
   }
 
-  togglePair() {
-    axios.post('/API/pair', {
-      partnered: this.props.user.id,
-      project: this.props.match.params.projectId,
-    })
-      .then((response) => {
-        this.props.dispatchPairing(this.props.user.id, Number(this.props.match.params.projectId));
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
-  pairButton() {
-    console.log('line 60', this.props.user);
-    console.log('line 61', this.props.user.paired);
-
-    if (this.props.user.paired.length > 0) {
-      return <RaisedButton
-        label='Partnered'
-        labelColor={ fullWhite }
-        backgroundColor='#a4c639'
-        fullWidth={true}
-        icon={ <ActionDone
-          color={ fullWhite } /> }
-        onClick={ this.togglePair } />
-    } else if (this.props.match.params.projectId) {
-      console.log('line 73', this.props.match);
-      return <RaisedButton
-        label='Work With Me'
-        fullWidth={true}
-        icon={ <ActionBuild /> }
-        onClick={ this.togglePair }
-        primary={ true } />
-    }
-  }
 
   render() {
     return (
@@ -99,7 +63,6 @@ class UserDetails extends React.Component {
           <CardTitle title="Language" subtitle={this.props.user.language}/>
           <CardTitle title="Projects" subtitle={this.props.projects.map(project => project.project).join(' ')}/>
           <div>
-            { this.pairButton() }
             <RaisedButton label='Message Me' fullWidth={true} icon={<ActionFace />} onClick={this.expandCard} secondary={true} />
           </div>
           <div expandable={true}>
