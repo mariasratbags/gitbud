@@ -17,6 +17,13 @@ import {
   ToolbarTitle
 } from 'material-ui/Toolbar';
 import {Card, CardText } from 'material-ui/Card';
+import {
+  Dialog,
+  TextField,
+  FlatButton,
+  MuiThemeProvider,
+  getMuiTheme,
+} from 'material-ui';
 
 const ProjectList = (props) => {
   return (
@@ -25,6 +32,9 @@ const ProjectList = (props) => {
         <Toolbar>
           <ToolbarGroup>
             <ToolbarTitle text="Projects"/>
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <Link to='/newproject'><RaisedButton label="Create Project" fullWidth={ true }/></Link>
           </ToolbarGroup>
         </Toolbar>
         <Table style={{ width: '95%', margin: 'auto', marginTop: 12, padding: 12 }}>
