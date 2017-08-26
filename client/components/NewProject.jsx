@@ -34,6 +34,7 @@ class NewProject extends React.Component {
 
   _handleClose() {
     this.setState({ open: false });
+    window.location.href = '/projects'
   }
 
   render() {
