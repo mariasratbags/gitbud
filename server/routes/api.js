@@ -2,7 +2,7 @@
  *  Request handlers for API routes.
  *  These are stored on an object for easy lookup in the request-handler module and are indexed
  *  first by method then by route.
- * 
+ *
  *  THINGS TO FIX:
  *  There's a lot of repeated code in the db queries. You may find it helpful to create better helper functions
  *  here, simply modularise the db functionality better or both.
@@ -25,7 +25,6 @@ module.exports = {
     // { text: prompt(string), hint: hint on how to tackle prompt(string), complete: completion status of prompt(bool) }
     progress: function getProgress(req) {
       return new Promise((resolve, reject) => {
-        console.log('GET progress');
         const dbSession = dbDriver.session();
         dbSession.run(`
           MATCH (:User {ghId: ${req.user.ghInfo.id}})-->(group:Group)-->(project:Project)
@@ -48,7 +47,6 @@ module.exports = {
     // { text: message(string), sender: whether or not the requesting user is the sender(bool) }
     messages: function getMessages(req) {
       return new Promise((resolve, reject) => {
-        console.log('GET messages');
         const dbSession = dbDriver.session();
         dbSession.run(`
           MATCH (:User {ghId: ${req.user.ghInfo.id}})-[to_user]-(message:Message)--(other:User)
@@ -83,7 +81,6 @@ module.exports = {
     users: function getUsers(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
-        console.log('GET users');
         const ghId = req.user.ghInfo.id;
         const projectId = Number(req.headers.id);
         dbSession.run(`
@@ -121,7 +118,6 @@ module.exports = {
     projects: function getProjects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
-        console.log('GET projects');
         const ghId = req.user.ghInfo.id;
         dbSession.run(`
             MATCH (user:User {ghId: ${ghId}})-->(group:Group)-->(project:Project)
@@ -139,7 +135,7 @@ module.exports = {
             RETURN false as pairs, false as interested, project
          `)
           .then((res) => {
-            resolve(res.records.map(project => 
+            resolve(res.records.map(project =>
               new db.models.Project(project.get('project'), project.get('pairs'), project.get('interested'))
             ));
           })
@@ -153,7 +149,6 @@ module.exports = {
     pairs: function getPairs(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
-        console.log('GET pairs');
         const ghId = req.user.ghInfo.id;
         dbSession.run(`
           MATCH (pair:User)-->(group:Group)<--(user:User)
@@ -161,7 +156,7 @@ module.exports = {
           RETURN pair
          `)
           .then((res) => {
-            resolve(res.records.map(project => 
+            resolve(res.records.map(project =>
               res.records.map(user => new db.models.User(user.get('pair')))
             ));
           })
@@ -180,7 +175,6 @@ module.exports = {
     projects: function projects(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
-        console.log('POST projects');
         dbSession.run(
           `
           MATCH (user:User) WHERE user.ghId=${Number(req.user.ghInfo.id)}
@@ -202,7 +196,6 @@ module.exports = {
     pair: function addPair(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
-        console.log('POST pair');
         dbSession.run(`
           MATCH (project:Project) WHERE ID(project) = ${Number(req.body.project)}
           MATCH (user:User) WHERE user.ghId = ${Number(req.user.ghInfo.id)}
@@ -223,7 +216,6 @@ module.exports = {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         const message = req.body;
-        console.log('POST messages');
         dbSession.run(`
           MATCH (user:User {ghId: ${ req.user.ghInfo.id }}), (recipient:User)
           WHERE ID(recipient) = ${ req.body.recipient }
@@ -248,7 +240,6 @@ module.exports = {
     progress: function updateProgress(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
-        console.log('POST progress')
         dbSession.run(`
           MATCH (:User {ghId: ${req.user.ghInfo.id}})-->(group:Group)-->(project:Project)
           WHERE ID(project) = ${req.body.projectId}
@@ -264,7 +255,6 @@ module.exports = {
     users: function addQuestionnaireData(req) {
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
-        console.log('POST users');
         dbSession.run(`
           MATCH (user:User) WHERE user.ghId = ${Number(req.user.ghInfo.id)}
           SET user.description = '${req.body.description}'
