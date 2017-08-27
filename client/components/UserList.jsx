@@ -48,7 +48,7 @@ const UserList = (props) => {
         fullWidth={ false }
         icon={ <ActionDone
           color={ fullWhite } /> }
-        onClick={ () => { togglePair(user)} } />
+        onClick={ () => {togglePair(user)} } />
     } else {
       return <RaisedButton
         style={ {marginLeft: 'auto', width: 200, height: 40} }
