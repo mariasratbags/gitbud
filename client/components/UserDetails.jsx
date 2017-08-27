@@ -101,7 +101,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) =>
   ({
-    dispatchPairing: (userId, projectId) => dispatch({ type: 'CHANGE_USER_PAIRING', userId, projectId }),
     dispatchMessage: (userId, message) => dispatch({ type: 'MESSAGE_SEND', userId, message })
   });
 
