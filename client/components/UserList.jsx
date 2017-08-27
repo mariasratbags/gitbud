@@ -25,6 +25,7 @@ const UserList = (props) => {
 
   let togglePair = (user) => {
     console.log('line 27', user);
+
     axios.post('/API/pair', {
       partnered: user.id,
       project: props.projectId

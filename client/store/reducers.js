@@ -22,7 +22,11 @@ const users = (state, action) => {
   } else if (action.type === 'CHANGE_USER_PAIRING') {
     return state.map((user) => {
       if (user.id === action.userId) {
-        return Object.assign({}, user, { paired: user.paired.concat(action.projectId) });
+        if(user.paired.length > 0) {
+          return Object.assign({}, user, { paired: [] });
+        } else {
+          return Object.assign({}, user, { paired: user.paired.concat(action.projectId) });
+        }
       }
       return user;
     });
