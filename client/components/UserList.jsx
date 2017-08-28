@@ -22,9 +22,10 @@ import {
 } from 'material-ui/Table';
 
 const UserList = (props) => {
+  console.log('USERLIST props: ', props);
 
   let togglePair = (user) => {
-    console.log('line 27', user);
+    console.log('USERLIST user: ', user);
 
     axios.post('/API/pair', {
       partnered: user.id,
@@ -54,7 +55,13 @@ const UserList = (props) => {
         style={ {marginLeft: 'auto', width: 200, height: 40} }
         label='Work With Me'
         icon={ <ActionBuild /> }
-        onClick={ () => { togglePair(user)} }
+        onClick={ () => {
+          if (props.interested) {
+            togglePair(user)
+          } else {
+            alert('You must first choose to "Work on this project!" before you can pair with users working on this project.')
+          }
+        } }
         primary={ true } />
     }
   }
