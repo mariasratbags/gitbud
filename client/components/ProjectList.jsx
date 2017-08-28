@@ -26,6 +26,7 @@ import {
 } from 'material-ui';
 
 const ProjectList = (props) => {
+  console.log('ProjectList props: ', props)
   return (
     <Paper style={ {width: '95%', margin: 'auto', marginTop: 12, padding: 12 } }>
       <Card>
@@ -36,7 +37,7 @@ const ProjectList = (props) => {
           <ToolbarGroup>
 
             <Link to='/newproject'><RaisedButton label="Create Project" fullWidth={ true }/></Link>
-            
+
           </ToolbarGroup>
         </Toolbar>
         <Table style={{ width: '95%', margin: 'auto', marginTop: 12, padding: 12 }}>
