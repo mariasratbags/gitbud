@@ -34,7 +34,7 @@ const MyProjects = (props) => {
               <TableHeaderColumn>Project Name</TableHeaderColumn>
               <TableHeaderColumn>Language</TableHeaderColumn>
               <TableHeaderColumn>Experience</TableHeaderColumn>
-              <TableHeaderColumn>Partner Name</TableHeaderColumn>
+              
             </TableRow>
           </TableHeader>
           <TableBody stripedRows={ true } displayRowCheckbox={ false }>
