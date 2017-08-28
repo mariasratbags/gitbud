@@ -237,16 +237,17 @@ module.exports = {
     // It's stored as JSON, as the database cannot hold objects per se
     // and the databse has no need to udnerstand or operate on the data as an object.
     newproject: function createProject(req) {
+      console.log(req.body);
       return new Promise((resolve, reject) => {
         const dbSession = dbDriver.session();
         dbSession.run(`
           CREATE (:Project {
-            project: ${req.body.name},
-            language: ${req.body.language},
-            description: ${req.body.description},
-            experience: ${req.body.experience},
-            link: ${req.body.link}
-          }
+            project: '${req.body.project}',
+            language: '${req.body.language}',
+            experience: '${req.body.experience}',
+            description: '${req.body.description}',
+            link: '${req.body.link}'
+          })
         `)
           .then(resolve)
           .catch(reject)
