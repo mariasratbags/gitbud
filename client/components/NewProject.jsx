@@ -78,8 +78,9 @@ class NewProject extends React.Component {
         modal={true}
         open={this.state.open}
       >
-        <form action="/" method="POST" onSubmit={(e) => { e.preventDefault(); alert('Submitted form!'); this.handleClose(); } }>
-          This dialog spans the entire width of the screen.
+        <form
+          onSubmit={this.addProject.bind(this)}>
+
           <TextField name="project" hintText="Project Name" />
           <TextField name="language" hintText="Project Language" />
           <TextField name="description" hintText="Project Description" />
