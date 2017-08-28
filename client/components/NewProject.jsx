@@ -29,7 +29,10 @@ import {
 class NewProject extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: true };
+    this.state = {
+      open: true,
+      project: '',
+    };
     this.handleClose = this._handleClose.bind(this);
   }
 
@@ -40,16 +43,18 @@ class NewProject extends React.Component {
 
   addProject(e) {
     e.preventDefault();
-    alert('Submitted form!');
     this.handleClose();
-    // axios.post('/API/newproject', {
-    //   project: ,
-    //   language: ,
-    //   description: ,
-    //   experience: ,
-    //   link:
-    // })
-    // .catch(console.error);
+
+    let data = {
+      project: this.state.project,
+      language: this.state.language,
+      experience: this.state.experience,
+      description: this.state.description,
+      link: this.state.link
+    }
+
+    axios.post('/API/newproject', data)
+    .catch(console.error);
   }
 
   render() {
@@ -78,14 +83,34 @@ class NewProject extends React.Component {
         modal={true}
         open={this.state.open}
       >
-        <form
-          onSubmit={this.addProject.bind(this)}>
+        <form onSubmit={this.addProject.bind(this)}>
 
-          <TextField name="project" hintText="Project Name" />
-          <TextField name="language" hintText="Project Language" />
-          <TextField name="description" hintText="Project Description" />
-          <TextField name="experience" hintText="Experience Level" />
-          <TextField name="link" hintText="Link to the Github repo" />
+          <TextField
+            name="project"
+            hintText="Project Name"
+            value={this.state.project}
+            onChange={(e, newValue) => this.setState({ project: newValue})}
+          />
+          <TextField
+            name="language"
+            hintText="Project Language"
+            value={this.state.language}
+            onChange={(e, newValue) => this.setState({ language: newValue})}
+          />
+          <TextField
+            name="description"
+            hintText="Project Description"
+            value={this.state.description}
+            onChange={(e, newValue) => this.setState({ description: newValue})}
+          />
+          <TextField name="experience" hintText="Experience Level"
+            value={this.state.experience}
+            onChange={(e, newValue) => this.setState({ experience: newValue})}
+          />
+          <TextField name="link" hintText="Link to the Github repo"
+            value={this.state.link}
+            onChange={(e, newValue) => this.setState({ link: newValue})}
+          />
           <div style={{ textAlign: 'right', padding: 8, margin: '24px -24px -24px -24px' }}>
             {actions}
           </div>
