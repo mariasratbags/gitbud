@@ -105,7 +105,7 @@ class App extends React.Component {
                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                                 >
-                <MenuItem primaryText="Notifications" />
+
                 <Link to='/user' style={{ textDecoration: 'none'}}><MenuItem primaryText="Profile" rightIcon={ <ActionAccountCircle/>}/> </Link>
                 <a href="/auth/signout" style={{ textDecoration: 'none'}} ><MenuItem primaryText="Sign out" rightIcon={ <ActionEject/>} /></a>
               </IconMenu>}
