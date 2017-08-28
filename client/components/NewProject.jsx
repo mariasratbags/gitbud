@@ -74,7 +74,7 @@ class NewProject extends React.Component {
 
     return (
       <Dialog
-        title="Dialog With Custom Width"
+        title="Create a new project!"
         modal={true}
         open={this.state.open}
       >
