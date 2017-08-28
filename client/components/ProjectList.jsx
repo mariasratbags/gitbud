@@ -26,7 +26,6 @@ import {
 } from 'material-ui';
 
 const ProjectList = (props) => {
-  console.log('ProjectList props: ', props)
   return (
     <Paper style={ {width: '95%', margin: 'auto', marginTop: 12, padding: 12 } }>
       <Card>

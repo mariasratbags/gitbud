@@ -25,8 +25,7 @@ class UserDetails extends React.Component {
     this.expandCard = () => {
       this.setState({ expanded: true });
     }
-    // this.togglePair = this.togglePair.bind(this);
-    // this.pairButton = this.pairButton.bind(this);
+
     this.setMessageText = (_, text) => this.setState({ message: text });
     this.sendMessage = () => {
       axios.post('/API/messages', {
@@ -105,9 +104,3 @@ const mapDispatchToProps = (dispatch) =>
   });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);
-
-
-
-/* <CardMedia overlay={ <CardTitle title={ this.props.user.name } subtitle='Experience: n00b'/> }>
-  <img src={ this.props.user.avatarUrl } />
-</CardMedia> */
