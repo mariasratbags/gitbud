@@ -38,6 +38,20 @@ class NewProject extends React.Component {
     window.location.href = '/projects'
   }
 
+  addProject(e) {
+    e.preventDefault();
+    alert('Submitted form!');
+    this.handleClose();
+    // axios.post('/API/newproject', {
+    //   project: ,
+    //   language: ,
+    //   description: ,
+    //   experience: ,
+    //   link:
+    // })
+    // .catch(console.error);
+  }
+
   render() {
     const actions = [
       <FlatButton
